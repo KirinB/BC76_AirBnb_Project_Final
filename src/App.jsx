@@ -1,7 +1,9 @@
 import { useRoutes } from "react-router-dom";
 import { pathDefault } from "./common/path";
-import HomeTemplate from "./templates/HomeTemplate";
-import HomePage from "./pages/HomePage";
+
+import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import HomePage from "./pages/HomePage/HomePage";
 
 const arrRoutes = [
   {
@@ -11,6 +13,10 @@ const arrRoutes = [
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: pathDefault.searchPage,
+        element: <SearchPage />,
       },
     ],
   },
