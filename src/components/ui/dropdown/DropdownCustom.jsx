@@ -1,7 +1,9 @@
-import { Dropdown } from "antd";
+import { Dropdown, Space } from "antd";
 import { useState } from "react";
 
 import { DownOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 export const DropdownCustom = ({
   items = [{ label: "The function is not working yet" }],
@@ -37,6 +39,41 @@ export const DropdownCustom = ({
           />
         </span>
       </button>
+    </Dropdown>
+  );
+};
+export const DropdownNoti = () => {
+  const items = [
+    {
+      label: <Link>Notication 1</Link>,
+      key: "0",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: <Link>Notication 2</Link>,
+      key: "1",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: <Link>Notication 3</Link>,
+      key: "3",
+    },
+  ];
+  return (
+    <Dropdown
+      placement="bottomCenter"
+      menu={{
+        items,
+      }}
+      trigger={["click"]}
+    >
+      <a onClick={(e) => e.preventDefault()}>
+        <IoMdNotificationsOutline size={25} />
+      </a>
     </Dropdown>
   );
 };

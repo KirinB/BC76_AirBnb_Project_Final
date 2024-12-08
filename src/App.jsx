@@ -7,7 +7,12 @@ import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import HomePage from "./pages/HomePage/HomePage";
 import SignIn from "./pages/SignIn/SignIn";
-
+import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
+import DashBoard from "./pages/DashBoard/DashBoard";
+import ManagerUser from "./pages/ManagerUser/ManagerUser";
+import ManagerLocation from "./pages/ManagerLocation/ManagerLocation";
+import ManagerReservation from "./pages/ManagerReservation/ManagerReservation";
+import ManagerRoom from "./pages/ManagerRoom/ManagerRoom";
 export const NotificationContext = createContext();
 const arrRoutes = [
   {
@@ -27,6 +32,30 @@ const arrRoutes = [
   {
     path: pathDefault.signIn,
     element: <SignIn />,
+  },
+  {
+    path: pathDefault.admin,
+    element: <AdminTemplate />,
+    children: [
+      { index: true, element: <DashBoard /> },
+      { path: pathDefault.dashBoard, element: <DashBoard /> },
+      {
+        path: pathDefault.managerUser,
+        element: <ManagerUser />,
+      },
+      {
+        path: pathDefault.managerLocation,
+        element: <ManagerLocation />,
+      },
+      {
+        path: pathDefault.managerReservation,
+        element: <ManagerReservation />,
+      },
+      {
+        path: pathDefault.managerRoom,
+        element: <ManagerRoom />,
+      },
+    ],
   },
 ];
 
