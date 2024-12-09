@@ -1,8 +1,15 @@
-import { Avatar, Button, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import { Avatar, Button, Input, Table } from "antd";
+import React, { useContext, useEffect, useState } from "react";
 import { userService } from "../../services/user.service";
+import { NotificationContext } from "../../App";
+import { VerticalLeftOutlined } from "@ant-design/icons";
+import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
+import { useSelector } from "react-redux";
+
 const ManagerUser = () => {
+  const { user, token } = useSelector((state) => state.userSlice);
   const [listUser, setListUser] = useState([]);
+  const { handleNotification } = useContext(NotificationContext);
   const getAllUsers = () => {
     userService
       .getAllUsers()
@@ -12,10 +19,10 @@ const ManagerUser = () => {
           ...user,
           key: user.id,
         }));
-        setListUser(res.data.content);
+        setListUser(setUser);
       })
       .catch((err) => {
-        console.log(err);
+        handleNotification("error", err.response.data.content);
       });
   };
   const columns = [
@@ -75,14 +82,24 @@ const ManagerUser = () => {
     getAllUsers();
   }, []);
   return (
-    <div>
-      <h1>Danh sách người dùng trong hệ thống</h1>
-      <Table
-        dataSource={listUser}
-        scroll={{ x: 1300, y: 600 }}
-        columns={columns}
-      />
-      ;
+    <div className="space-y-5">
+      <div className="flex justify-between items-center border-gray-500 border-b-2">
+        <h1
+          className="text-3xl font-bold text-gray-800 py-10
+        "
+        >
+          Quản lý danh sách người dùng
+        </h1>
+        <div className="flex space-x-3 w-1/3">
+          <Input.Search
+            placeholder="nhập tên người dùng"
+            className=""
+            size="large"
+          />
+          <ButtonAdmin content={"New User"} />
+        </div>
+      </div>
+      <Table dataSource={listUser} scroll={{ x: 1300 }} columns={columns} />;
     </div>
   );
 };

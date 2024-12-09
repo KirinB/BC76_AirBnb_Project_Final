@@ -65,7 +65,7 @@ export const DropdownNoti = () => {
   ];
   return (
     <Dropdown
-      placement="bottomCenter"
+      placement="bottom"
       menu={{
         items,
       }}

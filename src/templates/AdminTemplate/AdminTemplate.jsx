@@ -7,7 +7,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Layout, Menu, Space, theme } from "antd";
+import { Avatar, Badge, Button, Layout, Menu, Space, theme } from "antd";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { pathDefault } from "../../common/path";
 import { MdMyLocation } from "react-icons/md";
@@ -18,16 +18,19 @@ import {
   DropdownCustom,
   DropdownNoti,
 } from "../../components/ui/dropdown/DropdownCustom";
+import { useSelector } from "react-redux";
 const AdminTemplate = () => {
+  const { user, token } = useSelector((state) => state.userSlice);
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   return (
-    <Layout className="h-screen">
+    <Layout className="h-full">
       <Sider
-        theme="dark"
+        theme="light"
+        className="shadow-md shadow-fuchsia-500 rounded-e-2xl bg-white"
         trigger={null}
         collapsible
         collapsed={collapsed}
@@ -40,7 +43,7 @@ const AdminTemplate = () => {
           </Link>
         </div>
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={[
@@ -147,18 +150,31 @@ const AdminTemplate = () => {
                 height: 64,
               }}
             />
-            <Space wrap className="mr-4">
-              <DropdownNoti />
-              <Avatar />
+            <Space size={250} wrap className="mr-4">
+              <Badge count={0} showZero className="flex">
+                <DropdownNoti />
+              </Badge>
+
+              {user ? (
+                <div className="flex items-center space-x-3 font-semibold">
+                  <p>
+                    Xin chào, <i>{user.name}</i>
+                  </p>
+                  <Avatar size={40} style={{ backgroundColor: "#f56a00" }}>
+                    <span className="uppercase">{user.name[0]}</span>
+                  </Avatar>
+                </div>
+              ) : null}
             </Space>
           </div>
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
+            margin: "0px",
+            padding: 30,
+            minHeight: 1000,
+            background:
+              "linear-gradient(66deg, rgba(63,94,251,0.5) 0%, rgba(252,70,107,1) 100%)",
             borderRadius: borderRadiusLG,
           }}
         >
