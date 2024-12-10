@@ -1,4 +1,4 @@
-import { Dropdown, Space } from "antd";
+import { Badge, Dropdown, Space } from "antd";
 import { useState } from "react";
 
 import { DownOutlined } from "@ant-design/icons";
@@ -42,7 +42,7 @@ export const DropdownCustom = ({
     </Dropdown>
   );
 };
-export const DropdownNoti = () => {
+export const DropdownNoti = ({ icon }) => {
   const items = [
     {
       label: <Link>Notication 1</Link>,
@@ -64,6 +64,26 @@ export const DropdownNoti = () => {
     },
   ];
   return (
+    <Badge count={0} showZero className="align-middle">
+      <Dropdown
+        placement="bottom"
+        menu={{
+          items,
+        }}
+        trigger={["click"]}
+      >
+        <a onClick={(e) => e.preventDefault()}>{icon}</a>
+      </Dropdown>
+    </Badge>
+  );
+};
+export const DropdownNormal = ({ content }) => {
+  const items = [
+    {
+      label: "The function is not working yet",
+    },
+  ];
+  return (
     <Dropdown
       placement="bottom"
       menu={{
@@ -71,9 +91,7 @@ export const DropdownNoti = () => {
       }}
       trigger={["click"]}
     >
-      <a onClick={(e) => e.preventDefault()}>
-        <IoMdNotificationsOutline size={25} />
-      </a>
+      <a onClick={(e) => e.preventDefault()}>{content}</a>
     </Dropdown>
   );
 };

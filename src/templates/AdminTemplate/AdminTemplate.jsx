@@ -7,7 +7,16 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Avatar, Badge, Button, Layout, Menu, Space, theme } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Dropdown,
+  Layout,
+  Menu,
+  Space,
+  theme,
+} from "antd";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { pathDefault } from "../../common/path";
 import { MdMyLocation } from "react-icons/md";
@@ -16,9 +25,12 @@ import { TbDeviceDesktopCog } from "react-icons/tb";
 import { Icons } from "../../assets/Icons";
 import {
   DropdownCustom,
+  DropdownNormal,
   DropdownNoti,
 } from "../../components/ui/dropdown/DropdownCustom";
 import { useSelector } from "react-redux";
+import { FaBox } from "react-icons/fa";
+import { IoMdCheckboxOutline, IoMdNotificationsOutline } from "react-icons/io";
 const AdminTemplate = () => {
   const { user, token } = useSelector((state) => state.userSlice);
   const { Header, Sider, Content } = Layout;
@@ -26,6 +38,16 @@ const AdminTemplate = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const items = [
+    {
+      key: "1",
+      label: <Link>Thông tin đăng nhập</Link>,
+    },
+    {
+      key: "2",
+      label: <Link>Đăng xuất</Link>,
+    },
+  ];
   return (
     <Layout className="h-full">
       <Sider
@@ -150,19 +172,32 @@ const AdminTemplate = () => {
                 height: 64,
               }}
             />
-            <Space size={250} wrap className="mr-4">
-              <Badge count={0} showZero className="flex">
-                <DropdownNoti />
-              </Badge>
+            <Space size={30} wrap className="mr-4">
+              <DropdownNoti
+                icon={<IoMdNotificationsOutline color="#969696" size={25} />}
+              />
 
+              <DropdownNoti
+                icon={<IoMdCheckboxOutline color="#969696" size={25} />}
+              />
+              <DropdownNormal content={"English"} />
               {user ? (
                 <div className="flex items-center space-x-3 font-semibold">
                   <p>
                     Xin chào, <i>{user.name}</i>
                   </p>
-                  <Avatar size={40} style={{ backgroundColor: "#f56a00" }}>
-                    <span className="uppercase">{user.name[0]}</span>
-                  </Avatar>
+                  <Dropdown
+                    menu={{
+                      items,
+                    }}
+                  >
+                    {/* thông tin đăng nhập */}
+                    <a onClick={(e) => e.preventDefault()}>
+                      <Avatar size={40} style={{ backgroundColor: "#f56a00" }}>
+                        <span className="uppercase">{user.name[0]}</span>
+                      </Avatar>
+                    </a>
+                  </Dropdown>
                 </div>
               ) : null}
             </Space>
