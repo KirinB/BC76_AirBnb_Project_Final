@@ -100,16 +100,7 @@ const ManagerUser = () => {
       },
     },
   ];
-  const items = [
-    {
-      key: "1",
-      label: <Link>Thông tin đăng nhập</Link>,
-    },
-    {
-      key: "2",
-      label: <Link>Đăng xuất</Link>,
-    },
-  ];
+
   useEffect(() => {
     getAllUsers();
   }, []);
@@ -123,12 +114,11 @@ const ManagerUser = () => {
           Quản lý danh sách người dùng
         </h1>
         <div className="flex space-x-3 w-1/3">
-          <Input.Search
-            placeholder="nhập tên người dùng"
-            className=""
-            size="large"
+          <Input.Search placeholder="User's Name ?" className="" size="large" />
+          <ButtonAdmin
+            content={"Add New User"}
+            icon={<FaUserPlus size={20} />}
           />
-          <ButtonAdmin content={"New User"} icon={<FaUserPlus size={20} />} />
         </div>
       </div>
       <Table dataSource={listUser} scroll={{ x: 1300 }} columns={columns} />;

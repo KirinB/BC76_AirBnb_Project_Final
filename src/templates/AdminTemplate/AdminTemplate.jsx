@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import {
+  DownOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
@@ -180,7 +181,14 @@ const AdminTemplate = () => {
               <DropdownNoti
                 icon={<IoMdCheckboxOutline color="#969696" size={25} />}
               />
-              <DropdownNormal content={"English"} />
+              <DropdownNormal
+                content={"English"}
+                icon={
+                  <DownOutlined
+                    style={{ fontSize: "13px", marginLeft: "5px" }}
+                  />
+                }
+              />
               {user ? (
                 <div className="flex items-center space-x-3 font-semibold">
                   <p>

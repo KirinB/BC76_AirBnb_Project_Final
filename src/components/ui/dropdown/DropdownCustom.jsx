@@ -1,10 +1,7 @@
-import { Badge, Dropdown, Space } from "antd";
+import { Avatar, Badge, Dropdown, Space } from "antd";
 import { useState } from "react";
-
 import { DownOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { IoMdNotificationsOutline } from "react-icons/io";
-
 export const DropdownCustom = ({
   items = [{ label: "The function is not working yet" }],
   children,
@@ -77,7 +74,7 @@ export const DropdownNoti = ({ icon }) => {
     </Badge>
   );
 };
-export const DropdownNormal = ({ content }) => {
+export const DropdownNormal = ({ content, icon }) => {
   const items = [
     {
       label: "The function is not working yet",
@@ -91,7 +88,18 @@ export const DropdownNormal = ({ content }) => {
       }}
       trigger={["click"]}
     >
-      <a onClick={(e) => e.preventDefault()}>{content}</a>
+      <a
+        onClick={(e) => e.preventDefault()}
+        className="space-x-3 border p-3 rounded-3xl font-bold"
+      >
+        <Avatar
+          src={
+            "http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"
+          }
+        />
+        <p className="inline">{content}</p>
+        {icon}{" "}
+      </a>
     </Dropdown>
   );
 };
