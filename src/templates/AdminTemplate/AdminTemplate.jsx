@@ -192,7 +192,7 @@ const AdminTemplate = () => {
               {user ? (
                 <div className="flex items-center space-x-3 font-semibold">
                   <p>
-                    Xin chào, <i>{user.name}</i>
+                    Hello, <i>{user.name}</i>
                   </p>
                   <Dropdown
                     menu={{
