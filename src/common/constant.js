@@ -89,7 +89,7 @@ export const dataCategory = [
   },
   {
     icon: "/icon/category/hanok.jpg",
-    title: "Hanok.jpg",
+    title: "Hanok",
   },
 ];
 

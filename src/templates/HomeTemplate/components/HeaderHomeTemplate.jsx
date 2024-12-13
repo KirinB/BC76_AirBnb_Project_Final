@@ -3,14 +3,25 @@ import { Icons } from "../../../assets/Icons";
 import { ButtonGhost } from "../../../components/ui/button/ButtonCustom";
 import { RiGlobalLine } from "react-icons/ri";
 import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
 import { IoSearch } from "react-icons/io5";
 
 const HeaderHomeTemplate = () => {
+  const location = useLocation();
+  const isRoomDetail = location.pathname.includes("/rooms");
   return (
-    <header className="sticky bg-white shadow-sm z-20 h-[96px] py-4 top-0">
-      <div className="container flex justify-between items-center">
+    <header
+      // className={`${
+      //   isRoomDetail ? "" : "sticky"
+      // } bg-white shadow-sm z-20 h-[96px] py-4 top-0`}
+      className="sticky bg-white shadow-sm z-20 h-[96px] py-4 top-0"
+    >
+      <div
+        className={`${
+          isRoomDetail ? "px-40" : ""
+        } container flex justify-between items-center`}
+      >
         <div>
           <Link to={pathDefault.homePage}>
             <Icons.logoFull fill="#FF385C" />

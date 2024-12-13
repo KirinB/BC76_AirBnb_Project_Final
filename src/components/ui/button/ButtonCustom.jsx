@@ -25,3 +25,14 @@ export const ButtonOutLine = ({
     </Button>
   );
 };
+
+export const ButtonPrimary = ({ children, className, ...props }) => {
+  return (
+    <Button
+      className={`!bg-primary text-white font-semibold text-base !outline-none !border-none hover:!text-white hover:!bg-primary/80 ${className}`}
+      {...props}
+    >
+      {children}
+    </Button>
+  );
+};

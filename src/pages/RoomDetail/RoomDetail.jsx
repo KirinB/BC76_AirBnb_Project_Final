@@ -3,9 +3,17 @@ import { useParams } from "react-router-dom";
 import { phongService } from "../../services/phong.service";
 import PageNotFound from "../../components/PageNotFound";
 import LoadingCustom from "../../components/ui/loading/LoadingCustom";
-import { ButtonGhost } from "../../components/ui/button/ButtonCustom";
+import {
+  ButtonGhost,
+  ButtonPrimary,
+} from "../../components/ui/button/ButtonCustom";
 import { LuHeart, LuShare } from "react-icons/lu";
 import { IoIosStar } from "react-icons/io";
+import HighlightsRoom from "./components/HighlightsRoom";
+import LineSpace from "./components/LineSpace";
+import DetailRoom from "./components/DetailRoom";
+import AmenitiesRoom from "./components/AmenitiesRoom";
+import { DatePicker } from "antd";
 const RoomDetail = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +40,7 @@ const RoomDetail = () => {
         <LoadingCustom />
       </div>
     ) : (
-      <div className="container py-6">
+      <div className="container px-40 py-6">
         <div className="flex flex-col space-y-6">
           <div className="flex justify-between">
             <h1 className="text-2xl flex-1 font-semibold">
@@ -65,37 +73,73 @@ const RoomDetail = () => {
           </div>
           <div className="grid grid-cols-3 relative">
             <div className="col-span-2">
-              <div className="py-8">
-                <h2>{roomDetail.tenPhong}</h2>
-                <p>1 giường</p>
-                <p className="font-semibold flex items-center space-x-2">
+              <div className="pt-6">
+                <h2 className="text-xl font-semibold">{roomDetail.tenPhong}</h2>
+                <p>{roomDetail.giuong} giường</p>
+                <p className="font-semibold flex items-center space-x-2 mt-2">
                   <span className="flex items-center space-x-1">
-                    <IoIosStar /> <span>Mới</span>
+                    <IoIosStar /> <span className="text-[17px]">Mới</span>
                   </span>
                   <span>·</span>
-                  <span>2 đánh giá</span>
+                  <span className="underline cursor-pointer">2 đánh giá</span>
                 </p>
               </div>
-              <div className="w-full h-px bg-gray-200" />
-              <div className="py-8 flex gap-6 items-center">
-                <div>
+              <LineSpace />
+              <div className="flex gap-6 items-center">
+                <div className="">
                   <img
                     src="/avatar_mockup.jpg"
                     alt=""
-                    className="w-10 h-10 rounded-full"
+                    className="w-10 h-10 rounded-full "
                   />
                 </div>
                 <div className="flex-1 flex flex-col">
-                  <h3>Chủ nhà/ Người tổ chức: Minh Nhan</h3>
-                  <p>
+                  <h3 className="font-semibold">
+                    Chủ nhà/ Người tổ chức: Minh Nhan
+                  </h3>
+                  <p className="text-[#6A6A6A]">
                     Chủ nhà siêu cấp<span> · </span>10 năm kinh nghiệm đón tiếp
                     khách
                   </p>
                 </div>
               </div>
-              <div className="w-full h-px bg-gray-200" />
+              <LineSpace />
+              <div className="py-6">
+                <HighlightsRoom />
+              </div>
+              <LineSpace />
+              <DetailRoom description={roomDetail.moTa} />
+              <LineSpace />
+              <AmenitiesRoom
+                mayGiat={roomDetail.mayGiat}
+                banLa={roomDetail.banLa}
+                banUi={roomDetail.banUi}
+                bep={roomDetail.bep}
+                dieuHoa={roomDetail.dieuHoa}
+                doXe={roomDetail.doXe}
+                hoBoi={roomDetail.hoBoi}
+                tivi={roomDetail.tivi}
+                wifi={roomDetail.wifi}
+              />
+              <LineSpace />
             </div>
-            <div className="sticky top-0">111111111111111</div>
+            <div className="sticky top-24 h-px flex justify-end">
+              <div className="mt-6 w-4/5">
+                <div className="border w-full border-gray-200 shadow-lg rounded-xl p-6 space-y-6">
+                  <h2 className="font-semibold text-xl">
+                    Thêm ngày để xem giá
+                  </h2>
+                  <div>
+                    <DatePicker.RangePicker />
+                  </div>
+                  <div>
+                    <ButtonPrimary className={"w-full py-6"}>
+                      Kiểm tra tình trạng còn phòng
+                    </ButtonPrimary>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

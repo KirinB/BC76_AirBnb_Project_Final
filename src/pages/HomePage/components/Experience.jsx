@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { phongService } from "../../../services/phong.service";
 import LoadingCustom from "../../../components/ui/loading/LoadingCustom";
+import { Link } from "react-router-dom";
 
 const Experience = () => {
   const [listPhong, setListPhong] = useState([]);
@@ -30,7 +31,11 @@ const Experience = () => {
       <div className="grid grid-cols-6 gap-10">
         {listPhong.slice(0, 20).map((phong) => {
           return (
-            <div className="space-y-2" key={phong.id}>
+            <Link
+              to={`/rooms/${phong.id}`}
+              className="space-y-2"
+              key={phong.id}
+            >
               <img
                 src={phong.hinhAnh}
                 alt={phong.tenPhong}
@@ -43,7 +48,7 @@ const Experience = () => {
                 <p className="text[#6A6A6A] text-sm">Chủ nhà: Minh Nhân</p>
                 <p className="font-semibold">Đã hết phòng</p>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
