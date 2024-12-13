@@ -4,6 +4,7 @@ import { pathDefault } from "./common/path";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import HomePage from "./pages/HomePage/HomePage";
+import AuthPage from "./pages/AuthPage/AuthPage";
 
 const arrRoutes = [
   {
@@ -19,6 +20,10 @@ const arrRoutes = [
         element: <SearchPage />,
       },
     ],
+  },
+  {
+    path: pathDefault.AuthPage,
+    element: <AuthPage />,
   },
 ];
 
