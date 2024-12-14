@@ -3,5 +3,5 @@ export const pathDefault = {
   searchPage: "/search",
   signIn: "/sign-in",
   signUp: "/sign-up",
-  AuthPage: "/AuthPage",
+  AuthPage: "/Auth",
 };
