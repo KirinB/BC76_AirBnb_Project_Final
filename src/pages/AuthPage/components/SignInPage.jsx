@@ -98,6 +98,7 @@ const SignInPage = ({ styleIcon, handle }) => {
               touched={touched.password}
             />
           </div>
+
           <button
             type="submit"
             className="bg-primary text-white px-14 py-4 rounded-full w-full mt-3"
