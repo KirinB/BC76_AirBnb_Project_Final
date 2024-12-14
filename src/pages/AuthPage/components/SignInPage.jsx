@@ -7,6 +7,7 @@ import { authService } from "../../../services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaGooglePlusG, FaTwitter } from "react-icons/fa";
 import { Icons } from "../../../assets/Icons";
+import InputCustom from "../../../components/ui/inputCustom/InputCustom";
 
 const SignInPage = ({ styleIcon, handle }) => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const SignInPage = ({ styleIcon, handle }) => {
         </div>
         <p className="text-gray-500 font-medium">or register an account</p>
         <form onSubmit={handleSubmit}>
-          <div className="mb-7">
+          {/* <div className="mb-7">
             <Input
               onChange={handleChange}
               className="py-3"
@@ -80,6 +81,17 @@ const SignInPage = ({ styleIcon, handle }) => {
                 {errors.email}
               </p>
             )}
+          </div> */}
+          <div className="mb-7">
+            <InputCustom
+              name={"email"}
+              handleBlur={handleBlur}
+              value={values.email}
+              placeholder={"Email"}
+              handleChange={handleChange}
+              error={errors.email}
+              touched={touched.email}
+            />
           </div>
           <div>
             <Input
@@ -97,6 +109,7 @@ const SignInPage = ({ styleIcon, handle }) => {
               </p>
             )}
           </div>
+
           <button
             type="submit"
             className="bg-primary text-white px-14 py-4 rounded-full w-full mt-3"
