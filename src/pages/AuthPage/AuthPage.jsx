@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import SignUpPage from "./components/SignUpPage";
 import SignInPage from "./components/SignInPage";
+import { useNavigate } from "react-router-dom";
+import { pathDefault } from "../../common/path";
 
 const AuthPage = () => {
   const [handle, setHandle] = useState(false);
@@ -15,6 +16,13 @@ const AuthPage = () => {
     setHandle(!handle);
   };
 
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      navigate(pathDefault.homePage);
+    }
+  }, []);
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-3/5 flex h-[650px] shadow-2xl rounded-xl overflow-hidden">
@@ -24,7 +32,7 @@ const AuthPage = () => {
           }`}
         >
           <SignInPage handle={handle} styleIcon={styleIcon} />
-          <SignUpPage handle={handle} styleIcon={styleIcon} />
+          <SignUpPage styleIcon={styleIcon} />
         </div>
         <div
           className={`hidden lg:flex h-full w-1/2 duration-700 translate-x-0 bg-primary z-[5] opacity-100 overflow-hidden ${

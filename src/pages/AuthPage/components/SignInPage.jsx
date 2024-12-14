@@ -7,9 +7,16 @@ import { authService } from "../../../services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaGooglePlusG, FaTwitter } from "react-icons/fa";
 import { Icons } from "../../../assets/Icons";
+import InputCustom from "../../../components/ui/inputCustom/InputCustom";
+import { ButtonOutLine } from "../../../components/ui/button/ButtonCustom";
+import { useDispatch } from "react-redux";
+import { handleUpdateUser } from "../../../store/slice/User.Slice";
 
 const SignInPage = ({ styleIcon, handle }) => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   // handle sign in
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useFormik({
@@ -21,8 +28,8 @@ const SignInPage = ({ styleIcon, handle }) => {
         authService
           .signIn(values)
           .then((res) => {
-            const token = res.data.content.token;
-            localStorage.setItem("token", token);
+            dispatch(handleUpdateUser(res.data.content.user));
+            localStorage.setItem("userInfo", JSON.stringify(res.data.content));
             alert("Đăng nhập thành công!");
             navigate(pathDefault.homePage);
           })
@@ -55,47 +62,41 @@ const SignInPage = ({ styleIcon, handle }) => {
         <h2 className="font-bold text-3xl">Sign in</h2>
         <div className="space-x-5 flex text-2xl justify-center">
           <div className={styleIcon}>
-            <FaFacebookF />
+            <FaFacebookF fill="#FF385C" />
           </div>
           <div className={styleIcon}>
-            <FaGooglePlusG />
+            <FaGooglePlusG fill="#FF385C" />
           </div>
           <div className={styleIcon}>
-            <FaTwitter />
+            <FaTwitter fill="#FF385C" />
           </div>
         </div>
         <p className="text-gray-500 font-medium">or register an account</p>
         <form onSubmit={handleSubmit}>
           <div className="mb-7">
-            <Input
-              onChange={handleChange}
+            <InputCustom
+              handleChange={handleChange}
+              handleBlur={handleBlur}
               className="py-3"
-              onBlur={handleBlur}
               name="email"
               value={values.email}
               placeholder="Email"
+              error={errors.email}
+              touched={touched.email}
             />
-            {errors.email && touched.email && (
-              <p className="text-red-500 text-sm mt-1 text-left">
-                {errors.email}
-              </p>
-            )}
           </div>
           <div>
-            <Input
-              onBlur={handleBlur}
-              onChange={handleChange}
+            <InputCustom
+              handleChange={handleChange}
+              handleBlur={handleBlur}
               className="py-3"
               name="password"
               value={values.password}
               type="password"
               placeholder="Password"
+              error={errors.password}
+              touched={touched.password}
             />
-            {errors.password && touched.password && (
-              <p className="text-red-500 text-sm mt-1 text-left">
-                {errors.password}
-              </p>
-            )}
           </div>
           <button
             type="submit"

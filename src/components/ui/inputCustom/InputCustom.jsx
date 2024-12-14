@@ -8,17 +8,24 @@ const InputCustom = ({
   handleBlur,
   name,
   value,
+  error,
+  touched,
 }) => {
   return (
-    <Input
-      type={type}
-      placeholder={placeholder}
-      className="py-3"
-      onChange={handleChange}
-      onBlur={handleBlur}
-      name={name}
-      value={value}
-    />
+    <>
+      <Input
+        type={type}
+        placeholder={placeholder}
+        className="py-3"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        name={name}
+        value={value}
+      />
+      {error && touched && (
+        <p className="text-red-500 text-sm mt-1 text-left">{error}</p>
+      )}
+    </>
   );
 };
 

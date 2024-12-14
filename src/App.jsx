@@ -5,6 +5,7 @@ import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import HomePage from "./pages/HomePage/HomePage";
 import AuthPage from "./pages/AuthPage/AuthPage";
+import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
 
 const arrRoutes = [
   {
@@ -18,6 +19,10 @@ const arrRoutes = [
       {
         path: pathDefault.searchPage,
         element: <SearchPage />,
+      },
+      {
+        path: pathDefault.Profile,
+        element: <ProfilePage />,
       },
     ],
   },
