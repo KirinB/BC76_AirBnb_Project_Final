@@ -1,23 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import {
   DownOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Badge,
-  Button,
-  Dropdown,
-  Layout,
-  Menu,
-  Space,
-  theme,
-} from "antd";
+import { Avatar, Button, Dropdown, Layout, Menu, Space, theme } from "antd";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { pathDefault } from "../../common/path";
 import { MdMyLocation } from "react-icons/md";
@@ -25,12 +14,10 @@ import { BiHomeHeart } from "react-icons/bi";
 import { TbDeviceDesktopCog } from "react-icons/tb";
 import { Icons } from "../../assets/Icons";
 import {
-  DropdownCustom,
   DropdownNormal,
   DropdownNoti,
 } from "../../components/ui/dropdown/DropdownCustom";
 import { useSelector } from "react-redux";
-import { FaBox } from "react-icons/fa";
 import { IoMdCheckboxOutline, IoMdNotificationsOutline } from "react-icons/io";
 const AdminTemplate = () => {
   const { user, token } = useSelector((state) => state.userSlice);
@@ -46,9 +33,30 @@ const AdminTemplate = () => {
     },
     {
       key: "2",
-      label: <Link>Đăng xuất</Link>,
+      label: (
+        <Link
+          onClick={() => {
+            localStorage.removeItem("userInfo");
+            dispatch(handleUpdateUser(null));
+            window.location.href = pathDefault.homePage;
+          }}
+        >
+          Đăng xuất
+        </Link>
+      ),
     },
   ];
+  useEffect(() => {
+    const dataString = localStorage.getItem("userInfo");
+    if (!dataString) {
+      window.location.href = pathDefault.signInAdmin;
+    } else {
+      const data = JSON.parse(dataString);
+      if (data.user.role != "ADMIN") {
+        window.location.href = pathDefault.homePage;
+      }
+    }
+  }, []);
   return (
     <Layout className="h-full">
       <Sider

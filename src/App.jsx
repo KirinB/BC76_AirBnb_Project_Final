@@ -6,13 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import HomePage from "./pages/HomePage/HomePage";
-import SignIn from "./pages/SignIn/SignIn";
 import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
 import DashBoard from "./pages/DashBoard/DashBoard";
 import ManagerUser from "./pages/ManagerUser/ManagerUser";
 import ManagerLocation from "./pages/ManagerLocation/ManagerLocation";
 import ManagerReservation from "./pages/ManagerReservation/ManagerReservation";
 import ManagerRoom from "./pages/ManagerRoom/ManagerRoom";
+import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
 export const NotificationContext = createContext();
 const arrRoutes = [
   {
@@ -30,8 +30,8 @@ const arrRoutes = [
     ],
   },
   {
-    path: pathDefault.signIn,
-    element: <SignIn />,
+    path: pathDefault.signInAdmin,
+    element: <SignInAdmin />,
   },
   {
     path: pathDefault.admin,

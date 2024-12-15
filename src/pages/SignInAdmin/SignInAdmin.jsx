@@ -16,7 +16,7 @@ import { NotificationContext } from "../../App";
 import { authService } from "../../services/auth.service";
 import { useDispatch } from "react-redux";
 import { handleUpdateUser } from "../../store/slice/user.slice";
-const SignIn = () => {
+const SignInAdmin = () => {
   const { handleNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ const SignIn = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
     if (user?.token) {
-      navigate(pathDefault.homePage);
+      navigate(pathDefault.admin);
     }
   }, []);
   return (
@@ -163,4 +163,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInAdmin;
