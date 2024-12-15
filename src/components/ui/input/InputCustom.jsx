@@ -45,6 +45,7 @@ export const InputPasswordCustom = ({
   value,
   error,
   touched,
+  readOnly = false,
 }) => {
   return (
     <div className="space-y-1">
@@ -58,6 +59,7 @@ export const InputPasswordCustom = ({
         onBlur={handleBlur}
         onChange={handleChange}
         placeholder={placeholder}
+        readOnly={readOnly}
       />
       {touched && error ? (
         <p className="text-red-500 mt-1 text-sm">{error}</p>

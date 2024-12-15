@@ -13,7 +13,9 @@ export const nguoiDungSerivce = {
   getUserByID: (id) => {
     return http.get(`/users/${id}`);
   },
-
+  putUserByID: (id, data) => {
+    return http.put(`/users/${id}`, data);
+  },
   // phần chưa sử dụng
   getAllUsers: () => {
     return http.get("/users");

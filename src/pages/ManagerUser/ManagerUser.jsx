@@ -8,17 +8,31 @@ import dayjs from "dayjs";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 import FormAddUser from "./components/FormAddUser/FormAddUser";
+import * as Yup from "yup";
+
 const ManagerUser = () => {
+  const [initialValues, setInitialValues] = useState({
+    id: 0,
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    birthday: "",
+    gender: true,
+    role: "",
+  });
   const [keyword, setKeyword] = useState("");
   const handleChangeKeyword = (e) => {
     setKeyword(e.target.value);
   };
+  const [isOnSubmit, setIsOnSubmit] = useState(true);
   const { user, token } = useSelector((state) => state.userSlice);
   const [listUser, setListUser] = useState([]);
   const { handleNotification } = useContext(NotificationContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRow, setTotalRow] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handlePageChange = (page, pageSize) => {
     console.log("Current page:", page);
     console.log("Page size:", pageSize);
@@ -117,6 +131,19 @@ const ManagerUser = () => {
               icon={<LuPencilLine size={25} />}
               color="default"
               type="text"
+              onClick={() => {
+                setIsModalOpen(true);
+                setIsOnSubmit(false);
+                nguoiDungSerivce
+                  .getUserByID(record.id)
+                  .then((res) => {
+                    console.log(res);
+                    setInitialValues(res.data.content);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
             />
             <Popconfirm
               title="Thực hiện xóa người dùng"
@@ -146,7 +173,7 @@ const ManagerUser = () => {
       },
     },
   ];
-
+  // thiếu put user khi thay đổi chưa render lại được dannh sách
   useEffect(() => {
     getAllUsers();
   }, [currentPage, keyword]);
@@ -173,9 +200,39 @@ const ManagerUser = () => {
           <ButtonAdmin
             content={"Add New User"}
             icon={<FaUserPlus size={20} />}
+            onClick={() => {
+              setIsModalOpen(true);
+              setIsOnSubmit(true);
+              setInitialValues({
+                id: 0,
+                name: "",
+                email: "",
+                password: "",
+                phone: "",
+                birthday: "",
+                gender: true,
+                role: "",
+              });
+            }}
           />
-          <Modal title={"Add User Form"} open={isModalOpen}>
-            <FormAddUser />
+          <Modal
+            title={isOnSubmit ? "Add User" : "Edit User Information"}
+            open={isModalOpen}
+            onCancel={() => {
+              setIsModalOpen(false);
+            }}
+            footer={null}
+          >
+            <FormAddUser
+              handleCloseModal={() => {
+                setIsModalOpen(false);
+              }}
+              getAllUsers={() => {
+                getAllUsers();
+              }}
+              isOnSubmit={isOnSubmit}
+              initialValues={initialValues}
+            />
           </Modal>
         </div>
       </div>
@@ -186,8 +243,8 @@ const ManagerUser = () => {
         pagination={{
           total: totalRow,
           current: currentPage,
-          pageSize: 10, // Số dòng mỗi trang
-          onChange: handlePageChange, // Hàm callback khi đổi trang
+          pageSize: 10,
+          onChange: handlePageChange,
         }}
       />
       ;

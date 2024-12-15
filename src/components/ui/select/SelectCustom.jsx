@@ -7,6 +7,7 @@ export const SelectCustom = ({
   mode,
   error,
   touched,
+  value,
 }) => {
   return (
     <div className="space-y-1">
@@ -19,6 +20,7 @@ export const SelectCustom = ({
         mode={mode && mode}
         className="block"
         placeholder={"Vui lòng chọn giới tính"}
+        value={value}
       />
       {error && touched && <p className="text-sm text-red-500">{error}</p>}
     </div>
