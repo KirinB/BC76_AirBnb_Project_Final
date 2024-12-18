@@ -30,6 +30,9 @@ const ManagerRoom = () => {
     maViTri: 0,
     hinhAnh: "",
   });
+  //Sử lý hình ảnh
+  const [previewImage, setPreviewImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [isOnSubmit, setIsOnSubmit] = useState(true);
   const { user, token } = useSelector((state) => state.userSlice);
   const [listRoom, setListRoom] = useState([]);
@@ -39,6 +42,7 @@ const ManagerRoom = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRow, setTotalRow] = useState(0);
   const [keyword, setKeyword] = useState("");
+
   const handleChangeKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -112,6 +116,7 @@ const ManagerRoom = () => {
       render: (text, record, index) => {
         return (
           <div className="space-x-5">
+            {/* Nút sửa */}
             <Button
               icon={<LuPencilLine size={25} />}
               color="default"
@@ -124,12 +129,14 @@ const ManagerRoom = () => {
                   .then((res) => {
                     console.log(res);
                     setInitialValues(res.data.content);
+                    setPreviewImage(record.hinhAnh);
                   })
                   .catch((err) => {
                     console.log(err);
                   });
               }}
             />
+            {/* Nút xóa */}
             <Popconfirm
               title="Thực hiện xóa phòng"
               description="Bạn có chắc muốn xóa phòng này không?"
@@ -160,7 +167,7 @@ const ManagerRoom = () => {
   ];
   useEffect(() => {
     getAllRoom();
-  }, [currentPage, keyword]);
+  }, [currentPage, keyword, getAllRoom]);
   return (
     <div className="space-y-5">
       <div className="flex justify-between items-center border-gray-500 border-b-2">
@@ -181,6 +188,7 @@ const ManagerRoom = () => {
               setKeyword(value);
             }}
           />
+          {/* Nút thêm */}
           <ButtonAdmin
             content={"Add New Room"}
             icon={<FaUserPlus size={20} />}
@@ -208,6 +216,7 @@ const ManagerRoom = () => {
                 maViTri: 0,
                 hinhAnh: "",
               });
+              setPreviewImage(null);
             }}
           />
           <Modal
@@ -222,7 +231,9 @@ const ManagerRoom = () => {
               handleCloseModal={() => {
                 setIsModalOpen(false);
               }}
-              getAllUsers={() => {
+              previewImage={previewImage}
+              setPreviewImage={setPreviewImage}
+              getAllRoom={() => {
                 getAllRoom();
               }}
               isOnSubmit={isOnSubmit}

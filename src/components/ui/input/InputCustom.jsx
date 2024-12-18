@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, InputNumber } from "antd";
 import React from "react";
 
 export const InputNormal = ({
@@ -60,6 +60,39 @@ export const InputPasswordCustom = ({
         onChange={handleChange}
         placeholder={placeholder}
         readOnly={readOnly}
+      />
+      {touched && error ? (
+        <p className="text-red-500 mt-1 text-sm">{error}</p>
+      ) : null}
+    </div>
+  );
+};
+export const InputNumberCustom = ({
+  labelContent,
+  placeholder,
+  className,
+  handleChange,
+  handleBlur,
+  name,
+  id = "",
+  value,
+  error,
+  touched,
+}) => {
+  return (
+    <div className="space-y-1">
+      <label htmlFor={id} className="font-medium text-sm">
+        {labelContent}
+      </label>
+      <InputNumber
+        value={value}
+        className={`${className} block w-full`}
+        name={name}
+        id={id}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        placeholder={placeholder}
+        min={0}
       />
       {touched && error ? (
         <p className="text-red-500 mt-1 text-sm">{error}</p>
