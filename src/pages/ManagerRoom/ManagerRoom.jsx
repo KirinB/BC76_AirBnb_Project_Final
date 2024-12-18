@@ -1,5 +1,11 @@
 import { Button, Input, Modal, Popconfirm, Table } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { phongService } from "../../services/phong.service";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
@@ -70,6 +76,7 @@ const ManagerRoom = () => {
         handleNotification("error", err.response.data.content.data);
       });
   };
+
   const columns = [
     {
       title: "ID",
@@ -167,7 +174,8 @@ const ManagerRoom = () => {
   ];
   useEffect(() => {
     getAllRoom();
-  }, [currentPage, keyword, getAllRoom]);
+  }, [currentPage, keyword]);
+  useEffect(() => {}, [getAllRoom]);
   return (
     <div className="space-y-5">
       <div className="flex justify-between items-center border-gray-500 border-b-2">

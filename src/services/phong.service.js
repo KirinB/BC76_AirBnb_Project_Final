@@ -15,6 +15,9 @@ export const phongService = {
       `/phong-thue/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=10&keyword=${keyword}`
     );
   },
+  editRoom: (id, token, data) => {
+    return http.put(`phong-thue/${id}`, { headers: { token } }, data);
+  },
   postImageRoom: (formData, id, token) => {
     return http.post(`/phong-thue/upload-hinh-phong?maPhong=${id}`, formData, {
       headers: { token },
