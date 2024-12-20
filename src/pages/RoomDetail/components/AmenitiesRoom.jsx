@@ -41,7 +41,7 @@ const AmenitiesRoom = ({
 
   return (
     <div className="flex flex-col py-6">
-      <h2 className="text-xl font-semibold mb-6">
+      <h2 className="text-2xl font-semibold mb-6">
         Nơi này có những gì cho bạn
       </h2>
       <div className="grid grid-cols-2 gap-4">

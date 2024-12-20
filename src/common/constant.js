@@ -164,3 +164,20 @@ export const dataFooter = [
     ],
   },
 ];
+
+export const MOCKUP_COMMENT = [
+  {
+    avatar: "/avatar_mockup1.jpg",
+    author: "Choi",
+    yearOfOperation: "8 năm hoạt động trên Airbnb",
+    comment:
+      "The location is close to the city, and it is within walking distance. The location is good, the accommodation is clean, and the check-in process is convenient.",
+  },
+  {
+    avatar: "/avatar_mockup2.jpg",
+    author: "Ishani",
+    yearOfOperation: "9 năm hoạt động trên Airbnb",
+    comment:
+      "A lovely, cozy and calm place with everything nearby. loved my stay",
+  },
+];
