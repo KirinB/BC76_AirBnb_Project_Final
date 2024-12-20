@@ -16,7 +16,7 @@ export const phongService = {
     );
   },
   editRoom: (id, token, data) => {
-    return http.put(`phong-thue/${id}`, { headers: { token } }, data);
+    return http.put(`phong-thue/${id}`, data, { headers: { token } });
   },
   postImageRoom: (formData, id, token) => {
     return http.post(`/phong-thue/upload-hinh-phong?maPhong=${id}`, formData, {

@@ -1,4 +1,4 @@
-import { Button, Input, Modal, Popconfirm, Table } from "antd";
+import { Button, Dropdown, Input, Modal, Popconfirm, Space, Table } from "antd";
 import React, {
   useCallback,
   useContext,
@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FormAddRoom from "./components/FormAddRoom/FormAddRoom";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
+import { locationService } from "../../services/viTri.service";
+import { SelectCustom } from "../../components/ui/select/SelectCustom";
 const ManagerRoom = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -36,19 +38,23 @@ const ManagerRoom = () => {
     maViTri: 0,
     hinhAnh: "",
   });
-  //Sử lý hình ảnh
+  //Xử lý hình ảnh
   const [previewImage, setPreviewImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  //Xử lý phần add , edit
   const [isOnSubmit, setIsOnSubmit] = useState(true);
   const { user, token } = useSelector((state) => state.userSlice);
   const [listRoom, setListRoom] = useState([]);
   const { handleNotification } = useContext(NotificationContext);
+  //Xử lý phần Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // InputSearch
+  //Xử lý current Page,render giao diện
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRow, setTotalRow] = useState(0);
+  // Xử lý InputSearch
   const [keyword, setKeyword] = useState("");
-
+  // Xử lý phần vị trí
+  const [location, setLocation] = useState([]);
   const handleChangeKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -76,7 +82,17 @@ const ManagerRoom = () => {
         handleNotification("error", err.response.data.content.data);
       });
   };
-
+  const getAllLocation = () => {
+    locationService
+      .getViTri()
+      .then((res) => {
+        console.log(res);
+        setLocation(res.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const columns = [
     {
       title: "ID",
@@ -107,14 +123,41 @@ const ManagerRoom = () => {
     },
     {
       title: "Location",
-      dataIndex: "tinhThanh",
-      key: "tinhThanh",
+      dataIndex: "maViTri",
+      key: "maViTri",
+      render: (text, record, index) => {
+        const Obj = location.find((loc) => loc.id === record.maViTri);
+        return Obj ? (
+          <div>
+            <p className="font-semibold text-base">{Obj.tenViTri}</p>
+          </div>
+        ) : (
+          <p>No location found</p>
+        );
+      },
     },
     {
       title: "Information",
-      key: "information",
+      dataIndex: "moTa",
+      key: "moTa",
       render: (text, record, index) => {
-        return <Link>Thông tin chi tiết</Link>;
+        const items = [{ key: record.id, label: <p>{text}</p> }];
+        return (
+          <Dropdown
+            placement="topCenter"
+            menu={{
+              items,
+            }}
+            overlayStyle={{ width: 600 }}
+          >
+            <a
+              onClick={(e) => e.preventDefault()}
+              className="uppercase text-sm"
+            >
+              Infomation
+            </a>
+          </Dropdown>
+        );
       },
     },
     {
@@ -176,6 +219,9 @@ const ManagerRoom = () => {
     getAllRoom();
   }, [currentPage, keyword]);
   useEffect(() => {}, [getAllRoom]);
+  useEffect(() => {
+    getAllLocation();
+  }, []);
   return (
     <div className="space-y-5">
       <div className="flex justify-between items-center border-gray-500 border-b-2">
@@ -244,6 +290,7 @@ const ManagerRoom = () => {
               getAllRoom={() => {
                 getAllRoom();
               }}
+              location={location}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}
             />

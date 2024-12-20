@@ -19,12 +19,13 @@ const FormAddRoom = ({
   initialValues,
   previewImage,
   setPreviewImage,
+  location,
 }) => {
   // Xử lý hình ảnh
 
   const { handleNotification } = useContext(NotificationContext);
   const { user, token } = useSelector((state) => state.userSlice);
-  const [location, setLocation] = useState([]);
+
   const {
     errors,
     touched,
@@ -66,7 +67,7 @@ const FormAddRoom = ({
             handleNotification("error", err.response.data.content);
           });
       } else {
-        if (values.hinhAnh == file) {
+        if (values.hinhAnh instanceof File) {
           // phần xử lý hình ảnh trước khi up API
           let formData = new FormData();
           formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
@@ -77,6 +78,14 @@ const FormAddRoom = ({
             .editRoom(values.id, token, valuesClone)
             .then((res) => {
               console.log(res);
+              phongService
+                .postImageRoom(formData, values.id, token)
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((err) => {
               console.log(err);
@@ -95,16 +104,7 @@ const FormAddRoom = ({
     },
   });
   // call API lấy vị trí trong select
-  useEffect(() => {
-    locationService
-      .getViTri()
-      .then((res) => {
-        setLocation(res.data.content);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+
   return (
     <div>
       {/* Phần xử lí hình ảnh với UpLoad ant Design */}
