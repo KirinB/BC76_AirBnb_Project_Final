@@ -19,12 +19,13 @@ const FormAddRoom = ({
   initialValues,
   previewImage,
   setPreviewImage,
+  location,
 }) => {
   // Xử lý hình ảnh
 
   const { handleNotification } = useContext(NotificationContext);
   const { user, token } = useSelector((state) => state.userSlice);
-  const [location, setLocation] = useState([]);
+
   const {
     errors,
     touched,
@@ -38,45 +39,72 @@ const FormAddRoom = ({
     initialValues,
     enableReinitialize: true,
     onSubmit: (values) => {
-      // phần xử lý hình ảnh trước khi up API
-      let formData = new FormData();
-      formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
-      // tạo Clone up 1 API
-      const valuesClone = { ...values };
-      valuesClone.hinhAnh = "";
-      //Đẩy dữ liệu lên API post Room
-      phongService
-        .postPhong(valuesClone, token)
-        .then((res) => {
+      if (isOnSubmit) {
+        // phần xử lý hình ảnh trước khi up API
+        let formData = new FormData();
+        formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
+        // tạo Clone up 1 API
+        const valuesClone = { ...values };
+        valuesClone.hinhAnh = "";
+        //Đẩy dữ liệu lên API post Room
+        phongService
+          .postPhong(valuesClone, token)
+          .then((res) => {
+            phongService
+              .postImageRoom(formData, res.data.content.id, token)
+              .then((res) => {
+                //Đẩy hình lên API upload hình ảnh
+                handleNotification("success", "New room created successfully");
+                handleCloseModal(true);
+                getAllRoom();
+                resetForm();
+              })
+              .catch((err) => {
+                handleNotification("error", err.response.data.content);
+              });
+          })
+          .catch((err) => {
+            handleNotification("error", err.response.data.content);
+          });
+      } else {
+        if (values.hinhAnh instanceof File) {
+          // phần xử lý hình ảnh trước khi up API
+          let formData = new FormData();
+          formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
+          // tạo Clone up 1 API
+          const valuesClone = { ...values };
+          valuesClone.hinhAnh = "";
           phongService
-            .postImageRoom(formData, res.data.content.id, token)
+            .editRoom(values.id, token, valuesClone)
             .then((res) => {
-              //Đẩy hình lên API upload hình ảnh
-              handleNotification("success", "New room created successfully");
-              handleCloseModal(true);
-              getAllRoom();
-              resetForm();
+              console.log(res);
+              phongService
+                .postImageRoom(formData, values.id, token)
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((err) => {
-              handleNotification("error", err.response.data.content);
+              console.log(err);
             });
-        })
-        .catch((err) => {
-          handleNotification("error", err.response.data.content);
-        });
+        } else {
+          phongService
+            .editRoom(values.id, token, values)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      }
     },
   });
   // call API lấy vị trí trong select
-  useEffect(() => {
-    locationService
-      .getViTri()
-      .then((res) => {
-        setLocation(res.data.content);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+
   return (
     <div>
       {/* Phần xử lí hình ảnh với UpLoad ant Design */}
