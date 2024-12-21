@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { phongService } from "../../services/phong.service";
 import PageNotFound from "../../components/PageNotFound";
 import LoadingCustom from "../../components/ui/loading/LoadingCustom";
@@ -13,6 +13,8 @@ import AmenitiesRoom from "./components/AmenitiesRoom";
 import { MOCKUP_COMMENT } from "../../common/constant";
 import { FaAngleRight } from "react-icons/fa";
 import AsideRoomDetail from "./components/AsideRoomDetail";
+import { FaAngleLeft } from "react-icons/fa6";
+import { pathDefault } from "../../common/path";
 const RoomDetail = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
@@ -39,39 +41,48 @@ const RoomDetail = () => {
         <LoadingCustom />
       </div>
     ) : (
-      <div className="container px-40 py-6">
+      <div className="container py-6">
         <div className="flex flex-col space-y-6">
-          <div className="flex justify-between">
-            <h1 className="text-2xl flex-1 font-semibold">
+          <div className="flex justify-between px-4">
+            <h1 className="text-2xl flex-1 font-semibold hidden lg:block">
               {roomDetail.tenPhong}
             </h1>
+            <Link
+              to={pathDefault.homePage}
+              className="md:hidden flex items-center gap-2"
+            >
+              <FaAngleLeft />
+              <span>Nhà riêng</span>
+            </Link>
             <div className="flex space-x-1">
               <ButtonGhost
                 children={
                   <p className="underline font-semibold flex items-center space-x-2">
-                    <LuShare /> <span>Chia sẻ</span>
+                    <LuShare /> <span className="hidden md:block">Chia sẻ</span>
                   </p>
                 }
+                className={"px-2 md:px-4"}
               />
               <ButtonGhost
                 children={
                   <p className="underline font-semibold flex items-center space-x-2">
                     <LuHeart />
-                    <span>Lưu</span>
+                    <span className="hidden md:block">Lưu</span>
                   </p>
                 }
+                className={"px-2 md:px-4"}
               />
             </div>
           </div>
           <div className="shadow-sm">
             <img
               src={roomDetail.hinhAnh}
-              className="w-full rounded-2xl max-h-[500px] object-cover"
+              className="w-full md:rounded-2xl max-h-[500px] object-cover"
               alt=""
             />
           </div>
-          <div className="grid grid-cols-3 relative">
-            <div className="col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-3 relative">
+            <div className="col-span-2 px-6 md:px-0">
               <div className="pt-6">
                 <h2 className="text-2xl font-semibold">
                   {roomDetail.tenPhong}
@@ -98,7 +109,7 @@ const RoomDetail = () => {
                   <h3 className="font-semibold">
                     Chủ nhà/ Người tổ chức: Minh Nhan
                   </h3>
-                  <p className="text-[#6A6A6A]">
+                  <p className="text-[#6A6A6A] text-sm md:text-base">
                     Chủ nhà siêu cấp<span> · </span>10 năm kinh nghiệm đón tiếp
                     khách
                   </p>
@@ -122,14 +133,14 @@ const RoomDetail = () => {
                 tivi={roomDetail.tivi}
                 wifi={roomDetail.wifi}
               />
-              <LineSpace />
+              {/* <LineSpace />
               <div className="py-6">
                 <h2 className="text-2xl font-semibold">Chọn ngày nhận phòng</h2>
                 <p className="text-sm text-[#6A6A6A]">
                   Thêm ngày đi để biết giá chính xác
                 </p>
                 <div className="mt-6">Lich</div>
-              </div>
+              </div> */}
             </div>
             <AsideRoomDetail
               max={roomDetail.khach}
@@ -137,14 +148,14 @@ const RoomDetail = () => {
             />
           </div>
           <LineSpace />
-          <div className="py-6 space-x-6">
+          <div className="py-6 space-x-6 px-6 md:px-0">
             <div>
               <h2 className="text-2xl font-semibold">2 đánh giá</h2>
               <p className="text-[#6a6a6a] text-sm">
                 Xếp hạng trung bình sẽ được hiển thị sau khi có 3 đánh giá
               </p>
             </div>
-            <div className="grid grid-cols-2 mt-10 !mx-0">
+            <div className="grid grid-cols-1 gap-6 md:gap-0 md:grid-cols-2 mt-10 !mx-0">
               {MOCKUP_COMMENT.map((item, index) => {
                 return (
                   <div className="flex flex-col space-y-4 lg:pr-24" key={index}>
@@ -170,7 +181,7 @@ const RoomDetail = () => {
             </div>
           </div>
           <LineSpace />
-          <div className="py-6 space-y-4">
+          <div className="py-6 space-y-4 px-6 md:px-0">
             <h2 className="font-semibold text-2xl">Nơi bạn sẽ tới</h2>
             <p>Quận 1, Hồ Chí Minh, Việt Nam</p>
             <iframe
@@ -182,9 +193,9 @@ const RoomDetail = () => {
             />
           </div>
           <LineSpace />
-          <div className="py-6">
+          <div className="py-6 px-6 md:px-0">
             <h2 className="text-2xl font-semibold mb-6">Những điều cần biết</h2>
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-1 lg:grid-cols-3">
               <div className="flex flex-col gap-3">
                 <h3 className="font-semibold">Nội quy nhà</h3>
                 <p>Nhận phòng sau 14:00</p>
@@ -195,6 +206,9 @@ const RoomDetail = () => {
                   <FaAngleRight />
                 </p>
               </div>
+              <div className="block md:hidden">
+                <LineSpace />
+              </div>
               <div className="flex flex-col gap-3">
                 <h3 className="font-semibold">An toàn và chỗ ở</h3>
                 <p>Chỗ ở có camera an ninh ngoài nhà</p>
@@ -204,6 +218,9 @@ const RoomDetail = () => {
                   <span className="underline">Hiển thị thêm</span>
                   <FaAngleRight />
                 </p>
+              </div>
+              <div className="block md:hidden">
+                <LineSpace />
               </div>
               <div className="flex flex-col gap-3">
                 <h3 className="font-semibold">Chính sách hủy</h3>

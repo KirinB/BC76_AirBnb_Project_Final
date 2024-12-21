@@ -15,13 +15,16 @@ const HeaderHomeTemplate = () => {
       // className={`${
       //   isRoomDetail ? "" : "sticky"
       // } bg-white shadow-sm z-20 h-[96px] py-4 top-0`}
-      className="sticky bg-white shadow-sm z-20 h-[96px] py-4 top-0"
+      className={`sticky bg-white shadow-sm z-20 h-[96px] py-4 top-0 ${
+        isRoomDetail ? "hidden lg:block" : ""
+      }`}
     >
-      <div
+      {/* <div
         className={`${
           isRoomDetail ? "px-40" : ""
         } container flex justify-between items-center`}
-      >
+      > */}
+      <div className="container flex justify-between items-center">
         <div>
           <Link to={pathDefault.homePage}>
             <Icons.logoFull fill="#FF385C" />
