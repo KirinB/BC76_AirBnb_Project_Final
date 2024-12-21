@@ -3,23 +3,43 @@ import { Icons } from "../../../assets/Icons";
 import { ButtonGhost } from "../../../components/ui/button/ButtonCustom";
 import { RiGlobalLine } from "react-icons/ri";
 import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
 import { IoSearch } from "react-icons/io5";
+import useViewPort from "../../../hooks/useViewPort";
 
 const HeaderHomeTemplate = () => {
+  const { width } = useViewPort();
+  const location = useLocation();
+  const isRoomDetail = location.pathname.includes("/rooms");
   return (
-    <header className="sticky bg-white shadow-sm z-20 h-[96px] py-4 top-0">
-      <div className="container flex justify-between items-center">
+    <header
+      // className={`${
+      //   isRoomDetail ? "" : "sticky"
+      // } bg-white shadow-sm z-20 h-[96px] py-4 top-0`}
+      className={`sticky bg-white shadow-sm z-20 h-[96px] py-4 top-0 ${
+        isRoomDetail ? "hidden md:block" : ""
+      }`}
+    >
+      {/* <div
+        className={`${
+          isRoomDetail ? "px-40" : ""
+        } container flex justify-between items-center`}
+      > */}
+      <div className="container flex justify-between items-center px-10 lg:px-0">
         <div>
           <Link to={pathDefault.homePage}>
-            <Icons.logoFull fill="#FF385C" />
+            {width < 1024 ? (
+              <Icons.logo fill="#FF385C" />
+            ) : (
+              <Icons.logoFull fill="#FF385C" />
+            )}
           </Link>
         </div>
         <div className="pl-4 pr-2 py-2 rounded-full shadow-sm relative border border-gray-200 space-x-4 flex items-center">
           <input
             type="text"
-            className="py-1 min-w-96 outline-none text-gray-800 ml-2"
+            className="py-1 lg:min-w-96 outline-none text-gray-800 ml-2"
             placeholder="Test . . ."
           />
           <button className="bg-primary text-white py-3 px-3 rounded-full hover:bg-[#E43170] transition-all duration-200">

@@ -22,7 +22,7 @@ const CategoryNavbar = () => {
                 className="!flex flex-col justify-center items-center opacity-70 cursor-pointer hover:opacity-100 transition-all duration-200"
               >
                 <img className="w-6 h-6" src={item.icon} alt="" />
-                <h3 className="text-xs">{item.title}</h3>
+                <h3 className="text-xs text-center">{item.title}</h3>
               </div>
             );
           })}
