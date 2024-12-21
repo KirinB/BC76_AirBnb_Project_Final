@@ -43,8 +43,8 @@ const RoomDetail = () => {
     ) : (
       <div className="container py-6">
         <div className="flex flex-col space-y-6">
-          <div className="flex justify-between px-4">
-            <h1 className="text-2xl flex-1 font-semibold hidden lg:block">
+          <div className="flex justify-between px-4 md:px-10 lg:px-0">
+            <h1 className="text-2xl flex-1 font-semibold hidden md:block">
               {roomDetail.tenPhong}
             </h1>
             <Link
@@ -74,14 +74,14 @@ const RoomDetail = () => {
               />
             </div>
           </div>
-          <div className="shadow-sm">
+          <div className="shadow-sm px-0 md:px-10 lg:px-0">
             <img
               src={roomDetail.hinhAnh}
               className="w-full md:rounded-2xl max-h-[500px] object-cover"
               alt=""
             />
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 relative md:px-10 lg:px-0">
             <div className="col-span-2 px-6 md:px-0">
               <div className="pt-6">
                 <h2 className="text-2xl font-semibold">
@@ -148,14 +148,14 @@ const RoomDetail = () => {
             />
           </div>
           <LineSpace />
-          <div className="py-6 space-x-6 px-6 md:px-0">
+          <div className="py-6 space-x-6 px-6 md:px-10 lg:px-0">
             <div>
               <h2 className="text-2xl font-semibold">2 đánh giá</h2>
               <p className="text-[#6a6a6a] text-sm">
                 Xếp hạng trung bình sẽ được hiển thị sau khi có 3 đánh giá
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-6 md:gap-0 md:grid-cols-2 mt-10 !mx-0">
+            <div className="grid grid-cols-1 gap-6 md:gap-6 lg:gap-0 md:grid-cols-2 mt-10 !mx-0">
               {MOCKUP_COMMENT.map((item, index) => {
                 return (
                   <div className="flex flex-col space-y-4 lg:pr-24" key={index}>
@@ -181,7 +181,7 @@ const RoomDetail = () => {
             </div>
           </div>
           <LineSpace />
-          <div className="py-6 space-y-4 px-6 md:px-0">
+          <div className="py-6 space-y-4 px-6 md:px-10 lg:px-0">
             <h2 className="font-semibold text-2xl">Nơi bạn sẽ tới</h2>
             <p>Quận 1, Hồ Chí Minh, Việt Nam</p>
             <iframe
@@ -193,9 +193,9 @@ const RoomDetail = () => {
             />
           </div>
           <LineSpace />
-          <div className="py-6 px-6 md:px-0">
+          <div className="py-6 px-6 md:px-10 lg:px-0">
             <h2 className="text-2xl font-semibold mb-6">Những điều cần biết</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3">
+            <div className="grid grid-cols-1 md:grid-cols-3">
               <div className="flex flex-col gap-3">
                 <h3 className="font-semibold">Nội quy nhà</h3>
                 <p>Nhận phòng sau 14:00</p>

@@ -28,7 +28,7 @@ const FooterHomeTemplate = () => {
           })}
         </div>
         <div className="w-full h-px bg-gray-200 my-10"></div>
-        <div className="flex flex-col-reverse gap-6 md:gap-0 md:flex-row justify-between ">
+        <div className="flex flex-col-reverse gap-6 md:gap-0 lg:flex-row justify-between items-center ">
           <div>
             <span className="text-sm">
               © 2024 Airbnb, Inc.<span className="mx-2">·</span>

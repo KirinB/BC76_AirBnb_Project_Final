@@ -171,7 +171,7 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
       </Modal>
     </>
   ) : (
-    <div className="sticky top-24 hidden lg:flex justify-end self-start">
+    <div className="sticky top-24 hidden md:flex justify-end self-start">
       <div className="mt-6 w-4/5">
         <div className="border w-full border-gray-200 shadow-lg rounded-xl p-6 space-y-6">
           {isSelectedDay ? (
@@ -274,8 +274,10 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
             {isSelectedDay ? (
               <ButtonPrimary className={"w-full py-6"}>Đặt phòng</ButtonPrimary>
             ) : (
-              <ButtonPrimary className={"w-full py-6"}>
-                Kiểm tra tình trạng còn phòng
+              <ButtonPrimary className={"w-full md:py-10 lg:py-6 text-wrap"}>
+                <span className="md:text-sm">
+                  Kiểm tra tình trạng còn phòng
+                </span>
               </ButtonPrimary>
             )}
             {isSelectedDay && (
