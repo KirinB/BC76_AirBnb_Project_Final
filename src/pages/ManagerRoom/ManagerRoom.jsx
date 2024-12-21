@@ -1,21 +1,13 @@
-import { Button, Dropdown, Input, Modal, Popconfirm, Space, Table } from "antd";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Button, Dropdown, Input, Modal, Popconfirm, Table } from "antd";
+import React, { useContext, useEffect, useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { phongService } from "../../services/phong.service";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
 import { NotificationContext } from "../../App";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import FormAddRoom from "./components/FormAddRoom/FormAddRoom";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { locationService } from "../../services/viTri.service";
-import { SelectCustom } from "../../components/ui/select/SelectCustom";
 const ManagerRoom = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -229,7 +221,7 @@ const ManagerRoom = () => {
           className="text-3xl font-bold text-gray-800 py-10
     "
         >
-          Quản lý danh sách phòng
+          Quản lý danh sách vị trí
         </h1>
         <div className="flex space-x-3 w-1/3">
           <Input.Search

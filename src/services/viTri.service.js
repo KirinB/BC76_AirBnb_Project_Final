@@ -8,11 +8,11 @@ export const locationService = {
   },
   getAllLocation: (pageIndex, keyword) => {
     return http.get(
-      `/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=10&keyword=${keyword}`
+      `/vi-tri/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=3&keyword=${keyword}`
     );
   },
-  postLocation: () => {
-    return http.post("/vi-tri");
+  postLocation: (data, token) => {
+    return http.post("/vi-tri", data, { headers: { token } });
   },
   getLocationByID: (id) => {
     return http.get(`/vi-tri/${id}`);

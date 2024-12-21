@@ -103,8 +103,6 @@ const FormAddRoom = ({
       }
     },
   });
-  // call API lấy vị trí trong select
-
   return (
     <div>
       {/* Phần xử lí hình ảnh với UpLoad ant Design */}
