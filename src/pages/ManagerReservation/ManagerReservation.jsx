@@ -1,13 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { reservationService } from "../../services/reservation.service";
-import { Button, Popconfirm, Table } from "antd";
+import { Button, Input, Modal, Popconfirm, Table } from "antd";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { NotificationContext } from "../../App";
 import dayjs from "dayjs";
+import { IoCheckmark } from "react-icons/io5";
+import { FcCancel } from "react-icons/fc";
+import FormEditBooking from "./components/FormEditBooking/FormEditBooking";
 const ManagerReservation = () => {
   const { handleNotification } = useContext(NotificationContext);
   // tạo state quản lý dữ liệu
   const [listReservation, setListReservation] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [initialValues, setInitialValues] = useState({
+    id: 0,
+    maPhong: 0,
+    ngayDen: "",
+    ngayDi: "",
+    soLuongKhach: 0,
+    maNguoiDung: 0,
+  });
   // call API lấy dữ liệu về render
   const setReservationTable = (res) => {
     const setTable = res.data.content.map((reser) => ({
@@ -26,6 +38,11 @@ const ManagerReservation = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+  // quản lý dữ liệu search
+  const [keyword, setKeyword] = useState("");
+  const handleChangeKeyword = (e) => {
+    setKeyword(e.target.value);
   };
   // columns set dữ liệu cho table
   const columns = [
@@ -67,6 +84,15 @@ const ManagerReservation = () => {
     },
     {
       title: "Trạng thái",
+      render: (text, record, index) => {
+        const currentDay = dayjs();
+        const checkBooking = currentDay.isBefore(dayjs(record.ngayDi));
+        return checkBooking ? (
+          <IoCheckmark size={25} color="#DC143C" />
+        ) : (
+          <FcCancel size={25} />
+        );
+      },
     },
     {
       title: "Action",
@@ -84,6 +110,7 @@ const ManagerReservation = () => {
                   .getReservationByID(record.id)
                   .then((res) => {
                     console.log(res);
+                    setInitialValues(res.data.content);
                   })
                   .catch((err) => {
                     console.log(err);
@@ -123,7 +150,37 @@ const ManagerReservation = () => {
   }, []);
   useEffect(() => {}, [getAllReservation]);
   return (
-    <div>
+    <div className="space-y-5">
+      <div className="flex justify-between items-center border-gray-500 border-b-2">
+        <h1
+          className="text-3xl font-bold text-gray-800 py-10
+        "
+        >
+          Quản lý danh sách Booking
+        </h1>
+        <div className="flex space-x-3 w-1/3">
+          <Input.Search
+            placeholder="enter search keyword here"
+            value={keyword}
+            onChange={handleChangeKeyword}
+            className=""
+            size="large"
+            onSearch={(value) => {
+              setKeyword(value);
+            }}
+          />
+          <Modal
+            title={"Edit Booking"}
+            open={isModalOpen}
+            onCancel={() => {
+              setIsModalOpen(false);
+            }}
+            footer={null}
+          >
+            <FormEditBooking initialValues={initialValues} />
+          </Modal>
+        </div>
+      </div>
       <Table
         dataSource={listReservation}
         scroll={{ x: 1300 }}
