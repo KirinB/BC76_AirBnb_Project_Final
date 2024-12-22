@@ -36,7 +36,7 @@ const SignInAdmin = () => {
             dispatch(handleUpdateUser(res.data.content));
             handleNotification("success", "Đăng nhập thành công");
             setTimeout(() => {
-              navigate(pathDefault.homePage);
+              navigate(pathDefault.admin);
             }, 1500);
           })
           .catch((err) => {
