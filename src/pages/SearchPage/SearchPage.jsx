@@ -5,8 +5,10 @@ import FilterSearch from "./components/FilterSearch";
 import RoomSearch from "./components/RoomSearch";
 import { Pagination } from "antd";
 import PageNotFound from "../../components/PageNotFound";
+import { useLocation } from "react-router-dom";
 
 const SearchPage = () => {
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [listRoom, setListRoom] = useState([]);
@@ -20,7 +22,7 @@ const SearchPage = () => {
       phongService
         .getListRoomById(keyValue)
         .then((res) => {
-          console.log(res.data.content);
+          // console.log(res.data.content);
           setListRoom(res.data.content);
           setIsLoading(false);
         })
@@ -29,21 +31,20 @@ const SearchPage = () => {
           setIsError(true);
         });
     }
-  }, []);
-  console.log(isError);
+  }, [keyValue, location.search]);
+
   return keyValue && !isError ? (
     <div className="min-h-screen">
       <FilterSearch />
       {isLoading ? (
-        // <div className="container">
         <LoadingCustom />
       ) : (
-        // </div>
-        // <div className="container">
-        <div className="grid grid-cols-3 relative">
+        <div className="flex flex-col-reverse md:grid lg:grid-cols-3 sticky lg:relative top-1/2">
           <div className="px-6 col-span-2">
-            <h2 className="my-6 font-semibold">{listRoom.length} chỗ ở</h2>
-            <div className="grid grid-cols-3 gap-5">
+            <h2 className="my-6 font-semibold text-center md:text-left">
+              {listRoom.length} chỗ ở
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {listRoom.map((item, index) => {
                 return (
                   <RoomSearch
@@ -52,6 +53,7 @@ const SearchPage = () => {
                     image={item.hinhAnh}
                     title={item.tenPhong}
                     price={item.giaTien}
+                    giuong={item.phongNgu}
                     description={item.moTa}
                   />
                 );
@@ -66,7 +68,7 @@ const SearchPage = () => {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-screen sticky top-0"
+            className="w-full h-screen hidden lg:block sticky top-0"
           />
         </div>
       )}

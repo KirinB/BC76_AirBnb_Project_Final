@@ -27,7 +27,6 @@ const RoomDetail = () => {
       .getRoomById(id)
       .then((res) => {
         setIsLoading(false);
-        console.log(res.data.content);
         setRoomDetail(res.data.content);
       })
       .catch((err) => {

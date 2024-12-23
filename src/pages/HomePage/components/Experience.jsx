@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { phongService } from "../../../services/phong.service";
 import LoadingCustom from "../../../components/ui/loading/LoadingCustom";
-import { Link } from "react-router-dom";
+import RoomSearch from "../../SearchPage/components/RoomSearch";
 
 const Experience = () => {
   const [listPhong, setListPhong] = useState([]);
@@ -11,10 +11,8 @@ const Experience = () => {
     phongService
       .getListPhong()
       .then((res) => {
-        // console.log(res);
         setListPhong(res.data.content);
         setIsLoading(false);
-        console.log(listPhong);
       })
       .catch((err) => {
         console.log(err);
@@ -26,29 +24,20 @@ const Experience = () => {
       <LoadingCustom />
     </div>
   ) : (
-    <div className="container py-4">
+    <div className="container py-4 px-6 md:px-10 lg:px-0">
       <h2 className="text-3xl font-semibold mb-4">Trải nghiệm đã qua</h2>
-      <div className="grid grid-cols-6 gap-10">
-        {listPhong.slice(0, 20).map((phong) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        {listPhong.slice(0, 20).map((phong, index) => {
           return (
-            <Link
-              to={`/rooms/${phong.id}`}
-              className="space-y-2"
-              key={phong.id}
-            >
-              <img
-                src={phong.hinhAnh}
-                alt={phong.tenPhong}
-                className="w-[270px] h-[255px] rounded-lg object-cover"
-              />
-              <div>
-                <h1 className="font-semibold truncate overflow-hidden whitespace-nowrap w-full">
-                  {phong.tenPhong}
-                </h1>
-                <p className="text[#6A6A6A] text-sm">Chủ nhà: Minh Nhân</p>
-                <p className="font-semibold">Đã hết phòng</p>
-              </div>
-            </Link>
+            <RoomSearch
+              title={phong.tenPhong}
+              description={phong.moTa}
+              giuong={phong.phongNgu}
+              key={index}
+              id={phong.id}
+              image={phong.hinhAnh}
+              price={phong.giaTien}
+            />
           );
         })}
       </div>

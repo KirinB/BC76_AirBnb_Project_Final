@@ -3,7 +3,7 @@ import { IoIosStar } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
 
-const RoomSearch = ({ id, image, title, description, price }) => {
+const RoomSearch = ({ id, image, title, description, price, giuong }) => {
   return (
     <Link to={`/rooms/${id}`} className="flex flex-col space-y-4">
       <div>
@@ -22,7 +22,7 @@ const RoomSearch = ({ id, image, title, description, price }) => {
           </p>
         </div>
         <p className="text-[#6A6A6A] truncate">{description}</p>
-        <p className="text-[#6A6A6A]">1 giường</p>
+        <p className="text-[#6A6A6A]">{giuong} giường</p>
         <div className="flex space-x-2">
           <p className="text-[#6A6A6A]">
             <strong className="text-[#222222]">₫{price * 20}.000</strong>/ đêm

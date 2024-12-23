@@ -8,6 +8,7 @@ import LineSpace from "./LineSpace";
 import { AiFillFlag } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import useViewPort from "../../../hooks/useViewPort";
+
 const AsideRoomDetail = ({ max, priceRoom }) => {
   const { width } = useViewPort();
   const [counterAdult, setConterAdult] = useState(1);
@@ -20,10 +21,6 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
   const [dayEnd, setDayEnd] = useState();
   const totalPerson = counterAdult + counterChild;
   const isBlockMax = totalPerson >= max;
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
