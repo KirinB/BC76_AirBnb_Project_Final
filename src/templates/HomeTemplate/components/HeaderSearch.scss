@@ -1,0 +1,18 @@
+.ant-picker {
+  // border: none;
+  // padding: unset;
+  outline: unset;
+  background-color: transparent;
+  .ant-picker-input > input:focus {
+    outline: none;
+    box-shadow: unset;
+  }
+}
+
+.ant-picker-outlined:focus-within {
+  box-shadow: unset;
+}
+
+.ant-picker-outlined:hover {
+  background-color: transparent;
+}
