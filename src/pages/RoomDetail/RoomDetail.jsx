@@ -132,14 +132,6 @@ const RoomDetail = () => {
                 tivi={roomDetail.tivi}
                 wifi={roomDetail.wifi}
               />
-              {/* <LineSpace />
-              <div className="py-6">
-                <h2 className="text-2xl font-semibold">Chọn ngày nhận phòng</h2>
-                <p className="text-sm text-[#6A6A6A]">
-                  Thêm ngày đi để biết giá chính xác
-                </p>
-                <div className="mt-6">Lich</div>
-              </div> */}
             </div>
             <AsideRoomDetail
               max={roomDetail.khach}

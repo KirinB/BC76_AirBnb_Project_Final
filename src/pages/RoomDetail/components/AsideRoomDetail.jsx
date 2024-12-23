@@ -283,25 +283,33 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
                   Bạn vẫn chưa bị trừ tiền
                 </div>
                 <div className="flex flex-col gap-4 mt-4">
-                  <div className="flex justify-between items-center">
-                    <h4 className="underline">
+                  <div className="flex justify-between items-center gap-2">
+                    <h4 className="text-sm lg:text-base underline">
                       ₫{formatCurrency(priceRoom * 20e3)} x {daysSelected} đêm
                     </h4>
-                    <h4>₫{formatCurrency(priceRoom * 20e3 * daysSelected)}</h4>
+                    <h4 className="text-sm lg:text-base">
+                      ₫{formatCurrency(priceRoom * 20e3 * daysSelected)}
+                    </h4>
+                  </div>
+                  <div className="flex justify-between items-center gap-2">
+                    <h4 className="text-sm lg:text-base underline">
+                      Phí vệ sinh
+                    </h4>
+                    <h4 className="text-sm lg:text-base">₫150.000</h4>
                   </div>
                   <div className="flex justify-between items-center">
-                    <h4 className="underline">Phí vệ sinh</h4>
-                    <h4>₫150.000</h4>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <h4 className="underline">Phí dịch vụ AirBnb</h4>
-                    <h4>₫200.000</h4>
+                    <h4 className="text-sm lg:text-base underline">
+                      Phí dịch vụ AirBnb
+                    </h4>
+                    <h4 className="text-sm lg:text-base">₫200.000</h4>
                   </div>
                 </div>
                 <LineSpace />
-                <div className="flex justify-between items-center">
-                  <h4 className="font-semibold">Tổng trước thuế</h4>
-                  <h4 className="font-semibold">
+                <div className="flex justify-between items-center gap-2">
+                  <h4 className="text-sm lg:text-base font-semibold">
+                    Tổng trước thuế
+                  </h4>
+                  <h4 className="text-sm lg:text-base font-semibold">
                     ₫
                     {formatCurrency(
                       priceRoom * 20e3 * daysSelected + 150e3 + 200e3
