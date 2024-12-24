@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logoTest from "./../../../assets/img/logo_test.jpg";
 import { FaCheck } from "react-icons/fa";
 import { CameraOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../../../services/users.service";
 import { useNavigate } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
+import { handleUpdateUser } from "../../../store/Slice/User.Slice";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.UserSlice.user);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -20,17 +23,30 @@ const ProfilePage = () => {
 
   const handleUploadAvt = (e) => {
     const file = e.target.files[0];
-
     const formData = new FormData();
     formData.append("formFile", file);
 
     const { token } = JSON.parse(localStorage.getItem("userInfo"));
 
     userService
-      .uploadAvt(token, formData)
+      .uploadAvt(formData, token)
       .then((res) => {
-        console.log(res);
         alert("Ảnh đại diện đã được tải lên thành công!");
+
+        const updatedAvatar = res.data.content.avatar;
+        const updatedUser = {
+          ...user,
+          avatar: updatedAvatar,
+        };
+        dispatch(handleUpdateUser(updatedUser));
+
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            ...JSON.parse(localStorage.getItem("userInfo")),
+            user: updatedUser,
+          })
+        );
       })
       .catch((err) => {
         console.error(err);
