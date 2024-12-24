@@ -5,6 +5,7 @@ import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import HomePage from "./pages/HomePage/HomePage";
 import RoomDetail from "./pages/RoomDetail/RoomDetail";
+import { SearchPageProvider } from "./store/SearchPageContext";
 
 const arrRoutes = [
   {
@@ -17,7 +18,11 @@ const arrRoutes = [
       },
       {
         path: pathDefault.searchPage,
-        element: <SearchPage />,
+        element: (
+          <SearchPageProvider>
+            <SearchPage />
+          </SearchPageProvider>
+        ),
       },
       {
         path: pathDefault.roomDetailPage,

@@ -12,6 +12,7 @@ export const ButtonOutLine = ({
   children,
   roundedfull = false,
   className,
+  onClick,
   ...props
 }) => {
   return (
@@ -19,6 +20,7 @@ export const ButtonOutLine = ({
       className={`py-[10px] px-4 text-[#222222] hover:!border-black hover:!text-black ${className} ${
         roundedfull ? "rounded-full" : ""
       }`}
+      onClick={onClick}
       {...props}
     >
       {children}
