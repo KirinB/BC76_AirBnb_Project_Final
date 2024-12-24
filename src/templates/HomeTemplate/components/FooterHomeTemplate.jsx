@@ -8,8 +8,8 @@ import { FaSquareInstagram, FaSquareTwitter } from "react-icons/fa6";
 const FooterHomeTemplate = () => {
   return (
     <footer className="bg-[#F7F7F7] text-[#222222] py-10">
-      <div className="container px-40">
-        <div className="grid grid-cols-3 gap-10">
+      <div className="container px-6 lg:px-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {dataFooter.map((item, i) => {
             return (
               <ul key={i} className="space-y-3 text-sm">
@@ -28,7 +28,7 @@ const FooterHomeTemplate = () => {
           })}
         </div>
         <div className="w-full h-px bg-gray-200 my-10"></div>
-        <div className="flex justify-between ">
+        <div className="flex flex-col-reverse gap-6 md:gap-0 lg:flex-row justify-between items-center ">
           <div>
             <span className="text-sm">
               © 2024 Airbnb, Inc.<span className="mx-2">·</span>
@@ -45,7 +45,7 @@ const FooterHomeTemplate = () => {
               </Link>
             </span>
           </div>
-          <div className="flex space-x-4 items-center">
+          <div className="space-x-4 items-center flex">
             <button className="flex items-center justify-center space-x-2 hover:underline transition-all duration-300 font-semibold">
               <RiGlobalLine /> <span>Tiếng Việt (VN)</span>
             </button>
