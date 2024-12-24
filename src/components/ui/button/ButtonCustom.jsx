@@ -12,10 +12,12 @@ export const ButtonOutLine = ({
   children,
   roundedfull = false,
   className,
+  type,
   ...props
 }) => {
   return (
     <Button
+      type={type}
       className={`py-[10px] px-4 text-[#222222] hover:!border-black hover:!text-black ${className} ${
         roundedfull ? "rounded-full" : ""
       }`}

@@ -4,6 +4,8 @@ import { pathDefault } from "./common/path";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import HomePage from "./pages/HomePage/HomePage";
+import AuthPage from "./pages/AuthPage/AuthPage";
+import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
 import RoomDetail from "./pages/RoomDetail/RoomDetail";
 
 const arrRoutes = [
@@ -23,7 +25,15 @@ const arrRoutes = [
         path: pathDefault.roomDetailPage,
         element: <RoomDetail />,
       },
+      {
+        path: pathDefault.Profile,
+        element: <ProfilePage />,
+      },
     ],
+  },
+  {
+    path: pathDefault.AuthPage,
+    element: <AuthPage />,
   },
 ];
 
