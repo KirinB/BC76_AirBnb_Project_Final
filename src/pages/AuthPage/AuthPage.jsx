@@ -25,7 +25,7 @@ const AuthPage = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-3/5 flex h-[650px] shadow-2xl rounded-xl overflow-hidden">
+      <div className="w-full lg:w-3/5 flex h-[650px] shadow-2xl rounded-xl overflow-hidden">
         <div
           className={`w-full lg:w-1/2 relative flex h-full  translate-x-0 duration-700 bg-white z-[1] overflow-hidden ${
             handle ? "translate-x-full" : ""

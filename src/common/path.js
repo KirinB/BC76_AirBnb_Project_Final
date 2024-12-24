@@ -5,4 +5,5 @@ export const pathDefault = {
   signUp: "/sign-up",
   AuthPage: "/Auth",
   Profile: "/profile",
+  roomDetailPage: "/rooms/:id",
 };
