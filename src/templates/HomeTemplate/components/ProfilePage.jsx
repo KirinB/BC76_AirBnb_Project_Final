@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logoTest from "./../../../assets/img/logo_test.jpg";
 import { FaCheck } from "react-icons/fa";
 import { CameraOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,9 +6,20 @@ import { userService } from "../../../services/users.service";
 import { useNavigate } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
 import { handleUpdateUser } from "../../../store/Slice/User.Slice";
+import { Button, DatePicker, Input, Modal } from "antd";
+import dayjs from "dayjs";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.UserSlice.user);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [valueUser, setValueUser] = useState({
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    birthday: user.birthday,
+  });
 
   const dispatch = useDispatch();
 
@@ -54,8 +64,34 @@ const ProfilePage = () => {
       });
   };
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    userService
+      .thayDoiThongTinNguoiDung(user.id, valueUser)
+      .then((res) => {
+        const updatedUser = res.data.content;
+        dispatch(handleUpdateUser(updatedUser));
+
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            ...userInfo,
+            user: updatedUser,
+          })
+        );
+        alert("Thông tin đã được cập nhật");
+      })
+      .catch((err) => {
+        console.error("Lỗi khi cập nhật thông tin:", err);
+      });
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="container px-40">
+    <div className="container">
       <div className="grid grid-cols-12 gap-10">
         <div className="col-span-4">
           <div className="p-10 shadow-xl rounded-3xl my-10">
@@ -101,6 +137,88 @@ const ProfilePage = () => {
           <h2 className="text-3xl font-bold mt-2">
             Thông tin về <span>{user.name}</span>
           </h2>
+          <div className="grid grid-cols-2 gap-5 my-5">
+            <div className="space-y-3">
+              <label className="font-medium ">Tên người dùng</label>
+              <Input disabled value={user.name} />
+            </div>
+            <div className="space-y-3">
+              <label className="font-medium ">Email</label>
+              <Input disabled value={user.email} />
+            </div>
+            <div className="space-y-3">
+              <label className="font-medium">Mật khẩu</label>
+              <Input disabled type="password" value={user.password} />
+            </div>
+
+            <div className="space-y-3 font-medium">
+              <div>Bạn muốn thay đổi thông tin?</div>
+              <Button className="w-full" type="primary" onClick={showModal}>
+                Thay đổi thông tin
+              </Button>
+              <Modal
+                title="Thay đổi thông tin người dùng"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={() => setIsModalOpen(false)}
+              >
+                <div className="grid grid-cols-2 gap-5 my-5">
+                  <div className="space-y-3">
+                    <label className="font-medium">Tên người dùng</label>
+                    <Input
+                      onChange={(e) =>
+                        setValueUser((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
+                      value={valueUser.name}
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="font-medium">Email</label>
+                    <Input
+                      onChange={(e) =>
+                        setValueUser((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
+                      value={valueUser.email}
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="font-medium">Số điện thoại</label>
+                    <Input
+                      onChange={(e) =>
+                        setValueUser((prev) => ({
+                          ...prev,
+                          phone: e.target.value,
+                        }))
+                      }
+                      value={valueUser.phone}
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="font-medium">Ngày sinh nhật</label>
+                    <DatePicker
+                      value={
+                        valueUser.birthday ? dayjs(valueUser.birthday) : null
+                      }
+                      onChange={(dateString) =>
+                        setValueUser((prev) => ({
+                          ...prev,
+                          birthday: dateString,
+                        }))
+                      }
+                    />
+                  </div>
+                </div>
+              </Modal>
+            </div>
+          </div>
+
+          <h2 className="text-3xl font-bold mt-2">Thông tin đặt phòng</h2>
         </div>
       </div>
     </div>

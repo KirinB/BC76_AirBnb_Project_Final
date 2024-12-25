@@ -11,6 +11,8 @@ import { FaArrowLeft, FaMagnifyingGlass } from "react-icons/fa6";
 import { Modal } from "antd";
 import HeaderSearchMobile from "./HeaderSearchMobile";
 import { useHeaderContext } from "../../../store/HeaderContext";
+import { useDispatch, useSelector } from "react-redux";
+import { handleDeleteUser } from "../../../store/Slice/User.Slice";
 
 const HeaderHomeTemplate = () => {
   const { width } = useViewPort();
@@ -27,6 +29,16 @@ const HeaderHomeTemplate = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const user = useSelector((state) => state.UserSlice.user);
+
+  const dispatch = useDispatch();
+
+  const handlelogOut = () => {
+    localStorage.removeItem("userInfo");
+    dispatch(handleDeleteUser());
+    alert("Đăng xuất thành công");
   };
 
   return width < 768 && !isRoomDetail ? (
@@ -99,17 +111,50 @@ const HeaderHomeTemplate = () => {
           </Link>
         </div>
         <HeaderSearch />
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 ">
           <ButtonGhost className={"!px-2 py-5 font-semibold rounded-full"}>
             Cho thuê chỗ ở qua Airbnb
           </ButtonGhost>
           <ButtonGhost className={"!px-2 py-5 rounded-full"}>
             <RiGlobalLine size={20} />
           </ButtonGhost>
-          <div className="py-2 px-4 rounded-full border border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md">
+          <div className="py-2 px-4 rounded-full group border relative border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md">
             <FaBars size={18} />
             <div className="w-8 h-8 text-[#6A6A6A]">
               <Icons.avatar />
+            </div>
+            <div className="absolute bg-white w-52 top-12 right-0 rounded-lg shadow-xl hidden group-hover:block duration-1000">
+              <Link
+                to={pathDefault.Profile}
+                className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
+              >
+                Trang cá nhân
+              </Link>
+
+              {user ? (
+                <Link
+                  to={pathDefault.homePage}
+                  className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
+                  onClick={handlelogOut}
+                >
+                  Đăng xuất
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to={pathDefault.AuthPage}
+                    className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
+                  >
+                    Đăng nhập
+                  </Link>
+                  <Link
+                    to={pathDefault.AuthPage}
+                    className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
+                  >
+                    Đăng ký
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
