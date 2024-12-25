@@ -43,6 +43,12 @@ const ManagerReservation = () => {
   const [keyword, setKeyword] = useState("");
   const handleChangeKeyword = (e) => {
     setKeyword(e.target.value);
+    setTimeout(() => {
+      let soPhongNguoiDungDat = listReservation.filter((item, index) => {
+        return String(item.maNguoiDung).includes(keyword.trim());
+      });
+      setListReservation(soPhongNguoiDungDat);
+    }, 1000);
   };
   // columns set dữ liệu cho table
   const columns = [
@@ -156,17 +162,25 @@ const ManagerReservation = () => {
           className="text-3xl font-bold text-gray-800 py-10
         "
         >
-          Quản lý danh sách Booking
+          Manager Booking
         </h1>
         <div className="flex space-x-3 w-1/3">
           <Input.Search
-            placeholder="enter search keyword here"
+            placeholder="enter search user's code..."
             value={keyword}
             onChange={handleChangeKeyword}
             className=""
             size="large"
             onSearch={(value) => {
               setKeyword(value);
+              setTimeout(() => {
+                let soPhongNguoiDungDat = listReservation.filter(
+                  (item, index) => {
+                    return String(item.maNguoiDung).includes(keyword.trim());
+                  }
+                );
+                setListReservation(soPhongNguoiDungDat);
+              }, 3000);
             }}
           />
           <Modal

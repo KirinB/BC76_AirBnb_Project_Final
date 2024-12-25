@@ -1,6 +1,5 @@
 import { Button, Dropdown, Input, Modal, Popconfirm, Table } from "antd";
 import React, { useContext, useEffect, useState } from "react";
-import { FaUserPlus } from "react-icons/fa";
 import { phongService } from "../../services/phong.service";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
 import { NotificationContext } from "../../App";
@@ -8,6 +7,7 @@ import { useSelector } from "react-redux";
 import FormAddRoom from "./components/FormAddRoom/FormAddRoom";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { locationService } from "../../services/viTri.service";
+import { TbHomePlus } from "react-icons/tb";
 const ManagerRoom = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -221,11 +221,11 @@ const ManagerRoom = () => {
           className="text-3xl font-bold text-gray-800 py-10
     "
         >
-          Quản lý danh sách vị trí
+          Manager List Room
         </h1>
         <div className="flex space-x-3 w-1/3">
           <Input.Search
-            placeholder="enter search keyword here"
+            placeholder="enter search room's name..."
             value={keyword}
             onChange={handleChangeKeyword}
             className=""
@@ -237,7 +237,7 @@ const ManagerRoom = () => {
           {/* Nút thêm */}
           <ButtonAdmin
             content={"Add New Room"}
-            icon={<FaUserPlus size={20} />}
+            icon={<TbHomePlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
               setIsOnSubmit(true);

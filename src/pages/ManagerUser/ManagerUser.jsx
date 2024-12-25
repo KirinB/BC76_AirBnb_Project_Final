@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 import FormAddUser from "./components/FormAddUser/FormAddUser";
-import * as Yup from "yup";
 
 const ManagerUser = () => {
   const [initialValues, setInitialValues] = useState({
@@ -102,7 +101,7 @@ const ManagerUser = () => {
       dataIndex: "birthday",
       key: "birthday",
       render: (text, record, index) => {
-        return dayjs(record.birthday).format("DD/MM/YYYY");
+        return dayjs(text).format("DD/MM/YYYY");
       },
     },
     {
@@ -184,11 +183,11 @@ const ManagerUser = () => {
           className="text-3xl font-bold text-gray-800 py-10
         "
         >
-          Quản lý danh sách người dùng
+          Manager List User
         </h1>
         <div className="flex space-x-3 w-1/3">
           <Input.Search
-            placeholder="enter search keyword here"
+            placeholder="enter search name's user..."
             value={keyword}
             onChange={handleChangeKeyword}
             className=""

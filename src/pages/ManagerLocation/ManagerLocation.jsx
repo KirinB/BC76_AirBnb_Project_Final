@@ -8,6 +8,7 @@ import { FaUserPlus } from "react-icons/fa";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import FormAddRoom from "../ManagerRoom/components/FormAddRoom/FormAddRoom";
 import FormAddLocation from "./FormAddLocation/FormAddLocation";
+import { BiLocationPlus, BiSolidLocationPlus } from "react-icons/bi";
 const ManagerLocation = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -166,11 +167,11 @@ const ManagerLocation = () => {
           className="text-3xl font-bold text-gray-800 py-10
         "
         >
-          Quản lý danh sách phòng
+          Manager List Location
         </h1>
         <div className="flex space-x-3 w-1/3">
           <Input.Search
-            placeholder="enter search keyword here"
+            placeholder="enter search location..."
             value={keyword}
             onChange={handleChangeKeyword}
             className=""
@@ -181,8 +182,8 @@ const ManagerLocation = () => {
           />
           {/* Nút thêm */}
           <ButtonAdmin
-            content={"Add New Room"}
-            icon={<FaUserPlus size={20} />}
+            content={"Add New Location"}
+            icon={<BiSolidLocationPlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
               setIsOnSubmit(true);

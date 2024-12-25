@@ -103,7 +103,9 @@ const AdminTemplate = () => {
                 <NavLink
                   className={({ isActive }) => {
                     return `px-3 rounded-md inline-block ${
-                      isActive ? "item-active" : ""
+                      isActive || location.pathname === "/admin/manager-user"
+                        ? "item-active"
+                        : ""
                     }`;
                   }}
                   to={pathDefault.managerUser}
