@@ -1,19 +1,22 @@
+import { Dropdown, Modal } from "antd";
 import React, { useState } from "react";
-import { Icons } from "../../../assets/Icons";
-import { ButtonGhost } from "../../../components/ui/button/ButtonCustom";
-import { RiGlobalLine } from "react-icons/ri";
 import { FaBars, FaRegHeart, FaRegUserCircle } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { pathDefault } from "../../../common/path";
-import useViewPort from "../../../hooks/useViewPort";
-import HeaderSearch from "./HeaderSearch";
 import { FaArrowLeft, FaMagnifyingGlass } from "react-icons/fa6";
-import { Modal } from "antd";
-import HeaderSearchMobile from "./HeaderSearchMobile";
+import { RiGlobalLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Icons } from "../../../assets/Icons";
+import { pathDefault } from "../../../common/path";
+import { ButtonGhost } from "../../../components/ui/button/ButtonCustom";
+import useViewPort from "../../../hooks/useViewPort";
+import LineSpace from "../../../pages/RoomDetail/components/LineSpace";
 import { useHeaderContext } from "../../../store/HeaderContext";
+import HeaderSearch from "./HeaderSearch";
+import HeaderSearchMobile from "./HeaderSearchMobile";
 
 const HeaderHomeTemplate = () => {
   const { width } = useViewPort();
+  const user = useSelector((state) => state.UserSlice.user);
   const location = useLocation();
   const { keySearch } = useHeaderContext();
   const isSearchRoom = location.pathname.includes("/search");
@@ -106,12 +109,110 @@ const HeaderHomeTemplate = () => {
           <ButtonGhost className={"!px-2 py-5 rounded-full"}>
             <RiGlobalLine size={20} />
           </ButtonGhost>
-          <div className="py-2 px-4 rounded-full border border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md">
-            <FaBars size={18} />
-            <div className="w-8 h-8 text-[#6A6A6A]">
-              <Icons.avatar />
-            </div>
-          </div>
+          {!user ? (
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: (
+                      <div className="flex flex-col">
+                        <div className="py-2 px-4 hover:bg-gray-100 font-semibold">
+                          Đăng ký
+                        </div>
+                        <Link
+                          to={pathDefault.AuthPage}
+                          className="py-2 px-4 hover:bg-gray-100 hover:text-current"
+                        >
+                          Đăng nhập
+                        </Link>
+                        <LineSpace className="my-1" />
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Cho thuê chỗ ở qua Airbnb
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Tổ chức trải nghiệm
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Trung tâm hỗ trợ
+                        </div>
+                      </div>
+                    ),
+                  },
+                ],
+              }}
+              overlayClassName="header-dropdown-menu"
+              placement="bottomRight"
+              trigger={["click"]}
+            >
+              <a
+                onClick={() => {
+                  (e) => e.preventDefault();
+                }}
+                className="py-2 px-4 rounded-full border border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md"
+              >
+                <FaBars size={18} />
+                <div className="w-8 h-8 text-[#6A6A6A]">
+                  <Icons.avatar />
+                </div>
+              </a>
+            </Dropdown>
+          ) : (
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: (
+                      <div className="flex flex-col">
+                        <div className="py-2 px-4 hover:bg-gray-100 font-semibold">
+                          Quản lý hồ sơ
+                        </div>
+                        <LineSpace className="my-1" />
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Cho thuê chỗ ở qua Airbnb
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Tổ chức trải nghiệm
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Trung tâm hỗ trợ
+                        </div>
+                        <LineSpace className="my-1" />
+                        <div
+                          className="py-2 px-4 hover:bg-gray-100"
+                          onClick={() => {
+                            localStorage.removeItem("userInfo");
+                            navigate(pathDefault.homePage);
+                            window.location.reload();
+                          }}
+                        >
+                          Đăng xuất
+                        </div>
+                      </div>
+                    ),
+                  },
+                ],
+              }}
+              overlayClassName="header-dropdown-menu"
+              placement="bottomRight"
+              trigger={["click"]}
+            >
+              <a
+                onClick={() => {
+                  (e) => e.preventDefault();
+                }}
+                className="py-2 px-4 rounded-full border border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md"
+              >
+                <FaBars size={18} />
+                <div className="w-8 h-8 text-[#6A6A6A]">
+                  <img
+                    src={user.avatar || "/default_avatar.jpg"}
+                    className="rounded-full"
+                    alt=""
+                  />
+                </div>
+              </a>
+            </Dropdown>
+          )}
         </div>
       </div>
     </header>

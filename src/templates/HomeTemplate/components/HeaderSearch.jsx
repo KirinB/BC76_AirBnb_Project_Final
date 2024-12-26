@@ -60,6 +60,7 @@ const HeaderSearch = () => {
           <div
             className="flex gap-4 items-center hover:bg-gray-200 w-full pr-4 rounded-md"
             onClick={() => {
+              setIsUserSelecting(false);
               setKeyword(
                 `${item.tenViTri}, ${item.tinhThanh}, ${item.quocGia}`
               );
@@ -96,15 +97,6 @@ const HeaderSearch = () => {
     });
   }
 
-  useEffect(() => {
-    if (!isUserSelecting && value.trim() !== "") {
-      setIsOpenDropdown(true);
-    } else {
-      setIsOpenDropdown(false);
-    }
-    setIsUserSelecting(false);
-  }, [value]);
-
   return width < 1024 ? (
     <div className=" rounded-3xl bg-white py-4 pl-4 flex-1 relative flex border border-gray-200 shadow-md">
       <input
@@ -133,7 +125,6 @@ const HeaderSearch = () => {
         <p className="text-xs">Địa điểm</p>
         <Dropdown
           trigger={["click"]}
-          overlayClassName="dropdown-suggest"
           menu={{
             items: itemListSearch,
             onMouseLeave: () => {

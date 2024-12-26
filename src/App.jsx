@@ -8,6 +8,11 @@ import AuthPage from "./pages/AuthPage/AuthPage";
 import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
 import RoomDetail from "./pages/RoomDetail/RoomDetail";
 import { SearchPageProvider } from "./store/SearchPageContext";
+import { RoomDetailProvider } from "./store/RoomDetailContext";
+import { createContext } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+
+export const NotificationContext = createContext();
 
 const arrRoutes = [
   {
@@ -28,7 +33,11 @@ const arrRoutes = [
       },
       {
         path: pathDefault.roomDetailPage,
-        element: <RoomDetail />,
+        element: (
+          <RoomDetailProvider>
+            <RoomDetail />
+          </RoomDetailProvider>
+        ),
       },
       {
         path: pathDefault.Profile,
@@ -43,8 +52,28 @@ const arrRoutes = [
 ];
 
 function App() {
+  const handleNotification = (type, content, timeClose = 3000) => {
+    toast[type](content, {
+      position: "top-right",
+      autoClose: timeClose,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
   const routes = useRoutes(arrRoutes);
-  return routes;
+  return (
+    <>
+      <NotificationContext.Provider value={{ handleNotification }}>
+        {routes}
+        <ToastContainer />
+      </NotificationContext.Provider>
+    </>
+  );
 }
 
 export default App;

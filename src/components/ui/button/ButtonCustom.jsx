@@ -12,11 +12,8 @@ export const ButtonOutLine = ({
   children,
   roundedfull = false,
   className,
-<<<<<<< HEAD
   onClick,
-=======
-  type,
->>>>>>> main
+  type = "button",
   ...props
 }) => {
   return (
@@ -33,11 +30,18 @@ export const ButtonOutLine = ({
   );
 };
 
-export const ButtonPrimary = ({ children, className, onClick, ...props }) => {
+export const ButtonPrimary = ({
+  children,
+  type = "button",
+  className,
+  onClick,
+  ...props
+}) => {
   return (
     <Button
       className={`!bg-primary text-white font-semibold text-base !outline-none !border-none hover:!text-white hover:!bg-primary/80 ${className}`}
       onClick={onClick}
+      type={type}
       {...props}
     >
       {children}
