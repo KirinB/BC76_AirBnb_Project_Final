@@ -2,18 +2,22 @@ import React from "react";
 import "./CategoryNavbar.scss";
 import Slider from "react-slick";
 import { dataCategory } from "../../../common/constant";
+import useViewPort from "../../../hooks/useViewPort";
 
 const CategoryNavbar = () => {
+  const { width } = useViewPort();
+
   var settings = {
     infinite: false,
     arrow: false,
     speed: 500,
-    slidesToShow: 16,
-    slidesToScroll: 4,
+    slidesToShow: width < 576 ? 3 : width < 1024 ? 5 : 10,
+    slidesToScroll: width < 576 ? 2 : width < 1024 ? 3 : 4,
   };
+
   return (
-    <div className="shadow-sm sticky top-24 bg-white">
-      <div className="py-2 container">
+    <div className="shadow-sm sticky top-[81px] md:top-24 bg-white">
+      <div className="py-2 container px-10">
         <Slider {...settings}>
           {dataCategory.map((item, index) => {
             return (
@@ -22,7 +26,7 @@ const CategoryNavbar = () => {
                 className="!flex flex-col justify-center items-center opacity-70 cursor-pointer hover:opacity-100 transition-all duration-200"
               >
                 <img className="w-6 h-6" src={item.icon} alt="" />
-                <h3 className="text-xs">{item.title}</h3>
+                <h3 className="text-xs text-center">{item.title}</h3>
               </div>
             );
           })}

@@ -9,9 +9,10 @@ import { locationService } from "../../../../services/viTri.service";
 import { SwitchRoom } from "../../../../components/ui/switch/SwitchCustom";
 import { useSelector } from "react-redux";
 import { phongService } from "../../../../services/phong.service";
-import { Button, Result, Upload } from "antd";
+import { Button } from "antd";
 import { NotificationContext } from "../../../../App";
 import { UploadRoomPicture } from "../../../../components/ui/upload/UploadCustom";
+import * as Yup from "yup";
 const FormAddRoom = ({
   handleCloseModal,
   getAllRoom,
@@ -102,6 +103,26 @@ const FormAddRoom = ({
         }
       }
     },
+    validationSchema: Yup.object({
+      tenPhong: Yup.string().required("Vui lòng không bỏ trống !"),
+      moTa: Yup.string().required("Vui lòng không bỏ trống !"),
+      maViTri: Yup.string().required("Vui lòng không bỏ trống !"),
+      khach: Yup.string()
+        .min(1, "Vui lòng nhập số khách từ 1 trở lên")
+        .required("Vui lòng không bỏ trống !"),
+      phongNgu: Yup.string()
+        .min(1, "Vui lòng nhập số phòng từ 1 trở lên")
+        .required("Vui lòng không bỏ trống !"),
+      giuong: Yup.string()
+        .min(1, "Vui lòng nhập số giường từ 1 trở lên")
+        .required("Vui lòng không bỏ trống !"),
+      phongTam: Yup.string()
+        .min(1, "Vui lòng nhập số phòng tắm từ 1 trở lên")
+        .required("Vui lòng không bỏ trống !"),
+      giaTien: Yup.string()
+        .min(1, "Vui lòng nhập số tiền từ 1 trở lên")
+        .required("Vui lòng không bỏ trống !"),
+    }),
   });
   return (
     <div>
@@ -146,6 +167,7 @@ const FormAddRoom = ({
         <div className="grid grid-cols-2 gap-5">
           <SelectCustom
             labelContent={"Vị trí"}
+            placeholder={"Vui lòng chọn vị trí"}
             handleChange={(value, option) => {
               setFieldValue("maViTri", value);
             }}
@@ -181,6 +203,8 @@ const FormAddRoom = ({
               }
             }}
             handleBlur={handleBlur}
+            error={errors.khach}
+            touched={touched.khach}
           />
         </div>
         <div className="grid grid-cols-2 gap-5">
@@ -198,6 +222,8 @@ const FormAddRoom = ({
               }
             }}
             handleBlur={handleBlur}
+            error={errors.phongNgu}
+            touched={touched.phongNgu}
           />
           <InputNumberCustom
             labelContent={"Số giường ngủ"}

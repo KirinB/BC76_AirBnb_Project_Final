@@ -2,10 +2,14 @@ import { Avatar, Badge, Dropdown, Space } from "antd";
 import { useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import "./DropdownCustom.scss";
+
 export const DropdownCustom = ({
   items = [{ label: "The function is not working yet" }],
   children,
   icon = false,
+  rounded = true,
+  className,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +22,9 @@ export const DropdownCustom = ({
       trigger={["click"]}
       open={isOpen}
       onOpenChange={handleOpenChange}
-      className="border border-gray-200 !rounded-full"
+      className={`border border-gray-200 ${
+        rounded ? "!rounded-full" : ""
+      } ${className}`}
       {...props}
     >
       <button

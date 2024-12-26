@@ -8,6 +8,7 @@ export const SelectCustom = ({
   error,
   touched,
   value,
+  placeholder,
 }) => {
   return (
     <div className="space-y-1">
@@ -19,7 +20,7 @@ export const SelectCustom = ({
         onChange={handleChange}
         mode={mode && mode}
         className="block"
-        placeholder={"Vui lòng chọn giới tính"}
+        placeholder={placeholder}
         value={value}
       />
       {error && touched && <p className="text-sm text-red-500">{error}</p>}

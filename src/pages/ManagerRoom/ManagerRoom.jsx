@@ -32,7 +32,6 @@ const ManagerRoom = () => {
   });
   //Xử lý hình ảnh
   const [previewImage, setPreviewImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
   //Xử lý phần add , edit
   const [isOnSubmit, setIsOnSubmit] = useState(true);
   const { user, token } = useSelector((state) => state.userSlice);
@@ -218,7 +217,7 @@ const ManagerRoom = () => {
     <div className="space-y-5">
       <div className="flex justify-between items-center border-gray-500 border-b-2">
         <h1
-          className="text-3xl font-bold text-gray-800 py-10
+          className="text-3xl font-bold text-gray-800 dark:text-white py-10
     "
         >
           Manager List Room
@@ -244,12 +243,12 @@ const ManagerRoom = () => {
               setInitialValues({
                 id: 0,
                 tenPhong: "",
-                khach: 0,
-                phongNgu: 0,
-                giuong: 0,
-                phongTam: 0,
+                khach: "",
+                phongNgu: "",
+                giuong: "",
+                phongTam: "",
                 moTa: "",
-                giaTien: 0,
+                giaTien: "",
                 mayGiat: true,
                 banLa: true,
                 tivi: true,

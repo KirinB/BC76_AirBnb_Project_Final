@@ -25,7 +25,6 @@ const ManagerUser = ({ them }) => {
     setKeyword(e.target.value);
   };
   const [isOnSubmit, setIsOnSubmit] = useState(true);
-  const { user, token } = useSelector((state) => state.userSlice);
   const [listUser, setListUser] = useState([]);
   const { handleNotification } = useContext(NotificationContext);
   const [currentPage, setCurrentPage] = useState(1);

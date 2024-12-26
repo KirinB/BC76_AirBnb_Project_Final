@@ -8,4 +8,9 @@ export const pathDefault = {
   managerRoom: "/admin/manager-room",
   managerReservation: "/admin/manager-reservation",
   managerLocation: "/admin/manager-location",
+  signIn: "/sign-in",
+  signUp: "/sign-up",
+  AuthPage: "/Auth",
+  Profile: "/profile",
+  roomDetailPage: "/rooms/:id",
 };

@@ -1,7 +1,5 @@
 import { useRoutes } from "react-router-dom";
 import { pathDefault } from "./common/path";
-import { createContext } from "react";
-import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import SearchPage from "./pages/SearchPage/SearchPage";
@@ -13,7 +11,16 @@ import ManagerLocation from "./pages/ManagerLocation/ManagerLocation";
 import ManagerReservation from "./pages/ManagerReservation/ManagerReservation";
 import ManagerRoom from "./pages/ManagerRoom/ManagerRoom";
 import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
+import AuthPage from "./pages/AuthPage/AuthPage";
+import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
+import RoomDetail from "./pages/RoomDetail/RoomDetail";
+import { SearchPageProvider } from "./store/SearchPageContext";
+import { RoomDetailProvider } from "./store/RoomDetailContext";
+import { createContext } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+
 export const NotificationContext = createContext();
+
 const arrRoutes = [
   {
     path: pathDefault.homePage,
@@ -25,7 +32,23 @@ const arrRoutes = [
       },
       {
         path: pathDefault.searchPage,
-        element: <SearchPage />,
+        element: (
+          <SearchPageProvider>
+            <SearchPage />
+          </SearchPageProvider>
+        ),
+      },
+      {
+        path: pathDefault.roomDetailPage,
+        element: (
+          <RoomDetailProvider>
+            <RoomDetail />
+          </RoomDetailProvider>
+        ),
+      },
+      {
+        path: pathDefault.Profile,
+        element: <ProfilePage />,
       },
     ],
   },
@@ -57,10 +80,13 @@ const arrRoutes = [
       },
     ],
   },
+  {
+    path: pathDefault.AuthPage,
+    element: <AuthPage />,
+  },
 ];
 
 function App() {
-  const routes = useRoutes(arrRoutes);
   const handleNotification = (type, content, timeClose = 3000) => {
     toast[type](content, {
       position: "top-right",
@@ -74,6 +100,7 @@ function App() {
       transition: Bounce,
     });
   };
+  const routes = useRoutes(arrRoutes);
   return (
     <>
       <NotificationContext.Provider value={{ handleNotification }}>
