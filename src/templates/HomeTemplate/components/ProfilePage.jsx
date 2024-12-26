@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../../../services/users.service";
 import { useNavigate } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
-import { handleUpdateUser } from "../../../store/Slice/User.Slice";
+import { handleUpdateUser } from "../../../store/slice/user.slice";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.UserSlice.user);

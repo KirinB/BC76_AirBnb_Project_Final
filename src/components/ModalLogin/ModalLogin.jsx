@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { authService } from "../../services/auth.service";
 import { NotificationContext } from "../../App";
 import { useDispatch } from "react-redux";
-import { handleUpdateUser } from "../../store/slice/User.Slice";
+import { handleUpdateUser } from "../../store/slice/user.slice";
 
 const ModalLogin = ({ setIsModalLoginOpen }) => {
   const dispatch = useDispatch();

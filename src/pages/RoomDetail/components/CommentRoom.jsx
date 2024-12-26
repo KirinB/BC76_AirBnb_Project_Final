@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 
 const CommentRoom = () => {
   const { id } = useParams();
-  const user = useSelector((state) => state.UserSlice.user);
+  const user = useSelector((state) => state.userSlice.user);
   // console.log(user);
   const { listComment, setListComment } = useRoomDetailContext();
   const [isModalOpen, setIsModalOpen] = useState(false);

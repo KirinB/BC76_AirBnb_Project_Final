@@ -16,7 +16,7 @@ import HeaderSearchMobile from "./HeaderSearchMobile";
 
 const HeaderHomeTemplate = () => {
   const { width } = useViewPort();
-  const user = useSelector((state) => state.UserSlice.user);
+  const user = useSelector((state) => state.userSlice.user);
   const location = useLocation();
   const { keySearch } = useHeaderContext();
   const isSearchRoom = location.pathname.includes("/search");

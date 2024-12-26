@@ -1,6 +1,7 @@
-import { Dropdown } from "antd";
+import { Avatar, Badge, Dropdown, Space } from "antd";
 import { useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import "./DropdownCustom.scss";
 
 export const DropdownCustom = ({
@@ -41,6 +42,70 @@ export const DropdownCustom = ({
           />
         </span>
       </button>
+    </Dropdown>
+  );
+};
+export const DropdownNoti = ({ icon }) => {
+  const items = [
+    {
+      label: <Link>Notication 1</Link>,
+      key: "0",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: <Link>Notication 2</Link>,
+      key: "1",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: <Link>Notication 3</Link>,
+      key: "3",
+    },
+  ];
+  return (
+    <Badge count={0} showZero className="align-middle">
+      <Dropdown
+        placement="bottom"
+        menu={{
+          items,
+        }}
+        trigger={["click"]}
+      >
+        <a onClick={(e) => e.preventDefault()}>{icon}</a>
+      </Dropdown>
+    </Badge>
+  );
+};
+export const DropdownNormal = ({ content, icon }) => {
+  const items = [
+    {
+      label: "The function is not working yet",
+    },
+  ];
+  return (
+    <Dropdown
+      placement="bottom"
+      menu={{
+        items,
+      }}
+      trigger={["click"]}
+    >
+      <a
+        onClick={(e) => e.preventDefault()}
+        className="space-x-3 border p-3 rounded-3xl font-bold"
+      >
+        <Avatar
+          src={
+            "http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"
+          }
+        />
+        <p className="inline">{content}</p>
+        {icon}{" "}
+      </a>
     </Dropdown>
   );
 };

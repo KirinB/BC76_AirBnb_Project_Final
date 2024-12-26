@@ -10,7 +10,7 @@ import { Icons } from "../../../assets/Icons";
 import InputCustom from "../../../components/ui/inputCustom/InputCustom";
 import { ButtonOutLine } from "../../../components/ui/button/ButtonCustom";
 import { useDispatch } from "react-redux";
-import { handleUpdateUser } from "../../../store/slice/User.Slice";
+import { handleUpdateUser } from "../../../store/slice/user.slice";
 
 const SignInPage = ({ styleIcon, handle }) => {
   const navigate = useNavigate();
