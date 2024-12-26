@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { DatePicker, Modal } from "antd";
 import Counter from "../../../components/Counter/Counter";
@@ -8,17 +8,28 @@ import LineSpace from "./LineSpace";
 import { AiFillFlag } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import useViewPort from "../../../hooks/useViewPort";
-
+import { useSelector } from "react-redux";
+import { setRoomService } from "../../../services/setRoom.service";
+import { parse, formatISO } from "date-fns";
+import { NotificationContext } from "../../../App";
+import SignInPage from "../../AuthPage/components/SignInPage";
+import ModalLogin from "../../../components/ModalLogin/ModalLogin";
 const AsideRoomDetail = ({ max, priceRoom }) => {
   const { width } = useViewPort();
+  const user = useSelector((state) => {
+    return state.UserSlice.user;
+  });
+  const { handleNotification } = useContext(NotificationContext);
   const [counterAdult, setConterAdult] = useState(1);
   const [counterChild, setCounterChild] = useState(0);
   const [counterBaby, setCounterBaby] = useState(0);
   const [isSelectedDay, setIsSelectedDay] = useState(false);
   const [daysSelected, setDaysSelected] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
   const [dayStart, setDayStart] = useState();
   const [dayEnd, setDayEnd] = useState();
+
   const totalPerson = counterAdult + counterChild;
   const isBlockMax = totalPerson >= max;
 
@@ -77,10 +88,43 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
   };
 
   const handleRangeChange = (dates, dateStrings) => {
+    setDayStart(dateStrings[0]);
+    setDayEnd(dateStrings[1]);
     const totalDays = calculateTotalDays(dateStrings);
     setDaysSelected(totalDays);
     setIsSelectedDay(totalDays > 0);
   };
+
+  const handleSetRoom = () => {
+    if (user) {
+      const dataDateStart = formatDate(dayStart);
+      const dataDateEnd = formatDate(dayEnd);
+      // console.log(dataDateStart);
+      setRoomService
+        .setRoomService({
+          id: 0,
+          maPhong: 0,
+          ngayDen: dataDateEnd,
+          ngayDi: dataDateStart,
+          soLuongKhach: totalPerson,
+          maNguoiDung: user.id,
+        })
+        .then((res) => {
+          handleNotification("success", "Bạn đã đặt phòng thành công!");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      handleNotification("error", "Bạn cần đăng nhập để đặt phòng");
+      setIsModalLoginOpen(true);
+    }
+  };
+
+  function formatDate(date) {
+    const parsedDate = parse(date, "dd-MM-yyyy", new Date());
+    return formatISO(parsedDate);
+  }
 
   function calculateTotalDays(dateArray) {
     if (dateArray.length !== 2) {
@@ -108,7 +152,6 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
     return new Intl.NumberFormat("vi-VN").format(value);
   }
 
-  // console.log(isSelectedDay);
   return width < 768 ? (
     <>
       <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex gap-4 justify-between p-6">
@@ -269,7 +312,9 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
 
           <div className="">
             {isSelectedDay ? (
-              <ButtonPrimary className={"w-full py-6"}>Đặt phòng</ButtonPrimary>
+              <ButtonPrimary className={"w-full py-6"} onClick={handleSetRoom}>
+                Đặt phòng
+              </ButtonPrimary>
             ) : (
               <ButtonPrimary className={"w-full md:py-10 lg:py-6 text-wrap"}>
                 <span className="md:text-sm">
@@ -327,6 +372,14 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
           </Link>
         </div>
       </div>
+      <Modal
+        title=""
+        open={isModalLoginOpen}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <ModalLogin setIsModalLoginOpen={setIsModalLoginOpen} />
+      </Modal>
     </div>
   );
 };

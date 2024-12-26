@@ -8,7 +8,7 @@ import { FaSquareInstagram, FaSquareTwitter } from "react-icons/fa6";
 const FooterHomeTemplate = () => {
   return (
     <footer className="bg-[#F7F7F7] text-[#222222] py-10">
-      <div className="container px-6 lg:px-0">
+      <div className="container px-6 lg:px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {dataFooter.map((item, i) => {
             return (

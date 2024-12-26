@@ -1,3 +1,5 @@
+import { Icons } from "../assets/Icons";
+
 export const dataCategory = [
   {
     icon: "/icon/category/bieu_tuong.jpg",
@@ -179,5 +181,38 @@ export const MOCKUP_COMMENT = [
     yearOfOperation: "9 năm hoạt động trên Airbnb",
     comment:
       "A lovely, cozy and calm place with everything nearby. loved my stay",
+  },
+];
+
+export const MOCKUP_COMMENT_RANKING = [
+  {
+    icon: <Icons.binhXit />,
+    title: "Mức độ sạch sẽ",
+    rate: "4,7",
+  },
+  {
+    icon: <Icons.checkCircle />,
+    title: "Độ chính xác",
+    rate: "4,8",
+  },
+  {
+    icon: <Icons.key />,
+    title: "Nhận phòng",
+    rate: "4,9",
+  },
+  {
+    icon: <Icons.chatBox />,
+    title: "Giao tiếp",
+    rate: "4,9",
+  },
+  {
+    icon: <Icons.maps />,
+    title: "Vị trí",
+    rate: "4,5",
+  },
+  {
+    icon: <Icons.priceTag />,
+    title: "Giá trị",
+    rate: "4,9",
   },
 ];

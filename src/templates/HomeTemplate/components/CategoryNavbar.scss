@@ -3,20 +3,7 @@
   z-index: 10; /* Đảm bảo mũi tên nằm trên slide */
 }
 
-.slick-prev:hover,
-.slick-next:hover {
-}
-
-/* Vị trí cho mũi tên */
-.slick-prev {
-  /* Điều chỉnh vị trí bên trái */
-}
-
-.slick-next {
-  /* Điều chỉnh vị trí bên phải */
-}
-
-.slick-prev:before,
+.slick-prev::before,
 .slick-next::before {
   color: gray;
   display: flex;
