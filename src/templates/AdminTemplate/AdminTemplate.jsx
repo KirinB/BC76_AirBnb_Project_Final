@@ -23,6 +23,11 @@ const AdminTemplate = () => {
   const { user, token } = useSelector((state) => state.userSlice);
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(true);
+  const [them, setThem] = useState("light");
+  const changeTheme = () => {
+    setThem(them === "light" ? "dark" : "light");
+    console.log(them);
+  };
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -57,6 +62,13 @@ const AdminTemplate = () => {
       }
     }
   }, []);
+  useEffect(() => {
+    if (them === "dark") {
+      document.querySelector("html").classList.add("dark");
+    } else {
+      document.querySelector("html").classList.remove("dark");
+    }
+  }, [them]);
   return (
     <Layout className="h-full">
       <Sider
@@ -167,15 +179,21 @@ const AdminTemplate = () => {
       </Sider>
       <Layout>
         <Header
+          className="bg-white dark:bg-slate-900 dark:border-y-white dark:border-y dark:text-white dark:fill-white"
           style={{
             padding: 0,
-            background: colorBgContainer,
           }}
         >
           <div className="flex justify-between">
             <Button
               type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              icon={
+                collapsed ? (
+                  <MenuUnfoldOutlined className="dark:text-white" />
+                ) : (
+                  <MenuFoldOutlined className="dark:text-white" />
+                )
+              }
               onClick={() => setCollapsed(!collapsed)}
               style={{
                 fontSize: "16px",
@@ -185,11 +203,23 @@ const AdminTemplate = () => {
             />
             <Space size={30} wrap className="mr-4">
               <DropdownNoti
-                icon={<IoMdNotificationsOutline color="#969696" size={25} />}
+                icon={
+                  <IoMdNotificationsOutline
+                    color="#969696"
+                    className="dark:fill-white"
+                    size={25}
+                  />
+                }
               />
 
               <DropdownNoti
-                icon={<IoMdCheckboxOutline color="#969696" size={25} />}
+                icon={
+                  <IoMdCheckboxOutline
+                    color="#969696"
+                    className="dark:fill-white"
+                    size={25}
+                  />
+                }
               />
               <DropdownNormal
                 content={"English"}
@@ -199,6 +229,7 @@ const AdminTemplate = () => {
                   />
                 }
               />
+              <Button onClick={changeTheme} />
               {user ? (
                 <div className="flex items-center space-x-3 font-semibold">
                   <p>
@@ -222,16 +253,22 @@ const AdminTemplate = () => {
           </div>
         </Header>
         <Content
+          className={
+            them === "dark"
+              ? "bg-slate-900"
+              : "bg-gradient-to-tr from-blue-300 via-purple-300 to-pink-400"
+          }
           style={{
             margin: "0px",
             padding: 30,
             minHeight: 1000,
-            background:
-              "linear-gradient(66deg, rgba(63,94,251,0.5) 0%, rgba(252,70,107,1) 100%)",
+            // background:
+            //   "linear-gradient(66deg, rgba(63,94,251,0.5) 0%, rgba(252,70,107,1) 100%)",
+
             borderRadius: borderRadiusLG,
           }}
         >
-          <Outlet />
+          <Outlet them={them} />
         </Content>
       </Layout>
     </Layout>

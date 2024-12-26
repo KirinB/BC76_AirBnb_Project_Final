@@ -9,7 +9,7 @@ import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 import FormAddUser from "./components/FormAddUser/FormAddUser";
 
-const ManagerUser = () => {
+const ManagerUser = ({ them }) => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
     name: "",
@@ -180,7 +180,7 @@ const ManagerUser = () => {
     <div className="space-y-5">
       <div className="flex justify-between items-center border-gray-500 border-b-2">
         <h1
-          className="text-3xl font-bold text-gray-800 py-10
+          className="text-3xl font-bold text-gray-800 dark:text-white py-10
         "
         >
           Manager List User

@@ -40,7 +40,7 @@ export const ButtonAdmin = ({ content, icon, onClick }) => {
     <Button
       variant="outlined"
       icon={icon}
-      className="p-5 rounded-xl text-gray-800 font-bold text-lg bg-purple-400 border-transparent"
+      className="p-5 rounded-xl text-gray-800 dark:text-white font-bold text-lg bg-purple-400 border-transparent"
       onClick={onClick}
     >
       {content}
