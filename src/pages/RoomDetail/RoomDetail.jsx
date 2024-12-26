@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { phongService } from "../../services/phong.service";
-import PageNotFound from "../../components/PageNotFound";
-import LoadingCustom from "../../components/ui/loading/LoadingCustom";
-import { ButtonGhost } from "../../components/ui/button/ButtonCustom";
-import { LuHeart, LuShare } from "react-icons/lu";
+import { FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft } from "react-icons/fa6";
 import { IoIosStar } from "react-icons/io";
+import { LuHeart, LuShare } from "react-icons/lu";
+import { Link, useParams } from "react-router-dom";
+import { pathDefault } from "../../common/path";
+import PageNotFound from "../../components/PageNotFound";
+import { ButtonGhost } from "../../components/ui/button/ButtonCustom";
+import LoadingCustom from "../../components/ui/loading/LoadingCustom";
+import { phongService } from "../../services/phong.service";
+import AmenitiesRoom from "./components/AmenitiesRoom";
+import AsideRoomDetail from "./components/AsideRoomDetail";
+import CommentRoom from "./components/CommentRoom";
+import DetailRoom from "./components/DetailRoom";
 import HighlightsRoom from "./components/HighlightsRoom";
 import LineSpace from "./components/LineSpace";
-import DetailRoom from "./components/DetailRoom";
-import AmenitiesRoom from "./components/AmenitiesRoom";
-import { MOCKUP_COMMENT } from "../../common/constant";
-import { FaAngleRight } from "react-icons/fa";
-import AsideRoomDetail from "./components/AsideRoomDetail";
-import { FaAngleLeft } from "react-icons/fa6";
-import { pathDefault } from "../../common/path";
+import { useRoomDetailContext } from "../../store/RoomDetailContext";
 const RoomDetail = () => {
   const { id } = useParams();
+  const { listComment } = useRoomDetailContext();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [roomDetail, setRoomDetail] = useState([]);
@@ -27,6 +29,7 @@ const RoomDetail = () => {
       .getRoomById(id)
       .then((res) => {
         setIsLoading(false);
+        // console.log(res.data.content);
         setRoomDetail(res.data.content);
       })
       .catch((err) => {
@@ -42,7 +45,7 @@ const RoomDetail = () => {
     ) : (
       <div className="container py-6">
         <div className="flex flex-col space-y-6">
-          <div className="flex justify-between px-4 md:px-10 lg:px-0">
+          <div className="flex justify-between px-4 md:px-10 lg:px-4">
             <h1 className="text-2xl flex-1 font-semibold hidden md:block">
               {roomDetail.tenPhong}
             </h1>
@@ -73,14 +76,14 @@ const RoomDetail = () => {
               />
             </div>
           </div>
-          <div className="shadow-sm px-0 md:px-10 lg:px-0">
+          <div className="shadow-sm px-0 md:px-10 lg:px-4">
             <img
               src={roomDetail.hinhAnh}
               className="w-full md:rounded-2xl max-h-[500px] object-cover"
               alt=""
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 relative md:px-10 lg:px-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 relative md:px-10 lg:px-4">
             <div className="col-span-2 px-6 md:px-0">
               <div className="pt-6">
                 <h2 className="text-2xl font-semibold">
@@ -92,7 +95,9 @@ const RoomDetail = () => {
                     <IoIosStar /> <span className="text-[17px]">Mới</span>
                   </span>
                   <span>·</span>
-                  <span className="underline cursor-pointer">2 đánh giá</span>
+                  <span className="underline cursor-pointer">
+                    {listComment.length} đánh giá
+                  </span>
                 </p>
               </div>
               <LineSpace />
@@ -139,40 +144,10 @@ const RoomDetail = () => {
             />
           </div>
           <LineSpace />
-          <div className="py-6 space-x-6 px-6 md:px-10 lg:px-0">
-            <div>
-              <h2 className="text-2xl font-semibold">2 đánh giá</h2>
-              <p className="text-[#6a6a6a] text-sm">
-                Xếp hạng trung bình sẽ được hiển thị sau khi có 3 đánh giá
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-6 md:gap-6 lg:gap-0 md:grid-cols-2 mt-10 !mx-0">
-              {MOCKUP_COMMENT.map((item, index) => {
-                return (
-                  <div className="flex flex-col space-y-4 lg:pr-24" key={index}>
-                    <div className="flex gap-4">
-                      <div>
-                        <img
-                          src={item.avatar}
-                          className="w-12 h-12 rounded-full"
-                          alt={item.author}
-                        />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">{item.author}</h3>
-                        <p className="text-sm">{item.yearOfOperation}</p>
-                      </div>
-                    </div>
-                    <div>
-                      <p>{item.comment}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+
+          <CommentRoom />
           <LineSpace />
-          <div className="py-6 space-y-4 px-6 md:px-10 lg:px-0">
+          <div className="py-6 space-y-4 px-6 md:px-10 lg:px-4">
             <h2 className="font-semibold text-2xl">Nơi bạn sẽ tới</h2>
             <p>Quận 1, Hồ Chí Minh, Việt Nam</p>
             <iframe
@@ -184,7 +159,7 @@ const RoomDetail = () => {
             />
           </div>
           <LineSpace />
-          <div className="py-6 px-6 md:px-10 lg:px-0">
+          <div className="py-6 px-6 md:px-10 lg:px-4">
             <h2 className="text-2xl font-semibold mb-6">Những điều cần biết</h2>
             <div className="grid grid-cols-1 md:grid-cols-3">
               <div className="flex flex-col gap-3">

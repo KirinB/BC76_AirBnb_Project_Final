@@ -1,17 +1,22 @@
+import { Pagination } from "antd";
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import PageNotFound from "../../components/PageNotFound";
 import LoadingCustom from "../../components/ui/loading/LoadingCustom";
 import { phongService } from "../../services/phong.service";
+import {
+  SearchPageProvider,
+  useSearchPageContext,
+} from "../../store/SearchPageContext";
 import FilterSearch from "./components/FilterSearch";
 import RoomSearch from "./components/RoomSearch";
-import { Pagination } from "antd";
-import PageNotFound from "../../components/PageNotFound";
-import { useLocation } from "react-router-dom";
 
 const SearchPage = () => {
+  const { listRoom, setListRoom, originalListRoom, setOriginalListRoom } =
+    useSearchPageContext();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [listRoom, setListRoom] = useState([]);
   const queryParams = new URLSearchParams(location.search);
   const keyValue = queryParams.get("key");
 
@@ -22,8 +27,9 @@ const SearchPage = () => {
       phongService
         .getListRoomById(keyValue)
         .then((res) => {
-          // console.log(res.data.content);
+          console.log(res.data.content);
           setListRoom(res.data.content);
+          setOriginalListRoom(res.data.content);
           setIsLoading(false);
         })
         .catch((err) => {

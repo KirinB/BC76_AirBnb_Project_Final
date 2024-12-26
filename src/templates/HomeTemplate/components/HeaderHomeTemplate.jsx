@@ -1,21 +1,22 @@
+import { Dropdown, Modal } from "antd";
 import React, { useState } from "react";
-import { Icons } from "../../../assets/Icons";
-import { ButtonGhost } from "../../../components/ui/button/ButtonCustom";
-import { RiGlobalLine } from "react-icons/ri";
 import { FaBars, FaRegHeart, FaRegUserCircle } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { pathDefault } from "../../../common/path";
-import useViewPort from "../../../hooks/useViewPort";
-import HeaderSearch from "./HeaderSearch";
 import { FaArrowLeft, FaMagnifyingGlass } from "react-icons/fa6";
-import { Modal } from "antd";
-import HeaderSearchMobile from "./HeaderSearchMobile";
+import { RiGlobalLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Icons } from "../../../assets/Icons";
+import { pathDefault } from "../../../common/path";
+import { ButtonGhost } from "../../../components/ui/button/ButtonCustom";
+import useViewPort from "../../../hooks/useViewPort";
+import LineSpace from "../../../pages/RoomDetail/components/LineSpace";
 import { useHeaderContext } from "../../../store/HeaderContext";
-import { useDispatch, useSelector } from "react-redux";
-import { handleDeleteUser } from "../../../store/Slice/User.Slice";
+import HeaderSearch from "./HeaderSearch";
+import HeaderSearchMobile from "./HeaderSearchMobile";
 
 const HeaderHomeTemplate = () => {
   const { width } = useViewPort();
+  const user = useSelector((state) => state.UserSlice.user);
   const location = useLocation();
   const { keySearch } = useHeaderContext();
   const isSearchRoom = location.pathname.includes("/search");
@@ -30,10 +31,6 @@ const HeaderHomeTemplate = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-  const user = useSelector((state) => state.UserSlice.user);
-
-  const dispatch = useDispatch();
 
   const handlelogOut = () => {
     localStorage.removeItem("userInfo");
