@@ -32,12 +32,6 @@ const HeaderHomeTemplate = () => {
     setIsModalOpen(false);
   };
 
-  const handlelogOut = () => {
-    localStorage.removeItem("userInfo");
-    dispatch(handleDeleteUser());
-    alert("Đăng xuất thành công");
-  };
-
   return width < 768 && !isRoomDetail ? (
     <>
       <header className="sticky top-0 w-full bg-white z-20 flex items-center justify-between py-3 px-6 border-b border-gray-200">
@@ -108,52 +102,120 @@ const HeaderHomeTemplate = () => {
           </Link>
         </div>
         <HeaderSearch />
-        <div className="flex items-center space-x-2 ">
+        <div className="flex items-center space-x-2">
           <ButtonGhost className={"!px-2 py-5 font-semibold rounded-full"}>
             Cho thuê chỗ ở qua Airbnb
           </ButtonGhost>
           <ButtonGhost className={"!px-2 py-5 rounded-full"}>
             <RiGlobalLine size={20} />
           </ButtonGhost>
-          <div className="py-2 px-4 rounded-full group border relative border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md">
-            <FaBars size={18} />
-            <div className="w-8 h-8 text-[#6A6A6A]">
-              <Icons.avatar />
-            </div>
-            <div className="absolute bg-white w-52 top-12 right-0 rounded-lg shadow-xl hidden group-hover:block duration-1000">
-              <Link
-                to={pathDefault.Profile}
-                className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
+          {!user ? (
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: (
+                      <div className="flex flex-col">
+                        <div className="py-2 px-4 hover:bg-gray-100 font-semibold">
+                          Đăng ký
+                        </div>
+                        <Link
+                          to={pathDefault.AuthPage}
+                          className="py-2 px-4 hover:bg-gray-100 hover:text-current"
+                        >
+                          Đăng nhập
+                        </Link>
+                        <LineSpace className="my-1" />
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Cho thuê chỗ ở qua Airbnb
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Tổ chức trải nghiệm
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Trung tâm hỗ trợ
+                        </div>
+                      </div>
+                    ),
+                  },
+                ],
+              }}
+              overlayClassName="header-dropdown-menu"
+              placement="bottomRight"
+              trigger={["click"]}
+            >
+              <a
+                onClick={() => {
+                  (e) => e.preventDefault();
+                }}
+                className="py-2 px-4 rounded-full border border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md"
               >
-                Trang cá nhân
-              </Link>
-
-              {user ? (
-                <Link
-                  to={pathDefault.homePage}
-                  className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
-                  onClick={handlelogOut}
-                >
-                  Đăng xuất
-                </Link>
-              ) : (
-                <>
-                  <Link
-                    to={pathDefault.AuthPage}
-                    className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
-                  >
-                    Đăng nhập
-                  </Link>
-                  <Link
-                    to={pathDefault.AuthPage}
-                    className="block py-2 pl-5 hover:bg-gray-200 my-2 font-medium"
-                  >
-                    Đăng ký
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
+                <FaBars size={18} />
+                <div className="w-8 h-8 text-[#6A6A6A]">
+                  <Icons.avatar />
+                </div>
+              </a>
+            </Dropdown>
+          ) : (
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: (
+                      <div className="flex flex-col">
+                        <Link
+                          to={pathDefault.Profile}
+                          className="py-2 px-4 hover:bg-gray-100 font-semibold"
+                        >
+                          Quản lý hồ sơ
+                        </Link>
+                        <LineSpace className="my-1" />
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Cho thuê chỗ ở qua Airbnb
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Tổ chức trải nghiệm
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-100">
+                          Trung tâm hỗ trợ
+                        </div>
+                        <LineSpace className="my-1" />
+                        <div
+                          className="py-2 px-4 hover:bg-gray-100"
+                          onClick={() => {
+                            localStorage.removeItem("userInfo");
+                            navigate(pathDefault.homePage);
+                            window.location.reload();
+                          }}
+                        >
+                          Đăng xuất
+                        </div>
+                      </div>
+                    ),
+                  },
+                ],
+              }}
+              overlayClassName="header-dropdown-menu"
+              placement="bottomRight"
+              trigger={["click"]}
+            >
+              <a
+                onClick={() => {
+                  (e) => e.preventDefault();
+                }}
+                className="py-2 px-4 rounded-full border border-gray-200 shadow-sm flex items-center space-x-4 cursor-pointer hover:shadow-md"
+              >
+                <FaBars size={18} />
+                <div className="w-8 h-8 text-[#6A6A6A]">
+                  <img
+                    src={user.avatar || "/default_avatar.jpg"}
+                    className="rounded-full"
+                    alt=""
+                  />
+                </div>
+              </a>
+            </Dropdown>
+          )}
         </div>
       </div>
     </header>
