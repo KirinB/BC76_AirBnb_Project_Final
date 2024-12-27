@@ -9,7 +9,7 @@ import { pathDefault } from "../../../common/path";
 import { handleUpdateUser } from "../../../store/slice/user.slice";
 
 const ProfilePage = () => {
-  const user = useSelector((state) => state.UserSlice.user);
+  const user = useSelector((state) => state.userSlice.user);
 
   const dispatch = useDispatch();
 

@@ -32,11 +32,7 @@ const arrRoutes = [
       },
       {
         path: pathDefault.searchPage,
-        element: (
-          <SearchPageProvider>
-            <SearchPage />
-          </SearchPageProvider>
-        ),
+        element: <SearchPage />,
       },
       {
         path: pathDefault.roomDetailPage,
@@ -103,10 +99,12 @@ function App() {
   const routes = useRoutes(arrRoutes);
   return (
     <>
-      <NotificationContext.Provider value={{ handleNotification }}>
-        {routes}
-        <ToastContainer />
-      </NotificationContext.Provider>
+      <SearchPageProvider>
+        <NotificationContext.Provider value={{ handleNotification }}>
+          {routes}
+          <ToastContainer />
+        </NotificationContext.Provider>
+      </SearchPageProvider>
     </>
   );
 }

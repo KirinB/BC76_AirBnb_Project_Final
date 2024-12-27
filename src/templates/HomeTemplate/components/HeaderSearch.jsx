@@ -98,26 +98,55 @@ const HeaderSearch = () => {
   }
 
   return width < 1024 ? (
-    <div className=" rounded-3xl bg-white py-4 pl-4 flex-1 relative flex border border-gray-200 shadow-md">
-      <input
-        type="text"
-        className="border-none outline-none"
-        placeholder="Tìm kiếm điểm đến"
-      />
-      <div
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white self-center absolute right-2 cursor-pointer"
-        onClick={() => {
-          handleSearchButton();
-        }}
-      >
-        <FaMagnifyingGlass size={16} />
+    <Dropdown
+      trigger={["click"]}
+      menu={{
+        items: itemListSearch,
+        onMouseLeave: () => {
+          setIsOpenDropdown(false);
+        },
+      }}
+      open={isOpenDropdown}
+    >
+      <div className=" rounded-3xl bg-white py-4 pl-4 flex-1 relative flex border border-gray-200 shadow-md">
+        <input
+          type="text"
+          className="border-none outline-none"
+          placeholder="Tìm kiếm điểm đến"
+          value={keyword}
+          onChange={handleChangeKeyword}
+          onClick={() => {
+            setIsOpenDropdown(true);
+          }}
+        />
+
+        <div
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white self-center absolute right-2 cursor-pointer"
+          onClick={() => {
+            handleSearchButton();
+          }}
+        >
+          <FaMagnifyingGlass size={16} />
+        </div>
+        {keyword && (
+          <div
+            className="absolute top-1/2 -translate-y-1/2 right-14"
+            onClick={() => {
+              setIsUserSelecting(true);
+              setKeyword("");
+              setIsOpenDropdown(false);
+            }}
+          >
+            <IoCloseCircle className="text-gray-400" />
+          </div>
+        )}
       </div>
-    </div>
+    </Dropdown>
   ) : (
     <div className="bg-white border border-gray-200 rounded-3xl flex justify-between relative">
       <label
         htmlFor="inpt_location"
-        className="w-1/3 py-2 px-6 flex flex-col rounded-3xl hover:bg-[#EBEBEB] cursor-pointer"
+        className="w-1/3 py-2 px-6 flex flex-col rounded-3xl hover:bg-[#EBEBEB] cursor-pointer justify-between"
         onClick={() => {
           setIsOpenDropdown(true);
         }}
@@ -144,7 +173,7 @@ const HeaderSearch = () => {
             />
             {keyword && (
               <div
-                className="absolute top-1/2 -translate-y-1/2 right-0"
+                className="absolute top-1/2 -translate-y-1/2 right-0 text-gray-400 hover:text-gray-500 transition-all duration-200"
                 onClick={() => {
                   setIsUserSelecting(true);
                   setKeyword("");

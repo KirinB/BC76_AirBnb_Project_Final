@@ -19,7 +19,7 @@ export const ButtonOutLine = ({
   return (
     <Button
       type={type}
-      className={`py-[10px] px-4 text-[#222222] hover:!border-black hover:!text-black ${className} ${
+      className={`py-[10px] px-4 text-[#222222] border border-gray-200 hover:!border-black hover:!text-black ${className} ${
         roundedfull ? "rounded-full" : ""
       }`}
       onClick={onClick}

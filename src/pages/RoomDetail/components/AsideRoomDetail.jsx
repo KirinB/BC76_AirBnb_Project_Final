@@ -14,7 +14,7 @@ import { parse, formatISO } from "date-fns";
 import { NotificationContext } from "../../../App";
 import SignInPage from "../../AuthPage/components/SignInPage";
 import ModalLogin from "../../../components/ModalLogin/ModalLogin";
-const AsideRoomDetail = ({ max, priceRoom }) => {
+const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   const { width } = useViewPort();
   const user = useSelector((state) => {
     return state.userSlice.user;
@@ -99,11 +99,11 @@ const AsideRoomDetail = ({ max, priceRoom }) => {
     if (user) {
       const dataDateStart = formatDate(dayStart);
       const dataDateEnd = formatDate(dayEnd);
-      // console.log(dataDateStart);
+
       setRoomService
         .setRoomService({
           id: 0,
-          maPhong: 0,
+          maPhong: idRoom,
           ngayDen: dataDateEnd,
           ngayDi: dataDateStart,
           soLuongKhach: totalPerson,

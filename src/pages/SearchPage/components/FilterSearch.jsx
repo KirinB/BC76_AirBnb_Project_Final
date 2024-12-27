@@ -52,7 +52,7 @@ const FilterSearch = () => {
                       <p>Giá từ</p>
                       <InputNumber
                         min={0}
-                        max={5e6}
+                        max={1e6}
                         step={100e3}
                         value={range[0]}
                         formatter={(value) =>
@@ -69,7 +69,7 @@ const FilterSearch = () => {
                       range
                       value={range}
                       step={100e3}
-                      max={5e6}
+                      max={1e6}
                       onChange={handleSliderChange}
                       tooltip={{
                         formatter: (value) =>
@@ -85,7 +85,7 @@ const FilterSearch = () => {
                       <p>Giá đến</p>
                       <InputNumber
                         min={0}
-                        max={5e6}
+                        max={1e6}
                         step={100e3}
                         value={range[1]}
                         formatter={(value) =>

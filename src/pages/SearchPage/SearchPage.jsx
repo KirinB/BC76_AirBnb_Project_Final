@@ -27,7 +27,7 @@ const SearchPage = () => {
       phongService
         .getListRoomById(keyValue)
         .then((res) => {
-          console.log(res.data.content);
+          // console.log(res.data.content);
           setListRoom(res.data.content);
           setOriginalListRoom(res.data.content);
           setIsLoading(false);
@@ -44,6 +44,11 @@ const SearchPage = () => {
       <FilterSearch />
       {isLoading ? (
         <LoadingCustom />
+      ) : listRoom.length === 0 ? (
+        <div className="my-6 px-6 md:px-10 flex flex-col gap-10">
+          <h2 className="text-center font-semibold">Không có kết quả nào</h2>
+          <img src="/nodatafound.png" alt="" />
+        </div>
       ) : (
         <div className="flex flex-col-reverse md:grid lg:grid-cols-3 sticky lg:relative top-1/2">
           <div className="px-6 col-span-2">
