@@ -5,12 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../../../services/users.service";
 import { useNavigate } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
-import { handleUpdateUser } from "../../../store/Slice/User.Slice";
-import { Button, DatePicker, Input, Modal } from "antd";
-import dayjs from "dayjs";
+import { handleUpdateUser } from "../../../store/slice/user.slice";
 
 const ProfilePage = () => {
-  const user = useSelector((state) => state.UserSlice.user);
+  const user = useSelector((state) => state.userSlice.user);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

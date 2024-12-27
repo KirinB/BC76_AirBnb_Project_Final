@@ -17,7 +17,7 @@ import ModalLogin from "../../../components/ModalLogin/ModalLogin";
 const AsideRoomDetail = ({ max, priceRoom }) => {
   const { width } = useViewPort();
   const user = useSelector((state) => {
-    return state.UserSlice.user;
+    return state.userSlice.user;
   });
   const { handleNotification } = useContext(NotificationContext);
   const [counterAdult, setConterAdult] = useState(1);
