@@ -143,10 +143,10 @@ const HeaderSearch = () => {
       </div>
     </Dropdown>
   ) : (
-    <div className="bg-white border border-gray-200 rounded-3xl flex justify-between relative">
+    <div className="border border-gray-200 rounded-3xl flex justify-between relative">
       <label
         htmlFor="inpt_location"
-        className="w-1/3 py-2 px-6 flex flex-col rounded-3xl hover:bg-[#EBEBEB] cursor-pointer justify-between"
+        className="w-1/3 py-2 px-6 flex flex-col rounded-3xl hover:bg-[#EBEBEB] dark:hover:bg-slate-400 cursor-pointer justify-between"
         onClick={() => {
           setIsOpenDropdown(true);
         }}
@@ -189,7 +189,7 @@ const HeaderSearch = () => {
       <div className="w-1/3 flex gap-2 px-2">
         <label
           htmlFor="inpt_daystart"
-          className="w-1/2 py-2 px-4 flex flex-col rounded-3xl hover:bg-[#EBEBEB] cursor-pointer"
+          className="w-1/2 py-2 px-4 flex flex-col rounded-3xl hover:bg-[#EBEBEB] dark:hover:bg-slate-400 cursor-pointer"
         >
           <p className="text-xs">Nhận phòng</p>
           <DatePicker
@@ -203,7 +203,7 @@ const HeaderSearch = () => {
         </label>
         <label
           htmlFor="inpt_dayend"
-          className="w-1/2 py-2 px-4 flex flex-col rounded-3xl hover:bg-[#EBEBEB] cursor-pointer"
+          className="w-1/2 py-2 px-4 flex flex-col rounded-3xl hover:bg-[#EBEBEB] dark:hover:bg-slate-400 cursor-pointer"
         >
           <p className="text-xs">Trả phòng</p>
           <DatePicker
@@ -218,7 +218,7 @@ const HeaderSearch = () => {
       </div>
       <label
         htmlFor="inpt_person"
-        className="w-1/3 py-2 pr-16 px-6 flex flex-col rounded-3xl hover:bg-[#EBEBEB] cursor-pointer"
+        className="w-1/3 py-2 pr-16 px-6 flex flex-col rounded-3xl hover:bg-[#EBEBEB] dark:hover:bg-slate-400 cursor-pointer"
         onClick={() => {
           setIsOpenDropdownPerson(true);
         }}

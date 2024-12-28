@@ -25,7 +25,10 @@ const RoomSearch = ({ id, image, title, description, price, giuong }) => {
         <p className="text-[#6A6A6A]">{giuong} giường</p>
         <div className="flex space-x-2">
           <p className="text-[#6A6A6A]">
-            <strong className="text-[#222222]">₫{price * 20}.000</strong>/ đêm
+            <strong className="text-[#222222] dark:text-white">
+              ₫{price * 20}.000
+            </strong>
+            / đêm
           </p>
         </div>
       </div>

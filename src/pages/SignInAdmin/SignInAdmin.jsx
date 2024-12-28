@@ -33,7 +33,7 @@ const SignInAdmin = () => {
           .signIn(values)
           .then((res) => {
             localStorage.setItem("userInfo", JSON.stringify(res.data.content));
-            dispatch(handleUpdateUser(res.data.content));
+            dispatch(handleUpdateUser(res.data.content.user));
             handleNotification("success", "Đăng nhập thành công");
             setTimeout(() => {
               navigate(pathDefault.admin);

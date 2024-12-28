@@ -16,16 +16,16 @@ const CategoryNavbar = () => {
   };
 
   return (
-    <div className="shadow-sm sticky top-[81px] md:top-24 bg-white z-10">
+    <div className="shadow-sm dark:shadow-white sticky top-[81px] md:top-24 bg-white dark:bg-slate-800 z-10">
       <div className="py-2 container px-10">
         <Slider {...settings}>
           {dataCategory.map((item, index) => {
             return (
               <div
                 key={index}
-                className="!flex flex-col justify-center items-center opacity-70 cursor-pointer hover:opacity-100 transition-all duration-200"
+                className="!flex flex-col gap-2 justify-center items-center opacity-70 cursor-pointer hover:opacity-100 transition-all duration-200"
               >
-                <img className="w-6 h-6" src={item.icon} alt="" />
+                <img className="w-6 h-6 text-white" src={item.icon} alt="" />
                 <h3 className="text-xs text-center">{item.title}</h3>
               </div>
             );

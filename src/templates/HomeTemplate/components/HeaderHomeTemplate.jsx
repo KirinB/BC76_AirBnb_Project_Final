@@ -2,11 +2,14 @@ import { Dropdown, InputNumber, Modal, Slider } from "antd";
 import React, { useState } from "react";
 import { FaBars, FaRegHeart, FaRegUserCircle } from "react-icons/fa";
 import { FaArrowLeft, FaMagnifyingGlass } from "react-icons/fa6";
+import { FiMoon, FiSun } from "react-icons/fi";
+import { IoIosClose } from "react-icons/io";
 import { RiGlobalLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "../../../assets/Icons";
 import { pathDefault } from "../../../common/path";
+import Counter from "../../../components/Counter/Counter";
 import {
   ButtonGhost,
   ButtonPrimary,
@@ -14,15 +17,15 @@ import {
 import useViewPort from "../../../hooks/useViewPort";
 import LineSpace from "../../../pages/RoomDetail/components/LineSpace";
 import { useHeaderContext } from "../../../store/HeaderContext";
+import { useSearchPageContext } from "../../../store/SearchPageContext";
+import { useTheme } from "../../../store/ThemeContext";
 import HeaderSearch from "./HeaderSearch";
 import HeaderSearchMobile from "./HeaderSearchMobile";
-import { IoIosClose } from "react-icons/io";
-import { useSearchPageContext } from "../../../store/SearchPageContext";
-import Counter from "../../../components/Counter/Counter";
 
 const HeaderHomeTemplate = () => {
   const { width } = useViewPort();
   const { setListRoom, originalListRoom } = useSearchPageContext();
+  const { isDarkMode, setIsDarkMode } = useTheme();
   const user = useSelector((state) => state.userSlice.user);
   const location = useLocation();
   const { keySearch } = useHeaderContext();
@@ -317,7 +320,7 @@ const HeaderHomeTemplate = () => {
     </>
   ) : (
     <header
-      className={`sticky bg-white shadow-sm z-20 h-[96px] py-4 top-0 items-center hidden md:flex`}
+      className={`sticky bg-white shadow-sm dark:shadow-white z-20 h-[96px] py-4 top-0 items-center hidden dark:bg-slate-800 dark:text-white md:flex`}
     >
       <div className="container flex gap-4 justify-between items-center px-10 lg:px-0">
         <div>
@@ -331,11 +334,20 @@ const HeaderHomeTemplate = () => {
         </div>
         <HeaderSearch />
         <div className="flex items-center space-x-2">
-          <ButtonGhost className={"!px-2 py-5 font-semibold rounded-full"}>
-            Cho thuê chỗ ở qua Airbnb
+          <ButtonGhost
+            className={"!px-2 !py-5 font-semibold rounded-full"}
+            onClick={() => {
+              setIsDarkMode(!isDarkMode);
+            }}
+          >
+            {isDarkMode ? (
+              <FiMoon size={20} stroke="white" />
+            ) : (
+              <FiSun size={20} />
+            )}
           </ButtonGhost>
           <ButtonGhost className={"!px-2 py-5 rounded-full"}>
-            <RiGlobalLine size={20} />
+            <RiGlobalLine color={isDarkMode ? "white" : "black"} size={20} />
           </ButtonGhost>
           {!user ? (
             <Dropdown

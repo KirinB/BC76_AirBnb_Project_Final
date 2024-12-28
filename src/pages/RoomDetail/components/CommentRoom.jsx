@@ -16,11 +16,14 @@ import { useSelector } from "react-redux";
 import TextArea from "antd/es/input/TextArea";
 import { pathDefault } from "../../../common/path";
 import { NotificationContext } from "../../../App";
+import { IoMdClose } from "react-icons/io";
+import { useTheme } from "../../../store/ThemeContext";
 
 const desc = ["Rất tệ", "Tệ", "Bình thường", "Tốt", "Tuyệt vời"];
 
 const CommentRoom = ({ roomName, imageRoom, roomId }) => {
   const { id } = useParams();
+  const { isDarkMode } = useTheme();
   const { user, token } = useSelector((state) => state.userSlice);
   const { handleNotification } = useContext(NotificationContext);
   const { listComment, setListComment } = useRoomDetailContext();
@@ -142,7 +145,8 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                             percent={80}
                             showInfo={false}
                             className="flex-1"
-                            strokeColor="#222"
+                            strokeColor={isDarkMode ? "white" : "#222"}
+                            trailColor={isDarkMode ? "black" : ""}
                           />
                         </div>
                         <div className="flex gap-2">
@@ -152,7 +156,8 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                             percent={20}
                             showInfo={false}
                             className="flex-1"
-                            strokeColor="#222"
+                            strokeColor={isDarkMode ? "white" : "#222"}
+                            trailColor={isDarkMode ? "black" : ""}
                           />
                         </div>
                         <div className="flex gap-2">
@@ -162,7 +167,8 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                             percent={5}
                             showInfo={false}
                             className="flex-1"
-                            strokeColor="#222"
+                            strokeColor={isDarkMode ? "white" : "#222"}
+                            trailColor={isDarkMode ? "black" : ""}
                           />
                         </div>
                         <div className="flex gap-2">
@@ -172,7 +178,8 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                             percent={0}
                             showInfo={false}
                             className="flex-1"
-                            strokeColor="#222"
+                            strokeColor={isDarkMode ? "white" : "#222"}
+                            trailColor={isDarkMode ? "black" : ""}
                           />
                         </div>
                         <div className="flex gap-2">
@@ -182,7 +189,8 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                             percent={0}
                             showInfo={false}
                             className="flex-1"
-                            strokeColor="#222"
+                            strokeColor={isDarkMode ? "white" : "#222"}
+                            trailColor={isDarkMode ? "black" : ""}
                           />
                         </div>
                       </div>
@@ -203,7 +211,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                     </div>
                     <div className="relative flex-1">
                       <div className="max-h-[70vh] overflow-y-auto">
-                        <div className="sticky top-0 w-full flex justify-between bg-white z-50 pb-4 border-b border-gray-200">
+                        <div className="sticky top-0 w-full flex justify-between bg-white dark:bg-slate-800 z-50 pb-4 border-b border-gray-200">
                           <h3 className="text-2xl font-semibold">
                             {listComment.length} lượt đánh giá
                           </h3>
@@ -272,7 +280,14 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                 Viết đánh giá
               </ButtonOutLine>
               <Modal
-                title={<div className="text-center">Viết đánh giá</div>}
+                title={
+                  <div className="text-center dark:text-slate-200">
+                    Viết đánh giá
+                  </div>
+                }
+                closeIcon={
+                  <IoMdClose className="text-black dark:text-slate-200" />
+                }
                 open={isModalOpenWriteReview}
                 footer={null}
                 onCancel={() => {
