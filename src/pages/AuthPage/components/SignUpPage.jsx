@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { authService } from "../../../services/auth.service";
@@ -8,8 +8,11 @@ import { Link } from "react-router-dom";
 import { Icons } from "../../../assets/Icons";
 import { pathDefault } from "../../../common/path";
 import InputCustom from "../../../components/ui/inputCustom/InputCustom";
+import { NotificationContext } from "../../../App";
 
 const SignUpPage = ({ styleIcon }) => {
+  const handleNotification = useContext(NotificationContext);
+
   const { handleBlur, handleChange, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues: {
@@ -21,7 +24,7 @@ const SignUpPage = ({ styleIcon }) => {
         authService
           .signUp(values)
           .then((res) => {
-            alert("Đăng ký thành công");
+            handleNotification("success", "Đăng kí thành công", 3000);
             window.location.reload();
           })
           .catch((err) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { pathDefault } from "../../../common/path";
@@ -11,11 +11,14 @@ import InputCustom from "../../../components/ui/inputCustom/InputCustom";
 import { ButtonOutLine } from "../../../components/ui/button/ButtonCustom";
 import { useDispatch } from "react-redux";
 import { handleUpdateUser } from "../../../store/slice/user.slice";
+import { NotificationContext } from "../../../App";
 
 const SignInPage = ({ styleIcon, handle }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const handleNotification = useContext(NotificationContext);
 
   // handle sign in
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
@@ -30,7 +33,8 @@ const SignInPage = ({ styleIcon, handle }) => {
           .then((res) => {
             dispatch(handleUpdateUser(res.data.content.user));
             localStorage.setItem("userInfo", JSON.stringify(res.data.content));
-            alert("Đăng nhập thành công!");
+            handleNotification("success", "Đăng nhập thành công", 3000);
+
             navigate(pathDefault.homePage);
           })
           .catch((err) => {
