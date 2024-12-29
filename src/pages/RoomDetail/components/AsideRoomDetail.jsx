@@ -14,11 +14,13 @@ import { parse, formatISO } from "date-fns";
 import { NotificationContext } from "../../../App";
 import SignInPage from "../../AuthPage/components/SignInPage";
 import ModalLogin from "../../../components/ModalLogin/ModalLogin";
+import { formatCurrency } from "../../../common/formatCurrency";
 const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   const { width } = useViewPort();
   const user = useSelector((state) => {
     return state.userSlice.user;
   });
+  const rate = useSelector((state) => state.exchangeRate.rate);
   const { handleNotification } = useContext(NotificationContext);
   const [counterAdult, setConterAdult] = useState(1);
   const [counterChild, setCounterChild] = useState(0);
@@ -148,17 +150,13 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
     return Math.abs(timeDifference / (1000 * 60 * 60 * 24));
   }
 
-  function formatCurrency(value) {
-    return new Intl.NumberFormat("vi-VN").format(value);
-  }
-
   return width < 768 ? (
     <>
       <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex gap-4 justify-between p-6">
         <div className="w-1/2 flex items-center ">
           {isSelectedDay ? (
             <h2 className="text-lg font-semibold">
-              ₫{formatCurrency(priceRoom * 20e3)}{" "}
+              ₫{formatCurrency(priceRoom * rate)}{" "}
               <span className="font-normal text-base">/ đêm</span>
             </h2>
           ) : (
@@ -216,7 +214,7 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         <div className="border w-full border-gray-200 shadow-lg rounded-xl p-6 space-y-6">
           {isSelectedDay ? (
             <h2 className="text-xl font-semibold">
-              ₫{formatCurrency(priceRoom * 20e3)}{" "}
+              ₫{formatCurrency(priceRoom * rate)}{" "}
               <span className="font-normal text-base">/ đêm</span>
             </h2>
           ) : (
@@ -330,10 +328,10 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
                 <div className="flex flex-col gap-4 mt-4">
                   <div className="flex justify-between items-center gap-2">
                     <h4 className="text-sm lg:text-base underline">
-                      ₫{formatCurrency(priceRoom * 20e3)} x {daysSelected} đêm
+                      ₫{formatCurrency(priceRoom * rate)} x {daysSelected} đêm
                     </h4>
                     <h4 className="text-sm lg:text-base">
-                      ₫{formatCurrency(priceRoom * 20e3 * daysSelected)}
+                      ₫{formatCurrency(priceRoom * rate * daysSelected)}
                     </h4>
                   </div>
                   <div className="flex justify-between items-center gap-2">
@@ -357,7 +355,7 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
                   <h4 className="text-sm lg:text-base font-semibold">
                     ₫
                     {formatCurrency(
-                      priceRoom * 20e3 * daysSelected + 150e3 + 200e3
+                      priceRoom * rate * daysSelected + 150e3 + 200e3
                     )}
                   </h4>
                 </div>

@@ -299,9 +299,9 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                     <img
                       src={imageRoom}
                       alt={roomName}
-                      className="w-full rounded-xl"
+                      className="w-full rounded-xl max-h-64"
                     />
-                    <h2 className="truncate text-lg font-semibold">
+                    <h2 className="text-lg font-semibold w-full text-center">
                       {roomName}
                     </h2>
                     <Rate
