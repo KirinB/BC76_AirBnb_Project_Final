@@ -1,8 +1,8 @@
 import { Button } from "antd";
 
-export const ButtonGhost = ({ children, className, ...props }) => {
+export const ButtonGhost = ({ children, className, onClick, ...props }) => {
   return (
-    <Button className={className} type="text" {...props}>
+    <Button className={className} type="text" onClick={onClick} {...props}>
       {children}
     </Button>
   );
@@ -19,7 +19,7 @@ export const ButtonOutLine = ({
   return (
     <Button
       type={type}
-      className={`py-[10px] px-4 text-[#222222] hover:!border-black hover:!text-black ${className} ${
+      className={`py-[10px] px-4 text-[#222222] dark:text-slate-200 dark:hover:!text-white border border-gray-200 hover:!border-black hover:!text-black ${className} ${
         roundedfull ? "rounded-full" : ""
       }`}
       onClick={onClick}

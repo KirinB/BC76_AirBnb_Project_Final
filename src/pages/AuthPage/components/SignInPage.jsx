@@ -1,15 +1,13 @@
-import React from "react";
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { pathDefault } from "../../../common/path";
-import { Input } from "antd";
-import { authService } from "../../../services/auth.service";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
 import { FaFacebookF, FaGooglePlusG, FaTwitter } from "react-icons/fa";
-import { Icons } from "../../../assets/Icons";
-import InputCustom from "../../../components/ui/inputCustom/InputCustom";
-import { ButtonOutLine } from "../../../components/ui/button/ButtonCustom";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { Icons } from "../../../assets/Icons";
+import { pathDefault } from "../../../common/path";
+import InputCustom from "../../../components/ui/inputCustom/InputCustom";
+import { authService } from "../../../services/auth.service";
 import { handleUpdateUser } from "../../../store/slice/user.slice";
 
 const SignInPage = ({ styleIcon, handle }) => {

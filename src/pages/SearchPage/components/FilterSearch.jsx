@@ -31,7 +31,7 @@ const FilterSearch = () => {
     setRange(newRange);
   };
   return (
-    <div className="shadow-sm relative lg:sticky lg:top-24 hidden md:flex bg-white items-center py-4 lg:z-10">
+    <div className="shadow-sm relative lg:sticky lg:top-24 hidden md:flex bg-white dark:bg-slate-800 items-center dark:shadow-white py-4 lg:z-10">
       <div className="container flex space-x-4">
         <div className="border-r pr-4 border-gray-200 flex flex-wrap gap-2">
           <DropdownCustom
@@ -52,7 +52,7 @@ const FilterSearch = () => {
                       <p>Giá từ</p>
                       <InputNumber
                         min={0}
-                        max={5e6}
+                        max={1e6}
                         step={100e3}
                         value={range[0]}
                         formatter={(value) =>
@@ -69,7 +69,7 @@ const FilterSearch = () => {
                       range
                       value={range}
                       step={100e3}
-                      max={5e6}
+                      max={1e6}
                       onChange={handleSliderChange}
                       tooltip={{
                         formatter: (value) =>
@@ -85,7 +85,7 @@ const FilterSearch = () => {
                       <p>Giá đến</p>
                       <InputNumber
                         min={0}
-                        max={5e6}
+                        max={1e6}
                         step={100e3}
                         value={range[1]}
                         formatter={(value) =>
@@ -114,7 +114,7 @@ const FilterSearch = () => {
             ]}
             icon={true}
           >
-            Giá
+            <span>Giá</span>
           </DropdownCustom>
           <DropdownCustom icon={true}>Thời gian trong ngày</DropdownCustom>
           <DropdownCustom icon={true}>Ngôn ngữ có thể sử dụng</DropdownCustom>
