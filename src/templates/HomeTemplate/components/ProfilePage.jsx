@@ -9,6 +9,7 @@ import { handleUpdateUser } from "../../../store/slice/user.slice";
 import { Button, Carousel, DatePicker, Input, Modal } from "antd";
 import dayjs from "dayjs";
 import { phongService } from "../../../services/phong.service";
+import "./ProfilePage.scss";
 
 import Slider from "react-slick";
 
@@ -34,6 +35,13 @@ const ProfilePage = () => {
         settings: {
           slidesToShow: 2, // Hiển thị 2 items
           slidesToScroll: 2, // Cuộn 2 items mỗi lần
+        },
+      },
+      {
+        breakpoint: 480, // Màn hình rất nhỏ
+        settings: {
+          slidesToShow: 1, // Hiển thị 1 item
+          slidesToScroll: 1, // Cuộn 1 item mỗi lần
         },
       },
     ],
@@ -145,10 +153,10 @@ const ProfilePage = () => {
   }, [user.id]);
 
   return (
-    <div className="container">
-      <div className="grid grid-cols-12 gap-10">
-        <div className="hidden lg:col-span-4 lg:block">
-          <div className="p-10 shadow-xl rounded-3xl my-10">
+    <div className="container ">
+      <div className="block px-5 lg:px-0 lg:grid lg:grid-cols-12 gap-10">
+        <div className="col-span-12 lg:col-span-4">
+          <div className=" p-10 shadow-xl rounded-3xl my-10">
             <div className="flex flex-col space-y-5">
               <div className="flex items-end gap-10 relative">
                 <img
@@ -177,8 +185,8 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className="rounded-3xl border-2 p-10 space-y-3 mb-10">
-            <h2 className="text-xl font-medium">
+          <div className=" p-10 rounded-3xl border-2 space-y-3 mb-10">
+            <h2 className="text-base sm:text-xl font-medium">
               Thông tin đã được xác nhận của <span>{user.name}</span>
             </h2>
             <div className="flex items-center">
@@ -187,7 +195,7 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-12 w-full lg:col-span-8">
+        <div className="col-span-12 lg:col-span-8 ">
           <h2 className="text-3xl font-bold mt-5">
             Thông tin về <span>{user.name}</span>
           </h2>
@@ -245,7 +253,10 @@ const ProfilePage = () => {
           <Button onClick={handleOk}>Xác nhận thông tin</Button>
           <h2 className="text-3xl font-bold my-4">Thông tin đặt phòng</h2>
 
-          <Slider {...settings}>
+          <Slider
+            {...settings}
+            className="carousel_custom max-w-full mr-0 lg:mr-10"
+          >
             {rooms.map((item, index) => {
               const roomDetail = roomDetails[item.maPhong];
               return (

@@ -116,11 +116,14 @@ const HeaderHomeTemplate = () => {
                   {
                     label: (
                       <div className="flex flex-col">
-                        <div className="py-2 px-4 hover:bg-gray-100 font-semibold">
-                          Đăng ký
-                        </div>
                         <Link
-                          to={pathDefault.AuthPage}
+                          to={`${pathDefault.AuthPage}?type=signup`}
+                          className="py-2 px-4 hover:bg-gray-100 font-semibold"
+                        >
+                          Đăng ký
+                        </Link>
+                        <Link
+                          to={`${pathDefault.AuthPage}?type=signin`}
                           className="py-2 px-4 hover:bg-gray-100 hover:text-current"
                         >
                           Đăng nhập
