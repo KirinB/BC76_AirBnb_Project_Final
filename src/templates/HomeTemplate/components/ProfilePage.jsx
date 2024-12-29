@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { CameraOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,9 +12,12 @@ import { phongService } from "../../../services/phong.service";
 import "./ProfilePage.scss";
 
 import Slider from "react-slick";
+import { NotificationContext } from "../../../App";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.userSlice.user);
+
+  const { handleNotification } = useContext(NotificationContext);
 
   const settings = {
     dots: true, // Hiển thị các chấm chuyển slide
@@ -77,7 +80,11 @@ const ProfilePage = () => {
     userService
       .uploadAvt(formData, token)
       .then((res) => {
-        alert("Ảnh đại diện đã được tải lên thành công!");
+        handleNotification(
+          "success",
+          "Ảnh đại diện đã được tải lên thành công!",
+          3000
+        );
 
         const updatedAvatar = res.data.content.avatar;
         const updatedUser = {
@@ -96,7 +103,11 @@ const ProfilePage = () => {
       })
       .catch((err) => {
         console.error(err);
-        alert("Đã xảy ra lỗi khi tải lên ảnh đại diện.");
+        handleNotification(
+          "error",
+          "Đã xảy ra lỗi khi tải lên ảnh đại diện.",
+          3000
+        );
       });
   };
 
@@ -115,7 +126,7 @@ const ProfilePage = () => {
             user: updatedUser,
           })
         );
-        alert("Thông tin đã được cập nhật");
+        handleNotification("success", "Thông tin đã được cập nhật");
       })
       .catch((err) => {
         console.error("Lỗi khi cập nhật thông tin:", err);

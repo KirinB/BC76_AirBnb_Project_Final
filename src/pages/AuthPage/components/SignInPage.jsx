@@ -18,7 +18,7 @@ const SignInPage = ({ styleIcon, handle }) => {
 
   const dispatch = useDispatch();
 
-  const handleNotification = useContext(NotificationContext);
+  const { handleNotification } = useContext(NotificationContext);
 
   // handle sign in
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =

@@ -11,7 +11,7 @@ import InputCustom from "../../../components/ui/inputCustom/InputCustom";
 import { NotificationContext } from "../../../App";
 
 const SignUpPage = ({ styleIcon }) => {
-  const handleNotification = useContext(NotificationContext);
+  const { handleNotification } = useContext(NotificationContext);
 
   const { handleBlur, handleChange, handleSubmit, values, errors, touched } =
     useFormik({
