@@ -106,22 +106,23 @@ const FormAddRoom = ({
     validationSchema: Yup.object({
       tenPhong: Yup.string().required("Vui lòng không bỏ trống !"),
       moTa: Yup.string().required("Vui lòng không bỏ trống !"),
-      maViTri: Yup.string().required("Vui lòng không bỏ trống !"),
-      khach: Yup.string()
+      maViTri: Yup.number().required("Vui lòng không bỏ trống !"),
+      khach: Yup.number()
         .min(1, "Vui lòng nhập số khách từ 1 trở lên")
         .required("Vui lòng không bỏ trống !"),
-      phongNgu: Yup.string()
+      phongNgu: Yup.number()
         .min(1, "Vui lòng nhập số phòng từ 1 trở lên")
         .required("Vui lòng không bỏ trống !"),
-      giuong: Yup.string()
+      giuong: Yup.number()
         .min(1, "Vui lòng nhập số giường từ 1 trở lên")
         .required("Vui lòng không bỏ trống !"),
-      phongTam: Yup.string()
+      phongTam: Yup.number()
         .min(1, "Vui lòng nhập số phòng tắm từ 1 trở lên")
         .required("Vui lòng không bỏ trống !"),
-      giaTien: Yup.string()
+      giaTien: Yup.number()
         .min(1, "Vui lòng nhập số tiền từ 1 trở lên")
         .required("Vui lòng không bỏ trống !"),
+      hinhAnh: Yup.string().required("Vui lòng không bỏ trống"),
     }),
   });
   return (
@@ -130,6 +131,7 @@ const FormAddRoom = ({
       <form action="" onSubmit={handleSubmit} className="space-y-5">
         <UploadRoomPicture
           previewImage={previewImage}
+          error={errors.hinhAnh}
           handleChange={(info) => {
             console.log(info);
             const file = info.file.originFileObj;
@@ -183,7 +185,7 @@ const FormAddRoom = ({
                     <p>{loc.tenViTri}</p>
                   </div>
                 ),
-                value: loc.id,
+                value: loc.id * 1,
               };
             })}
             error={errors.maViTri}
@@ -239,6 +241,8 @@ const FormAddRoom = ({
               }
             }}
             handleBlur={handleBlur}
+            error={errors.giuong}
+            touched={touched.giuong}
           />
         </div>
         <div className="grid grid-cols-2 gap-5">
@@ -256,6 +260,8 @@ const FormAddRoom = ({
               }
             }}
             handleBlur={handleBlur}
+            error={errors.phongTam}
+            touched={touched.phongTam}
           />
           <InputNumberCustom
             labelContent={"Giá phòng"}
@@ -271,6 +277,8 @@ const FormAddRoom = ({
               }
             }}
             handleBlur={handleBlur}
+            error={errors.giaTien}
+            touched={touched.giaTien}
           />
         </div>
         <div className="grid grid-cols-3 gap-5">

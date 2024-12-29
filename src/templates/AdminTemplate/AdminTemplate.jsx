@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   DownOutlined,
   MenuFoldOutlined,
@@ -19,17 +19,29 @@ import {
 } from "../../components/ui/dropdown/DropdownCustom";
 import { useSelector } from "react-redux";
 import { IoMdCheckboxOutline, IoMdNotificationsOutline } from "react-icons/io";
+
 const AdminTemplate = () => {
-  const { user, token } = useSelector((state) => state.userSlice);
+  const { user } = useSelector((state) => state.userSlice);
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(true);
   const [them, setThem] = useState("light");
+  const location = useLocation();
+  const menuKeyMapping = {
+    [pathDefault.dashBoard]: "1",
+    [pathDefault.managerUser]: "2",
+    [pathDefault.managerLocation]: "3",
+    [pathDefault.managerRoom]: "4",
+    [pathDefault.managerReservation]: "5",
+  };
+
+  const selectedKey = menuKeyMapping[location.pathname] || "1";
+
   const changeTheme = () => {
     setThem(them === "light" ? "dark" : "light");
     console.log(them);
   };
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
   const items = [
     {
@@ -86,16 +98,15 @@ const AdminTemplate = () => {
           </Link>
         </div>
         <Menu
-          theme="light"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={[selectedKey]}
           items={[
             {
               key: "1",
               icon: <AiOutlineClockCircle />,
               label: (
                 <NavLink
-                  className={({ isActive }) => {
+                  className={({ isActive, isPending }) => {
                     return `px-3 rounded-md inline-block ${
                       isActive || location.pathname === "/admin"
                         ? "item-active"
@@ -113,7 +124,7 @@ const AdminTemplate = () => {
               icon: <UserOutlined />,
               label: (
                 <NavLink
-                  className={({ isActive }) => {
+                  className={({ isActive, isPending }) => {
                     return `px-3 rounded-md inline-block ${
                       isActive || location.pathname === "/admin/manager-user"
                         ? "item-active"

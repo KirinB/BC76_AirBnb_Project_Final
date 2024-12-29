@@ -18,7 +18,12 @@ import { message } from "antd";
 //   }
 //   return isJpgOrPng && isLt2M;
 // };
-export const UploadRoomPicture = ({ handleChange, id = "", previewImage }) => {
+export const UploadRoomPicture = ({
+  handleChange,
+  id = "",
+  previewImage,
+  error,
+}) => {
   const uploadButton = (
     <button
       style={{
@@ -49,6 +54,7 @@ export const UploadRoomPicture = ({ handleChange, id = "", previewImage }) => {
         listType="picture-card"
         showUploadList={false}
         id={id}
+        error={error}
       >
         {previewImage ? (
           <img
@@ -64,6 +70,7 @@ export const UploadRoomPicture = ({ handleChange, id = "", previewImage }) => {
           uploadButton
         )}
       </Upload>
+      {error ? <p className="text-red-500 mt-1 text-sm">{error}</p> : null}
     </div>
   );
 };

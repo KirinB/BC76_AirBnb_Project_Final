@@ -1,5 +1,5 @@
 import { Avatar, Button, Input, Modal, Popconfirm, Table, Tag } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { NotificationContext } from "../../App";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
 import { useSelector } from "react-redux";
@@ -30,6 +30,16 @@ const ManagerUser = ({ them }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRow, setTotalRow] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Xử lý resetForm
+  const resetFormRef = useRef(null);
+  const handleResetForm = (resetForm) => {
+    resetFormRef.current = resetForm;
+  };
+  const resetUserForm = () => {
+    if (resetFormRef.current) {
+      resetFormRef.current();
+    }
+  };
 
   const handlePageChange = (page, pageSize) => {
     console.log("Current page:", page);
@@ -175,6 +185,7 @@ const ManagerUser = ({ them }) => {
   useEffect(() => {
     getAllUsers();
   }, [currentPage, keyword]);
+  useEffect(() => {}, [getAllUsers]);
   return (
     <div className="space-y-5">
       <div className="flex justify-between items-center border-gray-500 border-b-2">
@@ -211,6 +222,7 @@ const ManagerUser = ({ them }) => {
                 gender: true,
                 role: "",
               });
+              resetUserForm();
             }}
           />
           <Modal
@@ -228,6 +240,7 @@ const ManagerUser = ({ them }) => {
               getAllUsers={() => {
                 getAllUsers();
               }}
+              onResetForm={handleResetForm}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}
             />

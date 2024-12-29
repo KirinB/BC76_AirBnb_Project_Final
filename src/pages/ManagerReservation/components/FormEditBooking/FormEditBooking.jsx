@@ -10,37 +10,31 @@ import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePicke
 import { reservationService } from "../../../../services/reservation.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
+import { format } from "date-fns";
 const FormEditBooking = ({ initialValues }) => {
   const { handleNotification } = useContext(NotificationContext);
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    errors,
-    touched,
-    setFieldValue,
-  } = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    onSubmit: (values) => {
-      reservationService
-        .putReservation(values.id, values)
-        .then((res) => {
-          console.log(res);
-          handleNotification("success", "Sửa thông tin đặt phòng thành công");
-        })
-        .catch((err) => {
-          console.log(err);
-          handleNotification("error", err.res.data.content);
-        });
-    },
-    validationSchema: Yup.object({
-      soLuongKhach: Yup.number()
-        .required("Vui lòng không bỏ trống")
-        .min(1, "Vui lòng nhập trên 1 khách"),
-    }),
-  });
+  const { values, handleSubmit, handleBlur, errors, touched, setFieldValue } =
+    useFormik({
+      initialValues,
+      enableReinitialize: true,
+      onSubmit: (values) => {
+        reservationService
+          .putReservation(values.id, values)
+          .then((res) => {
+            console.log(res);
+            handleNotification("success", "Sửa thông tin đặt phòng thành công");
+          })
+          .catch((err) => {
+            console.log(err);
+            handleNotification("error", err.res.data.content);
+          });
+      },
+      validationSchema: Yup.object({
+        soLuongKhach: Yup.number()
+          .required("Vui lòng không bỏ trống")
+          .min(1, "Vui lòng nhập trên 1 khách"),
+      }),
+    });
   return (
     <div>
       <form action="" className="space-y-5" onSubmit={handleSubmit}>
@@ -61,7 +55,10 @@ const FormEditBooking = ({ initialValues }) => {
         <div className="grid grid-cols-2 gap-5">
           <DatePickerCustom
             labelContent={"Ngày Đến"}
-            value={values.ngayDen ? dayjs(values.ngayDen) : null}
+            id={"ngayDen"}
+            name={"ngayDen"}
+            format={"DD/MM/YYYY"}
+            value={values.ngayDen ? dayjs(values.ngayDen, "DD/MM/YYYY") : null}
             error={errors.ngayDen}
             touched={touched.ngayDen}
             handleChange={(date, dateString) => {
@@ -71,6 +68,9 @@ const FormEditBooking = ({ initialValues }) => {
           />
           <DatePickerCustom
             labelContent={"Ngày Đi"}
+            id={"ngayDi"}
+            name={"ngayDi"}
+            format={"DD/MM/YYYY"}
             value={values.ngayDi ? dayjs(values.ngayDi) : null}
             error={errors.ngayDi}
             touched={touched.ngayDi}
@@ -78,6 +78,12 @@ const FormEditBooking = ({ initialValues }) => {
               setFieldValue("ngayDi", dateString);
             }}
             handleBlur={handleBlur}
+          />
+          <DatePicker
+            format={"DD/MM/YYYY"}
+            onChange={(date, dateString) => {
+              console.log(dateString);
+            }}
           />
         </div>
         <InputNumberCustom

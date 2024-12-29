@@ -258,7 +258,7 @@ const ManagerRoom = () => {
                 doXe: true,
                 hoBoi: true,
                 banUi: true,
-                maViTri: 0,
+                maViTri: "",
                 hinhAnh: "",
               });
               setPreviewImage(null);

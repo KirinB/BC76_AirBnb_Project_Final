@@ -6,6 +6,7 @@ import { NotificationContext } from "../../../App";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { Button } from "antd";
+import * as Yup from "yup";
 const FormAddLocation = ({
   handleCloseModal,
   getAllRoom,
@@ -13,7 +14,6 @@ const FormAddLocation = ({
   initialValues,
   previewImage,
   setPreviewImage,
-  location,
 }) => {
   const { handleNotification } = useContext(NotificationContext);
   const { user, token } = useSelector((state) => state.userSlice);
@@ -93,12 +93,19 @@ const FormAddLocation = ({
         }
       }
     },
+    validationSchema: Yup.object({
+      hinhAnh: Yup.string().required("Vui lòng thêm hình ảnh"),
+      tenViTri: Yup.string().required("Vui lòng nhập tên vị trí"),
+      tinhThanh: Yup.string().required("Vui lòng nhập tên Tỉnh Thành"),
+      quocGia: Yup.string().required("Vui lòng nhập tên Thành Phố"),
+    }),
   });
   return (
     <div>
       <form action="" onSubmit={handleSubmit} className="space-y-5">
         <UploadRoomPicture
           previewImage={previewImage}
+          error={errors.hinhAnh}
           handleChange={(info) => {
             console.log(info);
             const file = info.file.originFileObj;
@@ -135,7 +142,7 @@ const FormAddLocation = ({
           name={"quocGia"}
           id="quocGia"
           value={values.quocGia}
-          placeholder={"Nhập tên Tỉnh Thành"}
+          placeholder={"Nhập tên thành phố"}
           handleChange={handleChange}
           handleBlur={handleBlur}
           touched={touched.quocGia}

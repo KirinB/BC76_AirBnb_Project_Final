@@ -9,6 +9,7 @@ export const DatePickerCustom = ({
   touched,
   labelContent,
   handleBlur,
+  format,
 }) => {
   return (
     <div className="space-y-1">
@@ -19,7 +20,7 @@ export const DatePickerCustom = ({
         className="w-full"
         id={id}
         name={name}
-        format={"DD/MM/YYYY"}
+        format={format}
         onChange={handleChange}
         value={value}
         onBlur={handleBlur}

@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Dropdown, Input, Modal, Popconfirm, Table } from "antd";
+import { Button, Input, Modal, Popconfirm, Table } from "antd";
 import { NotificationContext } from "../../App";
 import { useSelector } from "react-redux";
 import { locationService } from "../../services/viTri.service";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
-import { FaUserPlus } from "react-icons/fa";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
-import FormAddRoom from "../ManagerRoom/components/FormAddRoom/FormAddRoom";
 import FormAddLocation from "./FormAddLocation/FormAddLocation";
-import { BiLocationPlus, BiSolidLocationPlus } from "react-icons/bi";
+import { BiSolidLocationPlus } from "react-icons/bi";
+import removeVietnameseTones from "../../common/removeVietnameseTones";
 const ManagerLocation = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -18,7 +17,6 @@ const ManagerLocation = () => {
     hinhAnh: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
   //Xử lý phần add , edit
   const [isOnSubmit, setIsOnSubmit] = useState(true);
   const { user, token } = useSelector((state) => state.userSlice);
