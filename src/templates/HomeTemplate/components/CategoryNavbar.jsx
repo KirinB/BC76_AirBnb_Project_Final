@@ -3,10 +3,11 @@ import "./CategoryNavbar.scss";
 import Slider from "react-slick";
 import { dataCategory } from "../../../common/constant";
 import useViewPort from "../../../hooks/useViewPort";
+import { useTheme } from "../../../store/ThemeContext";
 
 const CategoryNavbar = () => {
   const { width } = useViewPort();
-
+  const { isDarkMode } = useTheme();
   var settings = {
     infinite: false,
     arrow: false,
@@ -25,7 +26,11 @@ const CategoryNavbar = () => {
                 key={index}
                 className="!flex flex-col gap-2 justify-center items-center opacity-70 cursor-pointer hover:opacity-100 transition-all duration-200"
               >
-                <img className="w-6 h-6 text-white" src={item.icon} alt="" />
+                <img
+                  className="w-6 h-6 text-white"
+                  src={`${item.icon}${isDarkMode ? "_dark_theme.png" : ".png"}`}
+                  alt=""
+                />
                 <h3 className="text-xs text-center">{item.title}</h3>
               </div>
             );
