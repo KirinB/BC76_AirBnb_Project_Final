@@ -169,7 +169,7 @@ const ProfilePage = () => {
 
   return (
     <div className="container ">
-      <div className="block px-5 lg:px-0 lg:grid lg:grid-cols-12 gap-10">
+      <div className="block px-5 lg:px-6 lg:grid lg:grid-cols-12 gap-10">
         <div className="col-span-12 lg:col-span-4">
           <div className=" p-10 shadow-xl rounded-3xl my-10">
             <div className="flex flex-col space-y-5">
@@ -269,7 +269,7 @@ const ProfilePage = () => {
           <Button onClick={handleOk}>Xác nhận thông tin</Button>
           <h2 className="text-3xl font-bold my-4">Thông tin đặt phòng</h2>
 
-          <div className="px-6 md:px-10 lg:px-0">
+          <div className="px-6 md:px-10 lg:px-6">
             <Slider
               {...settings}
               className="carousel_custom max-w-full mr-0 lg:mr-10"

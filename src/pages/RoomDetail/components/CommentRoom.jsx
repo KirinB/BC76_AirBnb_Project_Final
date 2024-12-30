@@ -315,7 +315,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                   <form className="space-y-4">
                     <TextArea
                       placeholder="Mời bạn chia sẻ thêm cảm nhận..."
-                      className="!min-h-32 bg-slate-400"
+                      className="!min-h-32 dark:bg-slate-400"
                       onChange={(e) => {
                         setTextAreaReview(e.target.value);
                       }}

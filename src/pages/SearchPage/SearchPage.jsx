@@ -43,9 +43,9 @@ const SearchPage = () => {
       {isLoading ? (
         <LoadingCustom />
       ) : listRoom.length === 0 ? (
-        <div className="my-6 px-6 md:px-10 flex flex-col gap-10">
+        <div className="my-6 px-6 md:px-10 flex flex-col items-center justify-center gap-10">
           <h2 className="text-center font-semibold">Không có kết quả nào</h2>
-          <img src="/nodatafound.png" alt="" />
+          <img src="/nodatafound.png" className="w-1/2" alt="" />
         </div>
       ) : (
         <div className="flex flex-col-reverse md:grid lg:grid-cols-3 sticky lg:relative top-1/2">
