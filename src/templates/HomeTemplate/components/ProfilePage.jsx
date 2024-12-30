@@ -20,24 +20,24 @@ const ProfilePage = () => {
   const { handleNotification } = useContext(NotificationContext);
 
   const settings = {
-    dots: true, // Hiển thị các chấm chuyển slide
-    infinite: false, // Không lặp lại carousel
+    dots: false, // Hiển thị các chấm chuyển slide
+    infinite: true, // Không lặp lại carousel
     speed: 500, // Tốc độ chuyển slide
     slidesToShow: 5, // Số item hiển thị mặc định (desktop)
-    slidesToScroll: 5, // Số item cuộn mỗi lần
+    slidesToScroll: 1, // Số item cuộn mỗi lần
     responsive: [
       {
         breakpoint: 1024, // Tablet
         settings: {
           slidesToShow: 3, // Hiển thị 3 items
-          slidesToScroll: 3, // Cuộn 3 items mỗi lần
+          slidesToScroll: 1, // Cuộn 3 items mỗi lần
         },
       },
       {
         breakpoint: 640, // Mobile
         settings: {
           slidesToShow: 2, // Hiển thị 2 items
-          slidesToScroll: 2, // Cuộn 2 items mỗi lần
+          slidesToScroll: 1, // Cuộn 2 items mỗi lần
         },
       },
       {
@@ -69,6 +69,10 @@ const ProfilePage = () => {
       navigate(pathDefault.homePage);
     }
   }, []);
+
+  const formatDate = (dateString) => {
+    return dayjs(dateString).format("DD/MM/YYYY");
+  };
 
   const handleUploadAvt = (e) => {
     const file = e.target.files[0];
@@ -274,7 +278,7 @@ const ProfilePage = () => {
                 <div key={index} className="p-3">
                   <Link
                     to={`/rooms/${item.maPhong}`}
-                    className="p-3 rounded-xl border space-y-3"
+                    className="p-3 rounded-xl border space-y-3 border-none"
                   >
                     {roomDetail ? (
                       <>
@@ -290,8 +294,8 @@ const ProfilePage = () => {
                     ) : (
                       <p>Đang tải...</p>
                     )}
-                    <p>Ngày đặt: {item.ngayDen}</p>
-                    <p>Ngày trả: {item.ngayDi}</p>
+                    <p>Ngày đặt: {formatDate(item.ngayDen)}</p>
+                    <p>Ngày trả: {formatDate(item.ngayDi)}</p>
                   </Link>
                 </div>
               );
