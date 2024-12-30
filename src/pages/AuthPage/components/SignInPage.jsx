@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useFormik } from "formik";
-import React from "react";
 import { FaFacebookF, FaGooglePlusG, FaTwitter } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
