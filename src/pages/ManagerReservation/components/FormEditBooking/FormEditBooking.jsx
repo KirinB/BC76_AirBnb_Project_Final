@@ -10,31 +10,66 @@ import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePicke
 import { reservationService } from "../../../../services/reservation.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
-import { format } from "date-fns";
-const FormEditBooking = ({ initialValues }) => {
+const FormEditBooking = ({
+  initialValues,
+  getAllReservation,
+  setIsModalOpen,
+}) => {
   const { handleNotification } = useContext(NotificationContext);
-  const { values, handleSubmit, handleBlur, errors, touched, setFieldValue } =
-    useFormik({
-      initialValues,
-      enableReinitialize: true,
-      onSubmit: (values) => {
-        reservationService
-          .putReservation(values.id, values)
-          .then((res) => {
-            console.log(res);
-            handleNotification("success", "Sửa thông tin đặt phòng thành công");
-          })
-          .catch((err) => {
-            console.log(err);
-            handleNotification("error", err.res.data.content);
-          });
-      },
-      validationSchema: Yup.object({
-        soLuongKhach: Yup.number()
-          .required("Vui lòng không bỏ trống")
-          .min(1, "Vui lòng nhập trên 1 khách"),
-      }),
-    });
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleBlur,
+    errors,
+    touched,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      ...initialValues,
+      ngayDen: dayjs(initialValues.ngayDen),
+      ngayDi: dayjs(initialValues.ngayDi),
+    },
+    enableReinitialize: true,
+
+    onSubmit: (values) => {
+      const ngayDenISO = dayjs(values.ngayDen, "DD-MM-YYYY").format(
+        "YYYY-MM-DDTHH:mm:ss"
+      );
+      const ngayDiISO = dayjs(values.ngayDi, "DD-MM-YYYY").format(
+        "YYYY-MM-DDTHH:mm:ss"
+      );
+      reservationService
+        .putReservation(values.id, {
+          ...values,
+          ngayDen: ngayDenISO,
+          ngayDi: ngayDiISO,
+        })
+        .then((res) => {
+          console.log("Response:", res);
+          getAllReservation();
+          setIsModalOpen(false);
+          handleNotification("success", "Sửa thông tin đặt phòng thành công");
+        })
+        .catch((err) => {
+          console.error("Error:", err);
+          getAllReservation();
+          handleNotification(
+            "error",
+            err?.response?.data?.content || "Có lỗi xảy ra"
+          );
+        });
+    },
+
+    validationSchema: Yup.object({
+      soLuongKhach: Yup.number()
+        .required("Vui lòng không bỏ trống")
+        .min(1, "Vui lòng nhập trên 1 khách"),
+
+      ngayDen: Yup.string().required("Vui lòng chọn ngày đến"),
+      ngayDi: Yup.string().required("Vui lòng chọn ngày đi"),
+    }),
+  });
   return (
     <div>
       <form action="" className="space-y-5" onSubmit={handleSubmit}>
@@ -54,36 +89,27 @@ const FormEditBooking = ({ initialValues }) => {
         />
         <div className="grid grid-cols-2 gap-5">
           <DatePickerCustom
-            labelContent={"Ngày Đến"}
-            id={"ngayDen"}
-            name={"ngayDen"}
-            format={"DD/MM/YYYY"}
-            value={values.ngayDen ? dayjs(values.ngayDen, "DD/MM/YYYY") : null}
+            id="ngayDen"
+            name="ngayDen"
+            labelContent="Ngày Đến"
+            value={values.ngayDen}
+            format={"DD-MM-YYYY"}
             error={errors.ngayDen}
             touched={touched.ngayDen}
-            handleChange={(date, dateString) => {
-              setFieldValue("ngayDen", dateString);
-            }}
+            handleChange={(date) => setFieldValue("ngayDen", date)}
             handleBlur={handleBlur}
           />
+
           <DatePickerCustom
-            labelContent={"Ngày Đi"}
-            id={"ngayDi"}
-            name={"ngayDi"}
-            format={"DD/MM/YYYY"}
-            value={values.ngayDi ? dayjs(values.ngayDi) : null}
+            id="ngayDi"
+            name="ngayDi"
+            labelContent="Ngày Đi"
+            value={values.ngayDi}
             error={errors.ngayDi}
+            format={"DD-MM-YYYY"}
             touched={touched.ngayDi}
-            handleChange={(date, dateString) => {
-              setFieldValue("ngayDi", dateString);
-            }}
+            handleChange={(date) => setFieldValue("ngayDi", date)}
             handleBlur={handleBlur}
-          />
-          <DatePicker
-            format={"DD/MM/YYYY"}
-            onChange={(date, dateString) => {
-              console.log(dateString);
-            }}
           />
         </div>
         <InputNumberCustom
