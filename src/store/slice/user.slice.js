@@ -4,20 +4,14 @@ const initialState = {
   user: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")).user
     : null,
-  token: localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo")).token
-    : null,
 };
 
-const userSlice = createSlice({
-  name: "inforUser",
+const UserSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     handleUpdateUser: (state, action) => {
       state.user = action.payload;
-    },
-    handleUpdateToken: (state, action) => {
-      state.token = action.payload;
     },
     handleDeleteUser: (state) => {
       state.user = null;
@@ -25,6 +19,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { handleUpdateUser, handleDeleteUser } = userSlice.actions;
+export const { handleUpdateUser, handleDeleteUser } = UserSlice.actions;
 
-export default userSlice.reducer;
+export default UserSlice.reducer;
