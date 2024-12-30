@@ -2,95 +2,95 @@ import { Icons } from "../assets/Icons";
 
 export const dataCategory = [
   {
-    icon: "/icon/category/bieu_tuong.jpg",
+    icon: "/icon/category/bieu_tuong",
     title: "Biểu tượng",
   },
   {
-    icon: "/icon/category/phong.jpg",
+    icon: "/icon/category/phong",
     title: "Phòng",
   },
   {
-    icon: "/icon/category/khung_canh.jpg",
+    icon: "/icon/category/khung_canh",
     title: "Khung cảnh",
   },
   {
-    icon: "/icon/category/ho_boi.jpg",
+    icon: "/icon/category/ho_boi",
     title: "Hồ bơi",
   },
   {
-    icon: "/icon/category/golf.jpg",
+    icon: "/icon/category/golf",
     title: "Chơi golf",
   },
   {
-    icon: "/icon/category/ho.jpg",
+    icon: "/icon/category/ho",
     title: "Hồ",
   },
   {
-    icon: "/icon/category/nong_thon.jpg",
+    icon: "/icon/category/nong_thon",
     title: "Nông thôn",
   },
   {
-    icon: "/icon/category/nha_tren_cay.jpg",
+    icon: "/icon/category/nha_tren_cay",
     title: "Nhà trên cây",
   },
   {
-    icon: "/icon/category/nha_nho.jpg",
+    icon: "/icon/category/nha_nho",
     title: "Nhà nhỏ",
   },
   {
-    icon: "/icon/category/biet_thu.jpg",
+    icon: "/icon/category/biet_thu",
     title: "Biệt thự",
   },
   {
-    icon: "/icon/category/ua_chuong.jpg",
+    icon: "/icon/category/ua_chuong",
     title: "Được ưa chuộng",
   },
   {
-    icon: "/icon/category/ca_bin.jpg",
+    icon: "/icon/category/ca_bin",
     title: "Cabin",
   },
   {
-    icon: "/icon/category/ven_ho.jpg",
+    icon: "/icon/category/ven_ho",
     title: "Ven hồ",
   },
   {
-    icon: "/icon/category/piano.jpg",
+    icon: "/icon/category/piano",
     title: "Grand piano",
   },
   {
-    icon: "/icon/category/an_tuong.jpg",
+    icon: "/icon/category/an_tuong",
     title: "Thật ấn tượng!",
   },
   {
-    icon: "/icon/category/dao.jpg",
+    icon: "/icon/category/dao",
     title: "Đảo",
   },
   {
-    icon: "/icon/category/nha_khung.jpg",
+    icon: "/icon/category/nha_khung",
     title: "Nhà khung chữ A",
   },
   {
-    icon: "/icon/category/lau_dai.jpg",
+    icon: "/icon/category/lau_dai",
     title: "Lâu đài",
   },
   {
-    icon: "/icon/category/nha_duoi_long_dat.jpg",
+    icon: "/icon/category/nha_duoi_long_dat",
     title: "Nhà dưới lòng đất",
   },
   {
-    icon: "/icon/category/luxe.jpg",
+    icon: "/icon/category/luxe",
     title: "Luxe",
   },
   {
-    icon: "/icon/category/huong_bien.jpg",
+    icon: "/icon/category/huong_bien",
     title: "Hướng biển",
   },
   {
-    icon: "/icon/category/container.jpg",
+    icon: "/icon/category/container",
     title: "Container",
   },
   {
-    icon: "/icon/category/hanok.jpg",
+    icon: "/icon/category/hanok",
     title: "Hanok",
   },
 ];

@@ -25,6 +25,7 @@ import HeaderSearchMobile from "./HeaderSearchMobile";
 const HeaderHomeTemplate = () => {
   const { width } = useViewPort();
   const { setListRoom, originalListRoom } = useSearchPageContext();
+  const rate = useSelector((state) => state.exchangeRate.rate);
   const { isDarkMode, setIsDarkMode } = useTheme();
   const user = useSelector((state) => state.userSlice.user);
   const location = useLocation();
@@ -86,7 +87,7 @@ const HeaderHomeTemplate = () => {
   const handleFilterPrice = () => {
     const [min, max] = range;
     const dataFilter = originalListRoom.filter((room) => {
-      return room.giaTien >= min / 20e3 && room.giaTien <= max / 20e3;
+      return room.giaTien >= min / rate && room.giaTien <= max / rate;
     });
     setListRoom(dataFilter);
     setIsOpenFilterMobile(false);
@@ -105,7 +106,7 @@ const HeaderHomeTemplate = () => {
   };
   return width < 768 && !isRoomDetail ? (
     <>
-      <header className="sticky top-0 w-full bg-white z-20 flex items-center justify-between py-3 px-6 border-b border-gray-200">
+      <header className="sticky top-0 w-full bg-white dark:bg-slate-800 z-20 flex items-center justify-between py-3 px-6 border-b border-gray-200">
         {isSearchRoom && (
           <div className="p-3">
             <Link to={pathDefault.homePage}>
@@ -121,7 +122,7 @@ const HeaderHomeTemplate = () => {
         {isSearchRoom ? (
           <>
             <div
-              className="p-3 border-[#222222] border rounded-full"
+              className="p-3 border-[#222222] dark:border-white border rounded-full"
               onClick={() => {
                 setIsOpenFilterMobile(true);
               }}
@@ -129,7 +130,7 @@ const HeaderHomeTemplate = () => {
               <Icons.filter />
             </div>
             <div
-              className={`fixed bottom-0 right-0 left-0 bg-white min-h-[95vh] z-40 transition-all duration-500 rounded-t-2xl px-4 ${
+              className={`fixed bottom-0 right-0 left-0 bg-white dark:bg-slate-800 min-h-[95vh] z-[99] transition-all duration-500 rounded-t-2xl px-4 ${
                 isOpenFilterMobile ? "" : "translate-y-full"
               }`}
             >
@@ -239,10 +240,8 @@ const HeaderHomeTemplate = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="mt-6 fixed z-50 bottom-0 bg-white border border-gray-200 rounded-t-md drop-shadow-lg pt-4 pb-6 w-full right-0 left-0">
                 <ButtonPrimary
-                  className={"w-full py-6"}
+                  className={"w-full py-6 mt-6"}
                   onClick={handleFilterPrice}
                 >
                   Tìm kiếm
@@ -261,7 +260,7 @@ const HeaderHomeTemplate = () => {
         ) : (
           <>
             <div
-              className="p-3 border-[#222222] border rounded-full"
+              className="p-3 border-[#222222] dark:border-white border rounded-full"
               onClick={() => {
                 setIsModalOpen(true);
               }}
@@ -279,7 +278,7 @@ const HeaderHomeTemplate = () => {
           </>
         )}
       </header>
-      <nav className="fixed bottom-0 left-0 right-0 w-full z-10 py-2 bg-white flex justify-center gap-6 border-t border-gray-200">
+      <nav className="fixed bottom-0 left-0 right-0 w-full z-30 py-2 bg-white dark:bg-slate-800 flex items-center justify-center gap-6 border-t border-gray-200">
         <NavLink
           to={pathDefault.homePage}
           className={({ isActive }) =>
@@ -288,12 +287,38 @@ const HeaderHomeTemplate = () => {
               : "flex flex-col items-center gap-1"
           }
         >
-          <FaMagnifyingGlass size={20} />
+          <div className="w-10 flex justify-center">
+            <FaMagnifyingGlass size={20} />
+          </div>
           <h3 className="text-[10px]">Khám phá</h3>
         </NavLink>
         <div className="flex flex-col items-center gap-1">
-          <FaRegHeart size={20} />
+          <div className="w-10 flex justify-center">
+            <FaRegHeart size={20} />
+          </div>
           <h3 className="text-[10px]">Yêu thích</h3>
+        </div>
+        <div
+          className="flex flex-col items-center gap-1"
+          onClick={() => {
+            setIsDarkMode(!isDarkMode);
+          }}
+        >
+          {isDarkMode ? (
+            <>
+              <div className="w-10 flex justify-center">
+                <FiMoon size={20} stroke="white" />
+              </div>
+              <h3 className="text-[10px]">Tối</h3>
+            </>
+          ) : (
+            <>
+              <div className="w-10 flex justify-center">
+                <FiSun size={20} />
+              </div>
+              <h3 className="text-[10px]">Sáng</h3>
+            </>
+          )}
         </div>
         {user ? (
           <NavLink
@@ -304,15 +329,19 @@ const HeaderHomeTemplate = () => {
                 : "flex flex-col items-center gap-1"
             }
           >
-            <FaRegUserCircle size={20} />
+            <div className="w-10 flex justify-center">
+              <FaRegUserCircle size={20} />
+            </div>
             <h3 className="text-[10px]">Hồ sơ</h3>
           </NavLink>
         ) : (
           <NavLink
-            to={pathDefault.AuthPage}
+            to={`${pathDefault.AuthPage}?type=signin`}
             className="flex flex-col items-center gap-1"
           >
-            <FaRegUserCircle size={20} />
+            <div className="w-10 flex justify-center">
+              <FaRegUserCircle size={20} />
+            </div>
             <h3 className="text-[10px]">Đăng nhập</h3>
           </NavLink>
         )}
@@ -322,7 +351,7 @@ const HeaderHomeTemplate = () => {
     <header
       className={`sticky bg-white shadow-sm dark:shadow-white z-20 h-[96px] py-4 top-0 items-center hidden dark:bg-slate-800 dark:text-white md:flex`}
     >
-      <div className="container flex gap-4 justify-between items-center px-10 lg:px-0">
+      <div className="container flex gap-4 justify-between items-center px-10 lg:px-6">
         <div>
           <Link to={pathDefault.homePage}>
             {width < 1024 ? (
@@ -409,9 +438,12 @@ const HeaderHomeTemplate = () => {
                         <div className="py-2 px-4 hover:bg-gray-100 font-semibold">
                           Xin Chào, {user.name}
                         </div>
-                        <div className="py-2 px-4 hover:bg-gray-100">
+                        <Link
+                          to={pathDefault.Profile}
+                          className="py-2 px-4 hover:bg-gray-100"
+                        >
                           Quản lý hồ sơ
-                        </div>
+                        </Link>
                         <LineSpace className="my-1" />
                         <div className="py-2 px-4 hover:bg-gray-100">
                           Cho thuê chỗ ở qua Airbnb

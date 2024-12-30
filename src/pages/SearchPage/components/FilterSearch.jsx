@@ -7,14 +7,17 @@ import {
 import { Icons } from "../../../assets/Icons";
 import { InputNumber, Slider } from "antd";
 import { useSearchPageContext } from "../../../store/SearchPageContext";
+import { useSelector } from "react-redux";
 const FilterSearch = () => {
+  const rate = useSelector((state) => state.exchangeRate.rate);
+  console.log({ rate });
   const { setListRoom, originalListRoom } = useSearchPageContext();
   const [range, setRange] = useState([0, 200e3]);
 
   const handleFilterPrice = () => {
     const [min, max] = range;
     const dataFilter = originalListRoom.filter((room) => {
-      return room.giaTien >= min / 20e3 && room.giaTien <= max / 20e3;
+      return room.giaTien >= min / rate && room.giaTien <= max / rate;
     });
     setListRoom(dataFilter);
   };

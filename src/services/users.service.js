@@ -8,6 +8,9 @@ export const userService = {
       },
     });
   },
+  getListUser: () => {
+    return http.get("/users");
+  },
   thayDoiThongTinNguoiDung: (id, data) => {
     return http.put(`/users/${id}`, data);
   },

@@ -15,6 +15,7 @@ import { NotificationContext } from "../../../App";
 import SignInPage from "../../AuthPage/components/SignInPage";
 import ModalLogin from "../../../components/ModalLogin/ModalLogin";
 import { formatCurrency } from "../../../common/formatCurrency";
+import { IoMdClose } from "react-icons/io";
 const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   const { width } = useViewPort();
   const user = useSelector((state) => {
@@ -152,7 +153,7 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
 
   return width < 768 ? (
     <>
-      <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex gap-4 justify-between p-6">
+      <div className="fixed bottom-0 w-full bg-white z-50 dark:bg-slate-900 border-t border-gray-200 flex gap-4 justify-between p-6">
         <div className="w-1/2 flex items-center ">
           {isSelectedDay ? (
             <h2 className="text-lg font-semibold">
@@ -181,8 +182,9 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         </div>
       </div>
       <Modal
-        title="Chọn ngày"
+        title={<span className="dark:text-white">Chọn ngày</span>}
         open={isModalOpen}
+        closeIcon={<IoMdClose className="text-black dark:text-slate-200" />}
         onCancel={handleCancel}
         onOk={handleOk}
         okText="Xác nhận"

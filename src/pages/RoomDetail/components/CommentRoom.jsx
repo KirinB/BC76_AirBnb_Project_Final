@@ -98,7 +98,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
             );
           })}
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           {listComment.length > MAX_DISPLAY && (
             <div className="flex">
               <ButtonOutLine
@@ -107,7 +107,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                   setIsModalOpen(true);
                 }}
                 className={
-                  "border-[#222] font-semibold px-6 !py-6 text-[#222] hover:!bg-gray-100 hover:shadow-md transition-all duration-200"
+                  "border-[#222] font-semibold w-full px-6 !py-6 text-[#222] hover:!bg-gray-100 hover:shadow-md transition-all duration-200"
                 }
               />
               <Modal
@@ -122,7 +122,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                 footer={null}
               >
                 <div className="flex flex-col gap-4  max-h-[90vh]">
-                  <div className="p-4">
+                  <div className="p-0 md:p-4">
                     <div
                       className="p-2 cursor-pointer inline-flex"
                       onClick={() => {
@@ -132,7 +132,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                       <IoClose size={20} />
                     </div>
                   </div>
-                  <div className="flex gap-10 px-12">
+                  <div className="flex gap-10 lg:px-12">
                     <div className="hidden md:block w-1/3 overflow-y-auto">
                       <div className="mb-6">
                         <h2 className="font-semibold text-sm mb-2">
@@ -215,36 +215,38 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                           <h3 className="text-2xl font-semibold">
                             {listComment.length} lượt đánh giá
                           </h3>
-                          <DropdownCustom
-                            placement="bottomRight"
-                            children={
-                              <p className="inline-block">Gần đây nhất</p>
-                            }
-                            items={[
-                              {
-                                label: (
-                                  <span className="hover:bg-gray-200 w-full p-2 rounded-md">
-                                    Gần đây nhất
-                                  </span>
-                                ),
-                              },
-                              {
-                                label: (
-                                  <span className="hover:bg-gray-200 w-full p-2 rounded-md">
-                                    Có điểm xếp hạng cao nhất
-                                  </span>
-                                ),
-                              },
-                              {
-                                label: (
-                                  <span className="hover:bg-gray-200 w-full p-2 rounded-md">
-                                    Có điểm xếp hạng thấp nhất
-                                  </span>
-                                ),
-                              },
-                            ]}
-                            className={"!py-1"}
-                          />
+                          <div className="hidden md:block">
+                            <DropdownCustom
+                              placement="bottomRight"
+                              children={
+                                <p className="inline-block">Gần đây nhất</p>
+                              }
+                              items={[
+                                {
+                                  label: (
+                                    <span className="hover:bg-gray-200 w-full p-2 rounded-md">
+                                      Gần đây nhất
+                                    </span>
+                                  ),
+                                },
+                                {
+                                  label: (
+                                    <span className="hover:bg-gray-200 w-full p-2 rounded-md">
+                                      Có điểm xếp hạng cao nhất
+                                    </span>
+                                  ),
+                                },
+                                {
+                                  label: (
+                                    <span className="hover:bg-gray-200 w-full p-2 rounded-md">
+                                      Có điểm xếp hạng thấp nhất
+                                    </span>
+                                  ),
+                                },
+                              ]}
+                              className={"!py-1"}
+                            />
+                          </div>
                         </div>
                         <div className="flex flex-col gap-6 pt-6">
                           {listComment.map((item, index) => {
@@ -313,7 +315,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                   <form className="space-y-4">
                     <TextArea
                       placeholder="Mời bạn chia sẻ thêm cảm nhận..."
-                      className="!min-h-32"
+                      className="!min-h-32 dark:bg-slate-400"
                       onChange={(e) => {
                         setTextAreaReview(e.target.value);
                       }}
@@ -338,7 +340,9 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                 "border-[#222] font-semibold px-6 !py-6 text-[#222] hover:!bg-gray-100 hover:shadow-md transition-all duration-200"
               }
             >
-              <Link to={pathDefault.AuthPage}>Đăng nhập để viết đánh giá</Link>
+              <Link to={`${pathDefault.AuthPage}?type=signin`}>
+                Đăng nhập để viết đánh giá
+              </Link>
             </ButtonOutLine>
           )}
         </div>

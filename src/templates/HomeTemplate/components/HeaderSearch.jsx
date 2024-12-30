@@ -108,10 +108,10 @@ const HeaderSearch = () => {
       }}
       open={isOpenDropdown}
     >
-      <div className=" rounded-3xl bg-white py-4 pl-4 flex-1 relative flex border border-gray-200 shadow-md">
+      <div className=" rounded-3xl bg-white dark:bg-slate-800 py-4 pl-4 flex-1 relative flex border border-gray-200 shadow-md">
         <input
           type="text"
-          className="border-none outline-none"
+          className="border-none outline-none bg-transparent"
           placeholder="Tìm kiếm điểm đến"
           value={keyword}
           onChange={handleChangeKeyword}
