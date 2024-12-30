@@ -105,7 +105,7 @@ const HeaderHomeTemplate = () => {
   };
   return width < 768 && !isRoomDetail ? (
     <>
-      <header className="sticky top-0 w-full bg-white z-20 flex items-center justify-between py-3 px-6 border-b border-gray-200">
+      <header className="sticky top-0 w-full bg-white dark:bg-slate-800 z-20 flex items-center justify-between py-3 px-6 border-b border-gray-200">
         {isSearchRoom && (
           <div className="p-3">
             <Link to={pathDefault.homePage}>
@@ -121,7 +121,7 @@ const HeaderHomeTemplate = () => {
         {isSearchRoom ? (
           <>
             <div
-              className="p-3 border-[#222222] border rounded-full"
+              className="p-3 border-[#222222] dark:border-white border rounded-full"
               onClick={() => {
                 setIsOpenFilterMobile(true);
               }}
@@ -261,7 +261,7 @@ const HeaderHomeTemplate = () => {
         ) : (
           <>
             <div
-              className="p-3 border-[#222222] border rounded-full"
+              className="p-3 border-[#222222] dark:border-white border rounded-full"
               onClick={() => {
                 setIsModalOpen(true);
               }}
@@ -279,7 +279,7 @@ const HeaderHomeTemplate = () => {
           </>
         )}
       </header>
-      <nav className="fixed bottom-0 left-0 right-0 w-full z-10 py-2 bg-white flex justify-center gap-6 border-t border-gray-200">
+      <nav className="fixed bottom-0 left-0 right-0 w-full z-50 py-2 bg-white dark:bg-slate-800 flex items-center justify-center gap-6 border-t border-gray-200">
         <NavLink
           to={pathDefault.homePage}
           className={({ isActive }) =>
@@ -288,12 +288,38 @@ const HeaderHomeTemplate = () => {
               : "flex flex-col items-center gap-1"
           }
         >
-          <FaMagnifyingGlass size={20} />
+          <div className="w-10 flex justify-center">
+            <FaMagnifyingGlass size={20} />
+          </div>
           <h3 className="text-[10px]">Khám phá</h3>
         </NavLink>
         <div className="flex flex-col items-center gap-1">
-          <FaRegHeart size={20} />
+          <div className="w-10 flex justify-center">
+            <FaRegHeart size={20} />
+          </div>
           <h3 className="text-[10px]">Yêu thích</h3>
+        </div>
+        <div
+          className="flex flex-col items-center gap-1"
+          onClick={() => {
+            setIsDarkMode(!isDarkMode);
+          }}
+        >
+          {isDarkMode ? (
+            <>
+              <div className="w-10 flex justify-center">
+                <FiMoon size={20} stroke="white" />
+              </div>
+              <h3 className="text-[10px]">Tối</h3>
+            </>
+          ) : (
+            <>
+              <div className="w-10 flex justify-center">
+                <FiSun size={20} />
+              </div>
+              <h3 className="text-[10px]">Sáng</h3>
+            </>
+          )}
         </div>
         {user ? (
           <NavLink
@@ -304,15 +330,19 @@ const HeaderHomeTemplate = () => {
                 : "flex flex-col items-center gap-1"
             }
           >
-            <FaRegUserCircle size={20} />
+            <div className="w-10 flex justify-center">
+              <FaRegUserCircle size={20} />
+            </div>
             <h3 className="text-[10px]">Hồ sơ</h3>
           </NavLink>
         ) : (
           <NavLink
-            to={pathDefault.AuthPage}
+            to={`${pathDefault.AuthPage}?type=signin`}
             className="flex flex-col items-center gap-1"
           >
-            <FaRegUserCircle size={20} />
+            <div className="w-10 flex justify-center">
+              <FaRegUserCircle size={20} />
+            </div>
             <h3 className="text-[10px]">Đăng nhập</h3>
           </NavLink>
         )}

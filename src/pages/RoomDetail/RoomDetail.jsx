@@ -59,7 +59,7 @@ const RoomDetail = () => {
             <div className="flex space-x-1">
               <ButtonGhost
                 children={
-                  <p className="underline font-semibold flex items-center space-x-2">
+                  <p className="underline font-semibold flex items-center space-x-2 text-[#222] dark:text-white">
                     <LuShare /> <span className="hidden md:block">Chia sẻ</span>
                   </p>
                 }
@@ -67,7 +67,7 @@ const RoomDetail = () => {
               />
               <ButtonGhost
                 children={
-                  <p className="underline font-semibold flex items-center space-x-2">
+                  <p className="underline font-semibold flex items-center space-x-2 text-[#222] dark:text-white">
                     <LuHeart />
                     <span className="hidden md:block">Lưu</span>
                   </p>

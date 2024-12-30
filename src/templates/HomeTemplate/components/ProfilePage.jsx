@@ -21,7 +21,7 @@ const ProfilePage = () => {
 
   const settings = {
     dots: false, // Hiển thị các chấm chuyển slide
-    infinite: true, // Không lặp lại carousel
+    infinite: false, // Không lặp lại carousel
     speed: 500, // Tốc độ chuyển slide
     slidesToShow: 5, // Số item hiển thị mặc định (desktop)
     slidesToScroll: 1, // Số item cuộn mỗi lần
@@ -255,6 +255,7 @@ const ProfilePage = () => {
               <label className="font-medium">Ngày sinh nhật</label>
               <DatePicker
                 className="block"
+                format={"DD-MM-YYYY"}
                 value={valueUser.birthday ? dayjs(valueUser.birthday) : null}
                 onChange={(dateString) =>
                   setValueUser((prev) => ({
@@ -268,39 +269,41 @@ const ProfilePage = () => {
           <Button onClick={handleOk}>Xác nhận thông tin</Button>
           <h2 className="text-3xl font-bold my-4">Thông tin đặt phòng</h2>
 
-          <Slider
-            {...settings}
-            className="carousel_custom max-w-full mr-0 lg:mr-10"
-          >
-            {rooms.map((item, index) => {
-              const roomDetail = roomDetails[item.maPhong];
-              return (
-                <div key={index} className="p-3">
-                  <Link
-                    to={`/rooms/${item.maPhong}`}
-                    className="p-3 rounded-xl border space-y-3 border-none"
-                  >
-                    {roomDetail ? (
-                      <>
-                        <img
-                          src={roomDetail.hinhAnh}
-                          alt={roomDetail.tenPhong}
-                          className="h-32 w-full object-cover rounded-xl"
-                        />
-                        <h2 className="font-medium line-clamp-1">
-                          {roomDetail.tenPhong}
-                        </h2>
-                      </>
-                    ) : (
-                      <p>Đang tải...</p>
-                    )}
-                    <p>Ngày đặt: {formatDate(item.ngayDen)}</p>
-                    <p>Ngày trả: {formatDate(item.ngayDi)}</p>
-                  </Link>
-                </div>
-              );
-            })}
-          </Slider>
+          <div className="px-6 md:px-10 lg:px-0">
+            <Slider
+              {...settings}
+              className="carousel_custom max-w-full mr-0 lg:mr-10"
+            >
+              {rooms.map((item, index) => {
+                const roomDetail = roomDetails[item.maPhong];
+                return (
+                  <div key={index} className="p-3">
+                    <Link
+                      to={`/rooms/${item.maPhong}`}
+                      className="p-3 rounded-xl border space-y-3 border-none"
+                    >
+                      {roomDetail ? (
+                        <>
+                          <img
+                            src={roomDetail.hinhAnh}
+                            alt={roomDetail.tenPhong}
+                            className="h-32 w-full object-cover rounded-xl"
+                          />
+                          <h2 className="font-medium line-clamp-1">
+                            {roomDetail.tenPhong}
+                          </h2>
+                        </>
+                      ) : (
+                        <p>Đang tải...</p>
+                      )}
+                      <p>Ngày đặt: {formatDate(item.ngayDen)}</p>
+                      <p>Ngày trả: {formatDate(item.ngayDi)}</p>
+                    </Link>
+                  </div>
+                );
+              })}
+            </Slider>
+          </div>
         </div>
       </div>
     </div>
