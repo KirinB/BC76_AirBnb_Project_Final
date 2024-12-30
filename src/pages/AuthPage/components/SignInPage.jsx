@@ -1,5 +1,5 @@
+import React, { useContext } from "react";
 import { useFormik } from "formik";
-import React from "react";
 import { FaFacebookF, FaGooglePlusG, FaTwitter } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,11 +9,14 @@ import { pathDefault } from "../../../common/path";
 import InputCustom from "../../../components/ui/inputCustom/InputCustom";
 import { authService } from "../../../services/auth.service";
 import { handleUpdateUser } from "../../../store/slice/user.slice";
+import { NotificationContext } from "../../../App";
 
 const SignInPage = ({ styleIcon, handle }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const { handleNotification } = useContext(NotificationContext);
 
   // handle sign in
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
@@ -28,7 +31,8 @@ const SignInPage = ({ styleIcon, handle }) => {
           .then((res) => {
             dispatch(handleUpdateUser(res.data.content.user));
             localStorage.setItem("userInfo", JSON.stringify(res.data.content));
-            alert("Đăng nhập thành công!");
+            handleNotification("success", "Đăng nhập thành công", 3000);
+
             navigate(pathDefault.homePage);
           })
           .catch((err) => {
