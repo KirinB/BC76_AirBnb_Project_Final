@@ -93,6 +93,7 @@ const FormEditBooking = ({
             name="ngayDen"
             labelContent="Ngày Đến"
             value={values.ngayDen}
+            format={"DD-MM-YYYY"}
             error={errors.ngayDen}
             touched={touched.ngayDen}
             handleChange={(date) => setFieldValue("ngayDen", date)}
@@ -105,6 +106,7 @@ const FormEditBooking = ({
             labelContent="Ngày Đi"
             value={values.ngayDi}
             error={errors.ngayDi}
+            format={"DD-MM-YYYY"}
             touched={touched.ngayDi}
             handleChange={(date) => setFieldValue("ngayDi", date)}
             handleBlur={handleBlur}
