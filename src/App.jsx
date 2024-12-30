@@ -16,8 +16,10 @@ import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
 import RoomDetail from "./pages/RoomDetail/RoomDetail";
 import { SearchPageProvider } from "./store/SearchPageContext";
 import { RoomDetailProvider } from "./store/RoomDetailContext";
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { fetchExchangeRate } from "./store/slice/exchangeRateSlice";
 
 export const NotificationContext = createContext();
 
@@ -32,11 +34,7 @@ const arrRoutes = [
       },
       {
         path: pathDefault.searchPage,
-        element: (
-          <SearchPageProvider>
-            <SearchPage />
-          </SearchPageProvider>
-        ),
+        element: <SearchPage />,
       },
       {
         path: pathDefault.roomDetailPage,
@@ -100,13 +98,22 @@ function App() {
       transition: Bounce,
     });
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchExchangeRate());
+  }, [dispatch]);
+
   const routes = useRoutes(arrRoutes);
   return (
     <>
-      <NotificationContext.Provider value={{ handleNotification }}>
-        {routes}
-        <ToastContainer />
-      </NotificationContext.Provider>
+      <SearchPageProvider>
+        <NotificationContext.Provider value={{ handleNotification }}>
+          {routes}
+          <ToastContainer />
+        </NotificationContext.Provider>
+      </SearchPageProvider>
     </>
   );
 }

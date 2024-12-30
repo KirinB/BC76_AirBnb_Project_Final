@@ -141,11 +141,16 @@ const RoomDetail = () => {
             <AsideRoomDetail
               max={roomDetail.khach}
               priceRoom={roomDetail.giaTien}
+              idRoom={roomDetail.id}
             />
           </div>
           <LineSpace />
 
-          <CommentRoom />
+          <CommentRoom
+            roomName={roomDetail.tenPhong}
+            imageRoom={roomDetail.hinhAnh}
+            roomId={roomDetail.id}
+          />
           <LineSpace />
           <div className="py-6 space-y-4 px-6 md:px-10 lg:px-4">
             <h2 className="font-semibold text-2xl">Nơi bạn sẽ tới</h2>

@@ -1,9 +1,12 @@
 import React from "react";
 import { IoIosStar } from "react-icons/io";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { pathDefault } from "../../../common/path";
+import { formatCurrency } from "../../../common/formatCurrency";
 
 const RoomSearch = ({ id, image, title, description, price, giuong }) => {
+  const rate = useSelector((state) => state.exchangeRate.rate);
+
   return (
     <Link to={`/rooms/${id}`} className="flex flex-col space-y-4">
       <div>
@@ -25,7 +28,10 @@ const RoomSearch = ({ id, image, title, description, price, giuong }) => {
         <p className="text-[#6A6A6A]">{giuong} giường</p>
         <div className="flex space-x-2">
           <p className="text-[#6A6A6A]">
-            <strong className="text-[#222222]">₫{price * 20}.000</strong>/ đêm
+            <strong className="text-[#222222] dark:text-white">
+              ₫{formatCurrency(price * rate)}
+            </strong>
+            / đêm
           </p>
         </div>
       </div>
