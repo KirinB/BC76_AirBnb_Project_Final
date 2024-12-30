@@ -191,7 +191,11 @@ const ManagerReservation = () => {
             }}
             footer={null}
           >
-            <FormEditBooking initialValues={initialValues} />
+            <FormEditBooking
+              initialValues={initialValues}
+              getAllReservation={getAllReservation}
+              setIsModalOpen={setIsModalOpen}
+            />
           </Modal>
         </div>
       </div>
