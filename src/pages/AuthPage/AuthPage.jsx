@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import SignUpPage from "./components/SignUpPage";
 import SignInPage from "./components/SignInPage";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { pathDefault } from "../../common/path";
 
 const AuthPage = () => {
   const [handle, setHandle] = useState(false);
-
   const navigate = useNavigate();
+  const location = useLocation();
 
   const styleIcon =
     "rounded-full border-2 p-[12px] hover:cursor-pointer shadow-xl";
 
+  const queryParams = new URLSearchParams(location.search);
+  const pageType = queryParams.get("type");
+
   const toggleForm = () => {
     setHandle(!handle);
+    const newType = pageType === "signin" ? "signup" : "signin";
+    navigate(`${pathDefault.AuthPage}?type=${newType}`);
   };
 
   useEffect(() => {
@@ -21,19 +26,29 @@ const AuthPage = () => {
     if (userInfo) {
       navigate(pathDefault.homePage);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-full lg:w-3/5 flex h-[650px] shadow-2xl rounded-xl overflow-hidden">
-        <div
-          className={`w-full lg:w-1/2 relative flex h-full  translate-x-0 duration-700 bg-white z-[1] overflow-hidden ${
-            handle ? "translate-x-full" : ""
-          }`}
-        >
-          <SignInPage handle={handle} styleIcon={styleIcon} />
-          <SignUpPage styleIcon={styleIcon} />
-        </div>
+      <div className="w-full lg:w-3/5 flex h-[650px] shadow-2xl  rounded-xl overflow-hidden">
+        {pageType === "signin" ? (
+          <div
+            className={`w-full lg:w-1/2 relative flex h-full translate-x-0 duration-700 bg-white z-[1] overflow-hidden ${
+              handle ? "translate-x-full" : ""
+            }`}
+          >
+            <SignInPage handle={handle} styleIcon={styleIcon} />
+          </div>
+        ) : (
+          <div
+            className={`w-full lg:w-1/2 relative flex h-full translate-x-0 duration-700 bg-white z-[1] overflow-hidden ${
+              handle ? "translate-x-full" : ""
+            }`}
+          >
+            <SignUpPage styleIcon={styleIcon} />
+          </div>
+        )}
+
         <div
           className={`hidden lg:flex h-full w-1/2 duration-700 translate-x-0 bg-primary z-[5] opacity-100 overflow-hidden ${
             handle ? "!-translate-x-full" : ""

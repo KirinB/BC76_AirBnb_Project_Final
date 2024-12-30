@@ -29,4 +29,7 @@ export const phongService = {
   getRoomById: (id) => {
     return http.get(`/phong-thue/${id}`);
   },
+  getRoomByNguoiDung: (id) => {
+    return http.get(`/dat-phong/lay-theo-nguoi-dung/${id}`);
+  },
 };

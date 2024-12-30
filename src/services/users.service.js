@@ -8,4 +8,7 @@ export const userService = {
       },
     });
   },
+  thayDoiThongTinNguoiDung: (id, data) => {
+    return http.put(`/users/${id}`, data);
+  },
 };
