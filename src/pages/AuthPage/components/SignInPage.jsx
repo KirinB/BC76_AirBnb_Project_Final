@@ -8,7 +8,10 @@ import { Icons } from "../../../assets/Icons";
 import { pathDefault } from "../../../common/path";
 import InputCustom from "../../../components/ui/inputCustom/InputCustom";
 import { authService } from "../../../services/auth.service";
-import { handleUpdateUser } from "../../../store/slice/user.slice";
+import {
+  handleUpdateToken,
+  handleUpdateUser,
+} from "../../../store/slice/user.slice";
 import { NotificationContext } from "../../../App";
 
 const SignInPage = ({ styleIcon, handle }) => {
@@ -30,6 +33,7 @@ const SignInPage = ({ styleIcon, handle }) => {
           .signIn(values)
           .then((res) => {
             dispatch(handleUpdateUser(res.data.content.user));
+            dispatch(handleUpdateToken(res.data.content.token));
             localStorage.setItem("userInfo", JSON.stringify(res.data.content));
             handleNotification("success", "Đăng nhập thành công", 3000);
 

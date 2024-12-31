@@ -9,28 +9,28 @@ import { InputNumber, Slider } from "antd";
 import { useSearchPageContext } from "../../../store/SearchPageContext";
 import { useSelector } from "react-redux";
 const FilterSearch = () => {
-  const rate = useSelector((state) => state.exchangeRate.rate);
-  console.log({ rate });
+  const { rates, currentCurrency } = useSelector((state) => state.exchangeRate);
   const { setListRoom, originalListRoom } = useSearchPageContext();
   const [range, setRange] = useState([0, 200e3]);
 
   const handleFilterPrice = () => {
     const [min, max] = range;
     const dataFilter = originalListRoom.filter((room) => {
-      return room.giaTien >= min / rate && room.giaTien <= max / rate;
+      return (
+        room.giaTien >= min / rates[currentCurrency] &&
+        room.giaTien <= max / rates[currentCurrency]
+      );
     });
     setListRoom(dataFilter);
   };
 
-  // Hàm xử lý khi thay đổi Slider
   const handleSliderChange = (value) => {
     setRange(value);
   };
 
-  // Hàm xử lý khi thay đổi InputNumber
   const handleInputChange = (value, index) => {
     const newRange = [...range];
-    newRange[index] = value || 0; // Xử lý giá trị null
+    newRange[index] = value || 0;
     setRange(newRange);
   };
   return (

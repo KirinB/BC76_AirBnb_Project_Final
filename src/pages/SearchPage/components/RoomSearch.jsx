@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import { formatCurrency } from "../../../common/formatCurrency";
 
 const RoomSearch = ({ id, image, title, description, price, giuong }) => {
-  const rate = useSelector((state) => state.exchangeRate.rate);
+  const { rates, currentCurrency, currentSymbol } = useSelector(
+    (state) => state.exchangeRate
+  );
 
   return (
     <Link to={`/rooms/${id}`} className="flex flex-col space-y-4">
@@ -29,7 +31,8 @@ const RoomSearch = ({ id, image, title, description, price, giuong }) => {
         <div className="flex space-x-2">
           <p className="text-[#6A6A6A]">
             <strong className="text-[#222222] dark:text-white">
-              ₫{formatCurrency(price * rate)}
+              {currentSymbol}
+              {formatCurrency(price * rates[currentCurrency])}
             </strong>
             / đêm
           </p>

@@ -16,12 +16,15 @@ import SignInPage from "../../AuthPage/components/SignInPage";
 import ModalLogin from "../../../components/ModalLogin/ModalLogin";
 import { formatCurrency } from "../../../common/formatCurrency";
 import { IoMdClose } from "react-icons/io";
+import { pathDefault } from "../../../common/path";
 const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   const { width } = useViewPort();
   const user = useSelector((state) => {
     return state.userSlice.user;
   });
-  const rate = useSelector((state) => state.exchangeRate.rate);
+  const { rates, currentCurrency, currentSymbol } = useSelector(
+    (state) => state.exchangeRate
+  );
   const { handleNotification } = useContext(NotificationContext);
   const [counterAdult, setConterAdult] = useState(1);
   const [counterChild, setCounterChild] = useState(0);
@@ -157,7 +160,8 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         <div className="w-1/2 flex items-center ">
           {isSelectedDay ? (
             <h2 className="text-lg font-semibold">
-              ₫{formatCurrency(priceRoom * rate)}{" "}
+              {currentSymbol}
+              {formatCurrency(priceRoom * rates[currentCurrency])}{" "}
               <span className="font-normal text-base">/ đêm</span>
             </h2>
           ) : (
@@ -166,7 +170,10 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         </div>
         <div className="w-1/2 cursor-pointer">
           {isSelectedDay ? (
-            <ButtonPrimary className={"w-full text-wrap py-6"}>
+            <ButtonPrimary
+              className={"w-full text-wrap py-6"}
+              onClick={handleSetRoom}
+            >
               <span className="text-sm">Đặt phòng</span>
             </ButtonPrimary>
           ) : (
@@ -216,7 +223,8 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         <div className="border w-full border-gray-200 shadow-lg rounded-xl p-6 space-y-6">
           {isSelectedDay ? (
             <h2 className="text-xl font-semibold">
-              ₫{formatCurrency(priceRoom * rate)}{" "}
+              {currentSymbol}
+              {formatCurrency(priceRoom * rates[currentCurrency])}{" "}
               <span className="font-normal text-base">/ đêm</span>
             </h2>
           ) : (
@@ -330,23 +338,35 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
                 <div className="flex flex-col gap-4 mt-4">
                   <div className="flex justify-between items-center gap-2">
                     <h4 className="text-sm lg:text-base underline">
-                      ₫{formatCurrency(priceRoom * rate)} x {daysSelected} đêm
+                      {currentSymbol}
+                      {formatCurrency(
+                        priceRoom * rates[currentCurrency]
+                      )} x {daysSelected} đêm
                     </h4>
                     <h4 className="text-sm lg:text-base">
-                      ₫{formatCurrency(priceRoom * rate * daysSelected)}
+                      {currentSymbol}
+                      {formatCurrency(
+                        priceRoom * rates[currentCurrency] * daysSelected
+                      )}
                     </h4>
                   </div>
                   <div className="flex justify-between items-center gap-2">
                     <h4 className="text-sm lg:text-base underline">
                       Phí vệ sinh
                     </h4>
-                    <h4 className="text-sm lg:text-base">₫150.000</h4>
+                    <h4 className="text-sm lg:text-base">
+                      {currentSymbol}
+                      {formatCurrency(5 * rates[currentCurrency])}
+                    </h4>
                   </div>
                   <div className="flex justify-between items-center">
                     <h4 className="text-sm lg:text-base underline">
                       Phí dịch vụ AirBnb
                     </h4>
-                    <h4 className="text-sm lg:text-base">₫200.000</h4>
+                    <h4 className="text-sm lg:text-base">
+                      {currentSymbol}
+                      {formatCurrency(2 * rates[currentCurrency])}
+                    </h4>
                   </div>
                 </div>
                 <LineSpace />
@@ -355,9 +375,11 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
                     Tổng trước thuế
                   </h4>
                   <h4 className="text-sm lg:text-base font-semibold">
-                    ₫
+                    {currentSymbol}
                     {formatCurrency(
-                      priceRoom * rate * daysSelected + 150e3 + 200e3
+                      priceRoom * rates[currentCurrency] * daysSelected +
+                        5 * rates[currentCurrency] +
+                        2 * rates[currentCurrency]
                     )}
                   </h4>
                 </div>
