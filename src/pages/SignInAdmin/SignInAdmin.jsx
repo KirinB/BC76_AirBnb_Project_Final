@@ -15,7 +15,10 @@ import { ButtonIcon } from "../../components/ui/button/ButtonCustom";
 import { NotificationContext } from "../../App";
 import { authService } from "../../services/auth.service";
 import { useDispatch } from "react-redux";
-import { handleUpdateUser } from "../../store/slice/user.slice";
+import {
+  handleUpdateUser,
+  handleUpdateToken,
+} from "../../store/slice/user.slice";
 const SignInAdmin = () => {
   const { handleNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
@@ -34,12 +37,14 @@ const SignInAdmin = () => {
           .then((res) => {
             localStorage.setItem("userInfo", JSON.stringify(res.data.content));
             dispatch(handleUpdateUser(res.data.content.user));
+            dispatch(handleUpdateToken(res.data.content.token));
             handleNotification("success", "Đăng nhập thành công");
             setTimeout(() => {
               navigate(pathDefault.admin);
             }, 1500);
           })
           .catch((err) => {
+            console.log(err);
             handleNotification("error", err.response.data.content);
           });
       },

@@ -89,6 +89,7 @@ const ManagerRoom = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 100,
     },
     {
       title: "Room's Name",
@@ -135,7 +136,7 @@ const ManagerRoom = () => {
         const items = [{ key: record.id, label: <p>{text}</p> }];
         return (
           <Dropdown
-            placement="topCenter"
+            placement="top"
             menu={{
               items,
             }}
@@ -143,7 +144,7 @@ const ManagerRoom = () => {
           >
             <a
               onClick={(e) => e.preventDefault()}
-              className="uppercase text-sm"
+              className="uppercase text-sm font-bold underline"
             >
               Infomation
             </a>
@@ -154,12 +155,19 @@ const ManagerRoom = () => {
     {
       title: "Action",
       key: "action",
+      fixed: "right",
+      width: 150,
       render: (text, record, index) => {
         return (
-          <div className="space-x-5">
+          <div className="space-x-1">
             {/* Nút sửa */}
             <Button
-              icon={<LuPencilLine size={25} />}
+              icon={
+                <LuPencilLine
+                  className="dark:text-white hover:text-white"
+                  size={25}
+                />
+              }
               color="default"
               type="text"
               onClick={() => {
@@ -215,14 +223,14 @@ const ManagerRoom = () => {
   }, []);
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center border-gray-500 border-b-2">
+      <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white py-10
-    "
+          className="text-3xl font-bold text-gray-800 dark:text-white mb-3
+        "
         >
           Manager List Room
         </h1>
-        <div className="flex space-x-3 w-1/3">
+        <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
             placeholder="enter search room's name..."
             value={keyword}

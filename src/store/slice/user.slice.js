@@ -25,6 +25,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { handleUpdateUser, handleDeleteUser } = userSlice.actions;
+export const { handleUpdateUser, handleDeleteUser, handleUpdateToken } =
+  userSlice.actions;
 
 export default userSlice.reducer;

@@ -10,6 +10,7 @@ import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePicke
 import { reservationService } from "../../../../services/reservation.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
+import { SiTrueup } from "react-icons/si";
 const FormEditBooking = ({
   initialValues,
   getAllReservation,
@@ -78,14 +79,14 @@ const FormEditBooking = ({
           id="id"
           name={"id"}
           value={values.id}
-          readOnly={true}
+          disabled={true}
         />
         <InputNormal
           labelContent={"Mã phòng"}
           id="maPhong"
           name={"maPhong"}
           value={values.maPhong}
-          readOnly={true}
+          disabled={true}
         />
         <div className="grid grid-cols-2 gap-5">
           <DatePickerCustom
@@ -129,7 +130,7 @@ const FormEditBooking = ({
           id="maNguoiDung"
           name={"maNguoiDung"}
           value={values.maNguoiDung}
-          readOnly={true}
+          disabled={true}
         />
         <div className="text-center">
           <Button

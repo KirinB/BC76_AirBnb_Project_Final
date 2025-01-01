@@ -7,7 +7,8 @@ import dayjs from "dayjs";
 import { IoCheckmark } from "react-icons/io5";
 import { FcCancel } from "react-icons/fc";
 import FormEditBooking from "./components/FormEditBooking/FormEditBooking";
-const ManagerReservation = () => {
+import Input_ from "postcss/lib/input";
+const ManagerReservation = ({ isDarkMode }) => {
   const { handleNotification } = useContext(NotificationContext);
   // tạo state quản lý dữ liệu
   const [listReservation, setListReservation] = useState([]);
@@ -56,6 +57,7 @@ const ManagerReservation = () => {
       title: "Mã đặt phòng",
       dataIndex: "id",
       key: "id",
+      width: 100,
     },
     {
       title: "Mã phòng",
@@ -103,11 +105,18 @@ const ManagerReservation = () => {
     {
       title: "Action",
       key: "action",
+      fixed: "right",
+      width: 150,
       render: (text, record, index) => {
         return (
-          <div className="space-x-5">
+          <div className="space-x-1">
             <Button
-              icon={<LuPencilLine size={25} />}
+              icon={
+                <LuPencilLine
+                  className="dark:text-white hover:text-white"
+                  size={25}
+                />
+              }
               color="default"
               type="text"
               onClick={() => {
@@ -157,19 +166,18 @@ const ManagerReservation = () => {
   useEffect(() => {}, [getAllReservation]);
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center border-gray-500 border-b-2">
+      <div className="md:flex md:justify-between items-center border-gray-500 border-b-2 space-y-3 py-5">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white py-10
+          className="text-3xl font-bold text-gray-800 dark:text-white
         "
         >
           Manager Booking
         </h1>
-        <div className="flex space-x-3 w-1/3">
+        <div className="flex w-full md:w-1/3">
           <Input.Search
             placeholder="enter search user's code..."
             value={keyword}
             onChange={handleChangeKeyword}
-            className=""
             size="large"
             onSearch={(value) => {
               setKeyword(value);

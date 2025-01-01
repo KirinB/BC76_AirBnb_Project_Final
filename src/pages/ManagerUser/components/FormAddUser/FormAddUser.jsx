@@ -148,7 +148,7 @@ const FormAddUser = ({
             Birthday
           </label>
           <DatePicker
-            className="w-full"
+            className="w-full text-white"
             format={"DD-MM-YYYY"}
             onChange={(date, dateString) => {
               setFieldValue("birthday", dateString);

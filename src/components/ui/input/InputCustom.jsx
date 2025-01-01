@@ -14,6 +14,7 @@ export const InputNormal = ({
   error,
   touched,
   readOnly = false,
+  disabled = false,
 }) => {
   return (
     <div className="space-y-1">
@@ -30,6 +31,7 @@ export const InputNormal = ({
         onBlur={handleBlur}
         onChange={handleChange}
         readOnly={readOnly}
+        disabled={disabled}
       />
       {touched && error ? (
         <p className="text-red-500 mt-1 text-sm">{error}</p>
