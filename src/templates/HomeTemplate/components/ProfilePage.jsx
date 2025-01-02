@@ -21,7 +21,7 @@ const ProfilePage = () => {
 
   const settings = {
     dots: false, // Hiển thị các chấm chuyển slide
-    infinite: true, // Không lặp lại carousel
+    infinite: false, // Không lặp lại carousel
     speed: 500, // Tốc độ chuyển slide
     slidesToShow: 5, // Số item hiển thị mặc định (desktop)
     slidesToScroll: 1, // Số item cuộn mỗi lần
@@ -107,11 +107,7 @@ const ProfilePage = () => {
       })
       .catch((err) => {
         console.error(err);
-        handleNotification(
-          "error",
-          "Đã xảy ra lỗi khi tải lên ảnh đại diện.",
-          3000
-        );
+        handleNotification("error", err.response.data.content, 3000);
       });
   };
 
