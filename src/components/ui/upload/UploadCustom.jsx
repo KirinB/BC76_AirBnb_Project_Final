@@ -31,6 +31,7 @@ export const UploadRoomPicture = ({
         background: "none",
       }}
       type="button"
+      className="dark:text-white"
     >
       {<PlusOutlined />}
       <div

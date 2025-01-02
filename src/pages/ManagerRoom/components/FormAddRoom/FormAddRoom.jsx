@@ -359,12 +359,21 @@ const FormAddRoom = ({
             }}
           />
         </div>
-        <div className="text-center">
+        <div className="text-right space-x-3">
           <Button
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
             {isOnSubmit ? "Add Room" : "Edit"}
+          </Button>
+          <Button
+            className="p-5"
+            onClick={() => {
+              handleCloseModal();
+              resetForm();
+            }}
+          >
+            Cancel
           </Button>
         </div>
       </form>

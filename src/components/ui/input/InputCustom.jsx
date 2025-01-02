@@ -15,6 +15,7 @@ export const InputNormal = ({
   touched,
   readOnly = false,
   disabled = false,
+  handleFocus,
 }) => {
   return (
     <div className="space-y-1">
@@ -32,6 +33,7 @@ export const InputNormal = ({
         onChange={handleChange}
         readOnly={readOnly}
         disabled={disabled}
+        onFocus={handleFocus}
       />
       {touched && error ? (
         <p className="text-red-500 mt-1 text-sm">{error}</p>
@@ -51,6 +53,7 @@ export const InputPasswordCustom = ({
   touched,
   readOnly = false,
   disabled = false,
+  handleFocus,
 }) => {
   return (
     <div className="space-y-1">
@@ -65,6 +68,7 @@ export const InputPasswordCustom = ({
         onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}
+        onFocus={handleFocus}
       />
       {touched && error ? (
         <p className="text-red-500 mt-1 text-sm">{error}</p>

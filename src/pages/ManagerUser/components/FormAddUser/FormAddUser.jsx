@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
+import { CalendarOutlined } from "@ant-design/icons";
 import { useFormik } from "formik";
 import {
   InputNormal,
@@ -148,6 +149,9 @@ const FormAddUser = ({
             Birthday
           </label>
           <DatePicker
+            suffixIcon={
+              <CalendarOutlined className="dark:text-white" size={20} />
+            }
             className="w-full text-white"
             format={"DD-MM-YYYY"}
             onChange={(date, dateString) => {

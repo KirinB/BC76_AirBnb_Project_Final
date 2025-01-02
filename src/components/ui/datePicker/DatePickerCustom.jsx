@@ -1,6 +1,6 @@
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
-
+import { CalendarOutlined } from "@ant-design/icons";
 export const DatePickerCustom = ({
   id,
   name,
@@ -23,6 +23,9 @@ export const DatePickerCustom = ({
         {labelContent}
       </label>
       <DatePicker
+        suffixIcon={<CalendarOutlined className="dark:text-white" size={20} />}
+        allowClear={false}
+        disabledDate={() => {}}
         className="w-full"
         id={id}
         name={name}

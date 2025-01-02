@@ -8,6 +8,7 @@ import FormAddRoom from "./components/FormAddRoom/FormAddRoom";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { locationService } from "../../services/viTri.service";
 import { TbHomePlus } from "react-icons/tb";
+import { CloseOutlined } from "@ant-design/icons";
 const ManagerRoom = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -164,7 +165,7 @@ const ManagerRoom = () => {
             <Button
               icon={
                 <LuPencilLine
-                  className="dark:text-white hover:text-white"
+                  className="dark:text-white dark:hover:text-white "
                   size={25}
                 />
               }
@@ -273,7 +274,12 @@ const ManagerRoom = () => {
             }}
           />
           <Modal
-            title={isOnSubmit ? "Add Room" : "Edit Room Information"}
+            title={
+              <h2 className="dark:text-white text-2xl text-center">
+                {isOnSubmit ? "Add Room" : "Edit Room Information"}
+              </h2>
+            }
+            closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
             open={isModalOpen}
             onCancel={() => {
               setIsModalOpen(false);

@@ -15,6 +15,7 @@ const FormEditBooking = ({
   initialValues,
   getAllReservation,
   setIsModalOpen,
+  handleCloseModal,
 }) => {
   const { handleNotification } = useContext(NotificationContext);
   const {
@@ -80,6 +81,7 @@ const FormEditBooking = ({
           name={"id"}
           value={values.id}
           disabled={true}
+          className="dark:text-slate-500"
         />
         <InputNormal
           labelContent={"Mã phòng"}
@@ -87,6 +89,7 @@ const FormEditBooking = ({
           name={"maPhong"}
           value={values.maPhong}
           disabled={true}
+          className="dark:text-slate-500"
         />
         <div className="grid grid-cols-2 gap-5">
           <DatePickerCustom
@@ -126,18 +129,28 @@ const FormEditBooking = ({
           touched={touched.soLuongKhach}
         />
         <InputNormal
+          className="dark:text-slate-500"
           labelContent={"Mã người dùng"}
           id="maNguoiDung"
           name={"maNguoiDung"}
           value={values.maNguoiDung}
           disabled={true}
         />
-        <div className="text-center">
+        <div className="text-right space-x-3">
           <Button
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
             {"Put Form"}
+          </Button>
+          <Button
+            className="p-5"
+            onClick={() => {
+              handleCloseModal();
+              resetForm();
+            }}
+          >
+            Cancel
           </Button>
         </div>
       </form>

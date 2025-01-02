@@ -7,7 +7,7 @@ import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import FormAddLocation from "./FormAddLocation/FormAddLocation";
 import { BiSolidLocationPlus } from "react-icons/bi";
-import removeVietnameseTones from "../../common/removeVietnameseTones";
+import { CloseOutlined } from "@ant-design/icons";
 const ManagerLocation = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -204,7 +204,12 @@ const ManagerLocation = () => {
             }}
           />
           <Modal
-            title={isOnSubmit ? "Add Location" : "Edit Location Information"}
+            title={
+              <h2 className="dark:text-white text-2xl text-center">
+                {isOnSubmit ? "Add Location" : "Edit Location"}
+              </h2>
+            }
+            closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
             open={isModalOpen}
             onCancel={() => {
               setIsModalOpen(false);

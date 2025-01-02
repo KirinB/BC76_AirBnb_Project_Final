@@ -148,12 +148,21 @@ const FormAddLocation = ({
           touched={touched.quocGia}
           error={errors.quocGia}
         />
-        <div className="text-center">
+        <div className="text-right space-x-3">
           <Button
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
             {isOnSubmit ? "Add Location" : "Edit"}
+          </Button>
+          <Button
+            className="p-5"
+            onClick={() => {
+              handleCloseModal();
+              resetForm();
+            }}
+          >
+            Cancel
           </Button>
         </div>
       </form>

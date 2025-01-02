@@ -4,10 +4,10 @@ import { Button, Input, Modal, Popconfirm, Table } from "antd";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { NotificationContext } from "../../App";
 import dayjs from "dayjs";
+import { CloseOutlined } from "@ant-design/icons";
 import { IoCheckmark } from "react-icons/io5";
 import { FcCancel } from "react-icons/fc";
 import FormEditBooking from "./components/FormEditBooking/FormEditBooking";
-import Input_ from "postcss/lib/input";
 const ManagerReservation = ({ isDarkMode }) => {
   const { handleNotification } = useContext(NotificationContext);
   // tạo state quản lý dữ liệu
@@ -113,7 +113,7 @@ const ManagerReservation = ({ isDarkMode }) => {
             <Button
               icon={
                 <LuPencilLine
-                  className="dark:text-white hover:text-white"
+                  className="dark:text-white dark:hover:text-white"
                   size={25}
                 />
               }
@@ -192,7 +192,12 @@ const ManagerReservation = ({ isDarkMode }) => {
             }}
           />
           <Modal
-            title={"Edit Booking"}
+            title={
+              <h2 className="dark:text-white text-center text-2xl">
+                Edit Booking
+              </h2>
+            }
+            closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
             open={isModalOpen}
             onCancel={() => {
               setIsModalOpen(false);
@@ -202,7 +207,9 @@ const ManagerReservation = ({ isDarkMode }) => {
             <FormEditBooking
               initialValues={initialValues}
               getAllReservation={getAllReservation}
-              setIsModalOpen={setIsModalOpen}
+              handleCloseModal={() => {
+                setIsModalOpen(false);
+              }}
             />
           </Modal>
         </div>

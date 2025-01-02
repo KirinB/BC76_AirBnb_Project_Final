@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 import FormAddUser from "./components/FormAddUser/FormAddUser";
-import CloseOutlined from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 
 const ManagerUser = ({ them }) => {
   const [initialValues, setInitialValues] = useState({
@@ -238,10 +238,11 @@ const ManagerUser = ({ them }) => {
           />
           <Modal
             title={
-              <h2 className="dark:text-white text-xl">
+              <h2 className="dark:text-white text-2xl text-center">
                 {isOnSubmit ? "Add User" : "Edit User Information"}
               </h2>
             }
+            closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
             open={isModalOpen}
             onCancel={() => {
               setIsModalOpen(false);
