@@ -48,7 +48,6 @@ const FormEditBooking = ({
           ngayDi: ngayDiISO,
         })
         .then((res) => {
-          console.log("Response:", res);
           getAllReservation();
           setIsModalOpen(false);
           handleNotification("success", "Sửa thông tin đặt phòng thành công");

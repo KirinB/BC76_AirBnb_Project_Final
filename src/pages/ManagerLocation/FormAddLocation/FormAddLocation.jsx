@@ -14,7 +14,7 @@ const FormAddLocation = ({
   initialValues,
   previewImage,
   setPreviewImage,
-  onResetForm
+  onResetForm,
 }) => {
   const { handleNotification } = useContext(NotificationContext);
   const { user, token } = useSelector((state) => state.userSlice);
@@ -69,7 +69,6 @@ const FormAddLocation = ({
           locationService
             .editLocation(values.id, token, valuesClone)
             .then((res) => {
-              console.log(res);
               locationService
                 .uploadImgLocation(formData, values.id, token)
                 .then((res) => {
@@ -101,11 +100,11 @@ const FormAddLocation = ({
       quocGia: Yup.string().required("Vui lòng nhập tên Thành Phố"),
     }),
   });
- useEffect(() => {
-     if (onResetForm) {
-       onResetForm(resetForm);
-     }
-   }, [onResetForm, resetForm]);
+  useEffect(() => {
+    if (onResetForm) {
+      onResetForm(resetForm);
+    }
+  }, [onResetForm, resetForm]);
   return (
     <div>
       <form action="" onSubmit={handleSubmit} className="space-y-5">
@@ -113,7 +112,6 @@ const FormAddLocation = ({
           previewImage={previewImage}
           error={errors.hinhAnh}
           handleChange={(info) => {
-            console.log(info);
             const file = info.file.originFileObj;
             setFieldValue("hinhAnh", file);
             // Tạo URL để xem trước hình ảnh

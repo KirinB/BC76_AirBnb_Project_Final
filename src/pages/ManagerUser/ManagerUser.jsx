@@ -52,9 +52,7 @@ const ManagerUser = ({ them }) => {
   };
 
   const handlePageChange = (page, pageSize) => {
-    console.log("Current page:", page);
-    console.log("Page size:", pageSize);
-    setCurrentPage(page); // Cập nhật state nếu cần
+    setCurrentPage(page);
   };
   const Render = (res) => {
     const setUser = res.data.content.data.map((user) => ({
@@ -69,7 +67,6 @@ const ManagerUser = ({ them }) => {
     nguoiDungSerivce
       .getUserFind(currentPage, keyword)
       .then((res) => {
-        console.log(res);
         Render(res);
       })
       .catch((err) => {
@@ -165,7 +162,6 @@ const ManagerUser = ({ them }) => {
                 nguoiDungSerivce
                   .getUserByID(record.id)
                   .then((res) => {
-                    console.log(res);
                     setInitialValues(res.data.content);
                   })
                   .catch((err) => {

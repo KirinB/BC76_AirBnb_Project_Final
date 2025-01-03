@@ -36,7 +36,6 @@ const SignInAdmin = () => {
         password: "",
       },
       onSubmit: (values) => {
-        console.log(values);
         authService
           .signIn(values)
           .then((res) => {

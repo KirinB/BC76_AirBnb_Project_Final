@@ -71,8 +71,6 @@ const ManagerRoom = () => {
     }, 1000);
   };
   const handlePageChange = (page, pageSize) => {
-    console.log("Current page:", page);
-    console.log("Page size:", pageSize);
     setCurrentPage(page);
   };
   const Render = (res) => {
@@ -87,7 +85,6 @@ const ManagerRoom = () => {
     phongService
       .searchByKeyword(currentPage, keyword)
       .then((res) => {
-        console.log(res);
         Render(res);
       })
       .catch((err) => {
@@ -98,7 +95,6 @@ const ManagerRoom = () => {
     locationService
       .getViTri()
       .then((res) => {
-        console.log(res);
         setLocation(res.data.content);
       })
       .catch((err) => {
@@ -197,7 +193,6 @@ const ManagerRoom = () => {
                 phongService
                   .getRoomById(record.id)
                   .then((res) => {
-                    console.log(res);
                     setInitialValues(res.data.content);
                     setPreviewImage(record.hinhAnh);
                   })

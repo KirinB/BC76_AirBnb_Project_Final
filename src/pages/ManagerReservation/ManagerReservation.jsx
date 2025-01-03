@@ -35,7 +35,6 @@ const ManagerReservation = ({ isDarkMode }) => {
     reservationService
       .getAllReservation()
       .then((res) => {
-        console.log(res);
         setReservationTable(res);
       })
       .catch((err) => {
@@ -48,7 +47,6 @@ const ManagerReservation = ({ isDarkMode }) => {
   const TimeOutRef = useRef(null);
   const searchKeyWord = (data) => {
     setKeyword(data);
-    console.log(data);
     let soPhongNguoiDungDat = originalListReservation.filter((item, index) => {
       return String(item.maNguoiDung).includes(data.trim());
     });
@@ -141,7 +139,6 @@ const ManagerReservation = ({ isDarkMode }) => {
                 reservationService
                   .getReservationByID(record.id)
                   .then((res) => {
-                    console.log(res);
                     setInitialValues(res.data.content);
                   })
                   .catch((err) => {

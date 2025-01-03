@@ -38,7 +38,6 @@ const FormAddUser = ({
       nguoiDungSerivce
         .putUserByID(data.id, data)
         .then((res) => {
-          console.log(res);
           handleCloseModal();
           getAllUsser();
           handleNotification("success", "Edit User Successfully");
@@ -61,7 +60,6 @@ const FormAddUser = ({
     initialValues,
     enableReinitialize: true,
     onSubmit: (values) => {
-      console.log(values);
       handleOnSubmit(values);
     },
     validationSchema: Yup.object({

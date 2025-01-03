@@ -79,12 +79,9 @@ const FormAddRoom = ({
           phongService
             .editRoom(values.id, token, valuesClone)
             .then((res) => {
-              console.log(res);
               phongService
                 .postImageRoom(formData, values.id, token)
-                .then((res) => {
-                  console.log(res);
-                })
+                .then((res) => {})
                 .catch((err) => {
                   console.log(err);
                 });
@@ -95,9 +92,7 @@ const FormAddRoom = ({
         } else {
           phongService
             .editRoom(values.id, token, values)
-            .then((res) => {
-              console.log(res);
-            })
+            .then((res) => {})
             .catch((err) => {
               console.log(err);
             });
@@ -139,7 +134,6 @@ const FormAddRoom = ({
           previewImage={previewImage}
           error={errors.hinhAnh}
           handleChange={(info) => {
-            console.log(info);
             const file = info.file.originFileObj;
             setFieldValue("hinhAnh", file);
             // Tạo URL để xem trước hình ảnh

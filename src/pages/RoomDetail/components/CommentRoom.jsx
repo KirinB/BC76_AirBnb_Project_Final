@@ -41,7 +41,6 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
     commentService
       .getListCommentByIdRoom(id)
       .then((res) => {
-        // console.log(res.data.content);
         setListComment(res.data.content);
       })
       .catch((err) => {
@@ -63,7 +62,6 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
         token
       )
       .then((res) => {
-        console.log(res);
         handleNotification("success", res.data.message);
         getListComment();
         setIsModalOpenWriteReview(false);

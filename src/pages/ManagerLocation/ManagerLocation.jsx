@@ -47,8 +47,6 @@ const ManagerLocation = () => {
   };
   //handleChange khi bấm chuyển page
   const handlePageChange = (page, pageSize) => {
-    console.log("Current page:", page);
-    console.log("Page size:", pageSize);
     setCurrentPage(page);
   };
   const renderLocation = (res) => {
@@ -63,7 +61,6 @@ const ManagerLocation = () => {
     locationService
       .getAllLocation(currentPage, keyword)
       .then((res) => {
-        console.log(res);
         renderLocation(res);
       })
       .catch((err) => {
@@ -134,7 +131,6 @@ const ManagerLocation = () => {
                 locationService
                   .getLocationByID(record.id)
                   .then((res) => {
-                    console.log(res);
                     setInitialValues(res.data.content);
                     setPreviewImage(record.hinhAnh);
                   })
