@@ -10,7 +10,13 @@ import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePicke
 import { reservationService } from "../../../../services/reservation.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
-const FormEditBooking = ({ initialValues }) => {
+import { SiTrueup } from "react-icons/si";
+const FormEditBooking = ({
+  initialValues,
+  getAllReservation,
+  setIsModalOpen,
+  handleCloseModal,
+}) => {
   const { handleNotification } = useContext(NotificationContext);
   const {
     values,
@@ -21,24 +27,48 @@ const FormEditBooking = ({ initialValues }) => {
     touched,
     setFieldValue,
   } = useFormik({
-    initialValues,
+    initialValues: {
+      ...initialValues,
+      ngayDen: dayjs(initialValues.ngayDen),
+      ngayDi: dayjs(initialValues.ngayDi),
+    },
     enableReinitialize: true,
+
     onSubmit: (values) => {
+      const ngayDenISO = dayjs(values.ngayDen, "DD-MM-YYYY").format(
+        "YYYY-MM-DDTHH:mm:ss"
+      );
+      const ngayDiISO = dayjs(values.ngayDi, "DD-MM-YYYY").format(
+        "YYYY-MM-DDTHH:mm:ss"
+      );
       reservationService
-        .putReservation(values.id, values)
+        .putReservation(values.id, {
+          ...values,
+          ngayDen: ngayDenISO,
+          ngayDi: ngayDiISO,
+        })
         .then((res) => {
-          console.log(res);
+          getAllReservation();
+          setIsModalOpen(false);
           handleNotification("success", "Sửa thông tin đặt phòng thành công");
         })
         .catch((err) => {
-          console.log(err);
-          handleNotification("error", err.res.data.content);
+          console.error("Error:", err);
+          getAllReservation();
+          handleNotification(
+            "error",
+            err?.response?.data?.content || "Có lỗi xảy ra"
+          );
         });
     },
+
     validationSchema: Yup.object({
       soLuongKhach: Yup.number()
         .required("Vui lòng không bỏ trống")
         .min(1, "Vui lòng nhập trên 1 khách"),
+
+      ngayDen: Yup.string().required("Vui lòng chọn ngày đến"),
+      ngayDi: Yup.string().required("Vui lòng chọn ngày đi"),
     }),
   });
   return (
@@ -49,34 +79,39 @@ const FormEditBooking = ({ initialValues }) => {
           id="id"
           name={"id"}
           value={values.id}
-          readOnly={true}
+          disabled={true}
+          className="dark:text-slate-500"
         />
         <InputNormal
           labelContent={"Mã phòng"}
           id="maPhong"
           name={"maPhong"}
           value={values.maPhong}
-          readOnly={true}
+          disabled={true}
+          className="dark:text-slate-500"
         />
         <div className="grid grid-cols-2 gap-5">
           <DatePickerCustom
-            labelContent={"Ngày Đến"}
-            value={values.ngayDen ? dayjs(values.ngayDen) : null}
+            id="ngayDen"
+            name="ngayDen"
+            labelContent="Ngày Đến"
+            value={values.ngayDen}
+            format={"DD-MM-YYYY"}
             error={errors.ngayDen}
             touched={touched.ngayDen}
-            handleChange={(date, dateString) => {
-              setFieldValue("ngayDen", dateString);
-            }}
+            handleChange={(date) => setFieldValue("ngayDen", date)}
             handleBlur={handleBlur}
           />
+
           <DatePickerCustom
-            labelContent={"Ngày Đi"}
-            value={values.ngayDi ? dayjs(values.ngayDi) : null}
+            id="ngayDi"
+            name="ngayDi"
+            labelContent="Ngày Đi"
+            value={values.ngayDi}
             error={errors.ngayDi}
+            format={"DD-MM-YYYY"}
             touched={touched.ngayDi}
-            handleChange={(date, dateString) => {
-              setFieldValue("ngayDi", dateString);
-            }}
+            handleChange={(date) => setFieldValue("ngayDi", date)}
             handleBlur={handleBlur}
           />
         </div>
@@ -93,18 +128,28 @@ const FormEditBooking = ({ initialValues }) => {
           touched={touched.soLuongKhach}
         />
         <InputNormal
+          className="dark:text-slate-500"
           labelContent={"Mã người dùng"}
           id="maNguoiDung"
           name={"maNguoiDung"}
           value={values.maNguoiDung}
-          readOnly={true}
+          disabled={true}
         />
-        <div className="text-center">
+        <div className="text-right space-x-3">
           <Button
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
             {"Put Form"}
+          </Button>
+          <Button
+            className="p-5"
+            onClick={() => {
+              handleCloseModal();
+              resetForm();
+            }}
+          >
+            Cancel
           </Button>
         </div>
       </form>

@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
-import { Button, DatePicker } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
+import { CalendarOutlined } from "@ant-design/icons";
 import { useFormik } from "formik";
 import {
   InputNormal,
@@ -16,16 +17,17 @@ const FormAddUser = ({
   getAllUsser,
   isOnSubmit,
   initialValues,
+  onResetForm,
 }) => {
   const { handleNotification } = useContext(NotificationContext);
+
   const handleOnSubmit = (data) => {
     if (isOnSubmit) {
       nguoiDungSerivce
         .postUsers(data)
         .then((res) => {
           handleCloseModal();
-          getAllUsser;
-          resetForm();
+          getAllUsser();
           handleNotification("success", "User Created Successfully");
         })
         .catch((err) => {
@@ -36,10 +38,8 @@ const FormAddUser = ({
       nguoiDungSerivce
         .putUserByID(data.id, data)
         .then((res) => {
-          console.log(res);
           handleCloseModal();
-          getAllUsser;
-          resetForm();
+          getAllUsser();
           handleNotification("success", "Edit User Successfully");
         })
         .catch((err) => {
@@ -60,7 +60,6 @@ const FormAddUser = ({
     initialValues,
     enableReinitialize: true,
     onSubmit: (values) => {
-      console.log(values);
       handleOnSubmit(values);
     },
     validationSchema: Yup.object({
@@ -90,7 +89,11 @@ const FormAddUser = ({
       gender: Yup.boolean("Vui lòng chọn giới tính").required("aaaaa"),
     }),
   });
-
+  useEffect(() => {
+    if (onResetForm) {
+      onResetForm(resetForm);
+    }
+  }, [onResetForm, resetForm]);
   return (
     <form action="" onSubmit={handleSubmit} className="space-y-5">
       <InputNormal
@@ -116,16 +119,16 @@ const FormAddUser = ({
         touched={touched.email}
       />
       <InputPasswordCustom
-        labelContent={"password"}
+        labelContent={"Password"}
         id="password"
         name={"password"}
-        placeholder={"Vui lòng nhập password"}
+        placeholder={isOnSubmit ? "Vui lòng nhập password" : ""}
         value={values.password}
         handleChange={handleChange}
         handleBlur={handleBlur}
         error={errors.password}
         touched={touched.password}
-        readOnly={isOnSubmit ? false : true}
+        disabled={isOnSubmit ? false : true}
       />
       <InputNormal
         labelContent={"Phone"}
@@ -144,7 +147,10 @@ const FormAddUser = ({
             Birthday
           </label>
           <DatePicker
-            className="w-full"
+            suffixIcon={
+              <CalendarOutlined className="dark:text-white" size={20} />
+            }
+            className="w-full text-white"
             format={"DD-MM-YYYY"}
             onChange={(date, dateString) => {
               setFieldValue("birthday", dateString);
@@ -169,7 +175,7 @@ const FormAddUser = ({
             }}
             value={values.gender}
             error={errors.gender}
-            touched={touched.gender}
+            // touched={touched.gender}
           />
         </div>
       </div>
@@ -183,12 +189,21 @@ const FormAddUser = ({
         errors={errors.role}
         touched={touched.role}
       />
-      <div className="text-center">
+      <div className="flex justify-end gap-3">
         <Button
           htmlType="submit"
           className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
         >
           {isOnSubmit ? "Add User" : "Edit"}
+        </Button>
+        <Button
+          className="p-5"
+          onClick={() => {
+            handleCloseModal();
+            resetForm();
+          }}
+        >
+          Cancel
         </Button>
       </div>
     </form>

@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Dropdown, Input, Modal, Popconfirm, Table } from "antd";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Button, Input, Modal, Popconfirm, Table } from "antd";
 import { NotificationContext } from "../../App";
 import { useSelector } from "react-redux";
 import { locationService } from "../../services/viTri.service";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
-import { FaUserPlus } from "react-icons/fa";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
-import FormAddRoom from "../ManagerRoom/components/FormAddRoom/FormAddRoom";
 import FormAddLocation from "./FormAddLocation/FormAddLocation";
-import { BiLocationPlus, BiSolidLocationPlus } from "react-icons/bi";
+import { BiSolidLocationPlus } from "react-icons/bi";
+import { CloseOutlined } from "@ant-design/icons";
 const ManagerLocation = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -17,8 +16,17 @@ const ManagerLocation = () => {
     quocGia: "",
     hinhAnh: "",
   });
+  const resetFormRef = useRef(null);
+  const handleResetForm = (resetForm) => {
+    resetFormRef.current = resetForm;
+  };
+  const resetLocationForm = () => {
+    if (resetFormRef.current) {
+      resetFormRef.current();
+    }
+  };
+
   const [previewImage, setPreviewImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
   //Xử lý phần add , edit
   const [isOnSubmit, setIsOnSubmit] = useState(true);
   const { user, token } = useSelector((state) => state.userSlice);
@@ -39,8 +47,6 @@ const ManagerLocation = () => {
   };
   //handleChange khi bấm chuyển page
   const handlePageChange = (page, pageSize) => {
-    console.log("Current page:", page);
-    console.log("Page size:", pageSize);
     setCurrentPage(page);
   };
   const renderLocation = (res) => {
@@ -55,7 +61,6 @@ const ManagerLocation = () => {
     locationService
       .getAllLocation(currentPage, keyword)
       .then((res) => {
-        console.log(res);
         renderLocation(res);
       })
       .catch((err) => {
@@ -67,6 +72,7 @@ const ManagerLocation = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 100,
     },
     {
       title: "Image",
@@ -104,12 +110,19 @@ const ManagerLocation = () => {
     {
       title: "Action",
       key: "action",
+      fixed: "right",
+      width: 150,
       render: (text, record, index) => {
         return (
-          <div className="space-x-5">
+          <div className="space-x-1">
             {/* Nút sửa */}
             <Button
-              icon={<LuPencilLine size={25} />}
+              icon={
+                <LuPencilLine
+                  className="dark:text-white dark:hover:text-white"
+                  size={25}
+                />
+              }
               color="default"
               type="text"
               onClick={() => {
@@ -118,7 +131,6 @@ const ManagerLocation = () => {
                 locationService
                   .getLocationByID(record.id)
                   .then((res) => {
-                    console.log(res);
                     setInitialValues(res.data.content);
                     setPreviewImage(record.hinhAnh);
                   })
@@ -162,14 +174,14 @@ const ManagerLocation = () => {
   useEffect(() => {}, [getAllLocation]);
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center border-gray-500 border-b-2">
+      <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white py-10
+          className="text-3xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
           Manager List Location
         </h1>
-        <div className="flex space-x-3 w-1/3">
+        <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
             placeholder="enter search location..."
             value={keyword}
@@ -195,10 +207,16 @@ const ManagerLocation = () => {
                 hinhAnh: "",
               });
               setPreviewImage(null);
+              resetLocationForm();
             }}
           />
           <Modal
-            title={isOnSubmit ? "Add Location" : "Edit Location Information"}
+            title={
+              <h2 className="dark:text-white text-2xl text-center">
+                {isOnSubmit ? "Add Location" : "Edit Location"}
+              </h2>
+            }
+            closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
             open={isModalOpen}
             onCancel={() => {
               setIsModalOpen(false);
@@ -217,6 +235,7 @@ const ManagerLocation = () => {
               location={location}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}
+              onResetForm={handleResetForm}
             />
           </Modal>
         </div>
