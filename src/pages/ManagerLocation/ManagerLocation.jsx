@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, Input, Modal, Popconfirm, Table } from "antd";
 import { NotificationContext } from "../../App";
 import { useSelector } from "react-redux";
@@ -16,6 +16,16 @@ const ManagerLocation = () => {
     quocGia: "",
     hinhAnh: "",
   });
+  const resetFormRef = useRef(null);
+  const handleResetForm = (resetForm) => {
+    resetFormRef.current = resetForm;
+  };
+  const resetLocationForm = () => {
+    if (resetFormRef.current) {
+      resetFormRef.current();
+    }
+  };
+
   const [previewImage, setPreviewImage] = useState(null);
   //Xử lý phần add , edit
   const [isOnSubmit, setIsOnSubmit] = useState(true);
@@ -201,6 +211,7 @@ const ManagerLocation = () => {
                 hinhAnh: "",
               });
               setPreviewImage(null);
+              resetLocationForm();
             }}
           />
           <Modal
@@ -228,6 +239,7 @@ const ManagerLocation = () => {
               location={location}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}
+              onResetForm={handleResetForm}
             />
           </Modal>
         </div>

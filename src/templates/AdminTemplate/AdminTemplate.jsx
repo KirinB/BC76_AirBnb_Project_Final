@@ -192,7 +192,7 @@ const AdminTemplate = () => {
                     }}
                     to={pathDefault.managerReservation}
                   >
-                    Manager Reservation
+                    Manager Booking
                   </NavLink>
                 ),
               },

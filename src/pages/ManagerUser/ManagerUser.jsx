@@ -21,9 +21,18 @@ const ManagerUser = ({ them }) => {
     gender: true,
     role: "",
   });
+  // xử lý Input search
   const [keyword, setKeyword] = useState("");
+  const [value, setValue] = useState("");
+  const timeOutRef = useRef(null);
   const handleChangeKeyword = (e) => {
-    setKeyword(e.target.value);
+    setValue(e.target.value);
+    if (timeOutRef) {
+      clearTimeout(timeOutRef.current);
+    }
+    timeOutRef.current = setTimeout(() => {
+      setKeyword(value);
+    }, 1000);
   };
   const [isOnSubmit, setIsOnSubmit] = useState(true);
   const [listUser, setListUser] = useState([]);
@@ -209,7 +218,7 @@ const ManagerUser = ({ them }) => {
         <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
             placeholder="enter search name's user..."
-            value={keyword}
+            value={value}
             onChange={handleChangeKeyword}
             className=""
             size="large"

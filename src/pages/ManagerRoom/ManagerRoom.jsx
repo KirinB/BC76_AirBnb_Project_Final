@@ -1,5 +1,5 @@
 import { Button, Dropdown, Input, Modal, Popconfirm, Table } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { phongService } from "../../services/phong.service";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
 import { NotificationContext } from "../../App";
@@ -31,6 +31,17 @@ const ManagerRoom = () => {
     maViTri: 0,
     hinhAnh: "",
   });
+  // Xử lý resetForm
+  const resetFormRef = useRef(null);
+  const handleResetForm = (resetForm) => {
+    resetFormRef.current = resetForm;
+  };
+  const resetRoomForm = () => {
+    if (resetFormRef.current) {
+      resetFormRef.current();
+    }
+  };
+
   //Xử lý hình ảnh
   const [previewImage, setPreviewImage] = useState(null);
   //Xử lý phần add , edit
@@ -45,10 +56,19 @@ const ManagerRoom = () => {
   const [totalRow, setTotalRow] = useState(0);
   // Xử lý InputSearch
   const [keyword, setKeyword] = useState("");
+  const [value, setValue] = useState("");
+  const timeOutRef = useRef(null);
   // Xử lý phần vị trí
   const [location, setLocation] = useState([]);
+  // Xử lý input Search
   const handleChangeKeyword = (e) => {
-    setKeyword(e.target.value);
+    setValue(e.target.value);
+    if (timeOutRef) {
+      clearTimeout(timeOutRef.current);
+    }
+    timeOutRef.current = setTimeout(() => {
+      setKeyword(value);
+    }, 1000);
   };
   const handlePageChange = (page, pageSize) => {
     console.log("Current page:", page);
@@ -234,7 +254,7 @@ const ManagerRoom = () => {
         <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
             placeholder="enter search room's name..."
-            value={keyword}
+            value={value}
             onChange={handleChangeKeyword}
             className=""
             size="large"
@@ -271,6 +291,7 @@ const ManagerRoom = () => {
                 hinhAnh: "",
               });
               setPreviewImage(null);
+              resetRoomForm();
             }}
           />
           <Modal
@@ -295,6 +316,7 @@ const ManagerRoom = () => {
               getAllRoom={() => {
                 getAllRoom();
               }}
+              onResetForm={handleResetForm}
               location={location}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}

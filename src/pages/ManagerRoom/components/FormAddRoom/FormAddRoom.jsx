@@ -21,6 +21,7 @@ const FormAddRoom = ({
   previewImage,
   setPreviewImage,
   location,
+  onResetForm,
 }) => {
   // Xử lý hình ảnh
 
@@ -125,6 +126,11 @@ const FormAddRoom = ({
       hinhAnh: Yup.string().required("Vui lòng không bỏ trống"),
     }),
   });
+  useEffect(() => {
+    if (onResetForm) {
+      onResetForm(resetForm);
+    }
+  }, [onResetForm, resetForm]);
   return (
     <div>
       {/* Phần xử lí hình ảnh với UpLoad ant Design */}

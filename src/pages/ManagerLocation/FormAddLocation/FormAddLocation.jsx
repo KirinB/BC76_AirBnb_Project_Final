@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { locationService } from "../../../services/viTri.service";
 import { UploadRoomPicture } from "../../../components/ui/upload/UploadCustom";
 import { InputNormal } from "../../../components/ui/input/InputCustom";
@@ -14,6 +14,7 @@ const FormAddLocation = ({
   initialValues,
   previewImage,
   setPreviewImage,
+  onResetForm
 }) => {
   const { handleNotification } = useContext(NotificationContext);
   const { user, token } = useSelector((state) => state.userSlice);
@@ -100,6 +101,11 @@ const FormAddLocation = ({
       quocGia: Yup.string().required("Vui lòng nhập tên Thành Phố"),
     }),
   });
+ useEffect(() => {
+     if (onResetForm) {
+       onResetForm(resetForm);
+     }
+   }, [onResetForm, resetForm]);
   return (
     <div>
       <form action="" onSubmit={handleSubmit} className="space-y-5">

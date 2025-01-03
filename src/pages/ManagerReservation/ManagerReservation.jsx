@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { reservationService } from "../../services/reservation.service";
 import { Button, Input, Modal, Popconfirm, Table } from "antd";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
@@ -12,6 +12,7 @@ const ManagerReservation = ({ isDarkMode }) => {
   const { handleNotification } = useContext(NotificationContext);
   // tạo state quản lý dữ liệu
   const [listReservation, setListReservation] = useState([]);
+  const [originalListReservation, setOriginalListReservation] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -28,6 +29,7 @@ const ManagerReservation = ({ isDarkMode }) => {
       key: reser.id,
     }));
     setListReservation(setTable);
+    setOriginalListReservation(setTable);
   };
   const getAllReservation = () => {
     reservationService
@@ -42,13 +44,28 @@ const ManagerReservation = ({ isDarkMode }) => {
   };
   // quản lý dữ liệu search
   const [keyword, setKeyword] = useState("");
+  const [value, setValue] = useState("");
+  const TimeOutRef = useRef(null);
+  const searchKeyWord = (data) => {
+    setKeyword(data);
+    console.log(data);
+    let soPhongNguoiDungDat = originalListReservation.filter((item, index) => {
+      return String(item.maNguoiDung).includes(data.trim());
+    });
+    setListReservation(soPhongNguoiDungDat);
+  };
   const handleChangeKeyword = (e) => {
-    setKeyword(e.target.value);
+    const newValue = e.target.value;
+    setValue(newValue);
+    if (TimeOutRef.current) {
+      clearTimeout(TimeOutRef.current);
+    }
     setTimeout(() => {
-      let soPhongNguoiDungDat = listReservation.filter((item, index) => {
-        return String(item.maNguoiDung).includes(keyword.trim());
-      });
-      setListReservation(soPhongNguoiDungDat);
+      if (newValue == "") {
+        setListReservation(originalListReservation);
+      } else {
+        searchKeyWord(newValue);
+      }
     }, 1000);
   };
   // columns set dữ liệu cho table
@@ -176,19 +193,11 @@ const ManagerReservation = ({ isDarkMode }) => {
         <div className="flex w-full md:w-1/3">
           <Input.Search
             placeholder="enter search user's code..."
-            value={keyword}
+            value={value}
             onChange={handleChangeKeyword}
             size="large"
             onSearch={(value) => {
-              setKeyword(value);
-              setTimeout(() => {
-                let soPhongNguoiDungDat = listReservation.filter(
-                  (item, index) => {
-                    return String(item.maNguoiDung).includes(keyword.trim());
-                  }
-                );
-                setListReservation(soPhongNguoiDungDat);
-              }, 3000);
+              searchKeyWord(value);
             }}
           />
           <Modal
