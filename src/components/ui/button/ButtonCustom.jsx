@@ -58,12 +58,12 @@ export const ButtonIcon = ({ icon, onClick, className }) => {
     </button>
   );
 };
-export const ButtonAdmin = ({ content, icon, onClick }) => {
+export const ButtonAdmin = ({ content, icon, onClick, className = "" }) => {
   return (
     <Button
       variant="outlined"
       icon={icon}
-      className="p-5 rounded-xl text-gray-800 dark:text-white font-bold text-lg bg-purple-400 border-transparent"
+      className={`p-5 rounded-xl text-gray-700 dark:text-white font-bold text-lg bg-white dark:bg-slate-900 border-transparent dark:border-white ${className}`}
       onClick={onClick}
     >
       {content}

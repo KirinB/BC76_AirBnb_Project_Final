@@ -14,8 +14,12 @@ export const RadioCustom = ({
         {labelContent}
       </label>
       <Radio.Group onChange={handleChange} value={value}>
-        <Radio value="USER">USER</Radio>
-        <Radio value="ADMIN">ADMIN</Radio>
+        <Radio className="dark:text-white" value="USER">
+          USER
+        </Radio>
+        <Radio className="dark:text-white" value="ADMIN">
+          ADMIN
+        </Radio>
       </Radio.Group>
       {errors && touched && <p className="text-red-500 text-sm">{errors}</p>}
     </div>

@@ -22,6 +22,8 @@ export const SelectCustom = ({
         className="block"
         placeholder={placeholder}
         value={value}
+        error={error}
+        touched={touched}
       />
       {error && touched && <p className="text-sm text-red-500">{error}</p>}
     </div>

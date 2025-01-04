@@ -1,5 +1,5 @@
 import { Avatar, Button, Input, Modal, Popconfirm, Table, Tag } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { NotificationContext } from "../../App";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
 import { useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 import FormAddUser from "./components/FormAddUser/FormAddUser";
+import { CloseOutlined } from "@ant-design/icons";
 
 const ManagerUser = ({ them }) => {
   const [initialValues, setInitialValues] = useState({
@@ -20,9 +21,18 @@ const ManagerUser = ({ them }) => {
     gender: true,
     role: "",
   });
+  // xử lý Input search
   const [keyword, setKeyword] = useState("");
+  const [value, setValue] = useState("");
+  const timeOutRef = useRef(null);
   const handleChangeKeyword = (e) => {
-    setKeyword(e.target.value);
+    setValue(e.target.value);
+    if (timeOutRef) {
+      clearTimeout(timeOutRef.current);
+    }
+    timeOutRef.current = setTimeout(() => {
+      setKeyword(value);
+    }, 1000);
   };
   const [isOnSubmit, setIsOnSubmit] = useState(true);
   const [listUser, setListUser] = useState([]);
@@ -30,11 +40,19 @@ const ManagerUser = ({ them }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRow, setTotalRow] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Xử lý resetForm
+  const resetFormRef = useRef(null);
+  const handleResetForm = (resetForm) => {
+    resetFormRef.current = resetForm;
+  };
+  const resetUserForm = () => {
+    if (resetFormRef.current) {
+      resetFormRef.current();
+    }
+  };
 
   const handlePageChange = (page, pageSize) => {
-    console.log("Current page:", page);
-    console.log("Page size:", pageSize);
-    setCurrentPage(page); // Cập nhật state nếu cần
+    setCurrentPage(page);
   };
   const Render = (res) => {
     const setUser = res.data.content.data.map((user) => ({
@@ -49,7 +67,6 @@ const ManagerUser = ({ them }) => {
     nguoiDungSerivce
       .getUserFind(currentPage, keyword)
       .then((res) => {
-        console.log(res);
         Render(res);
       })
       .catch((err) => {
@@ -61,6 +78,7 @@ const ManagerUser = ({ them }) => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 100,
     },
     {
       title: "Name",
@@ -88,6 +106,13 @@ const ManagerUser = ({ them }) => {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      render: (text, record, index) => {
+        return (
+          <p className="font-semibold">
+            <i>{text}</i>
+          </p>
+        );
+      },
     },
 
     {
@@ -109,9 +134,9 @@ const ManagerUser = ({ them }) => {
       key: "role",
       render: (text, record, index) => {
         return text === "ADMIN" ? (
-          <Tag color="magenta">{text}</Tag>
+          <Tag color="red">{text}</Tag>
         ) : text === "USER" ? (
-          <Tag color="green">{text}</Tag>
+          <Tag color="cyan">{text}</Tag>
         ) : text === "" ? (
           <Tag color="purple">Chưa xác định</Tag>
         ) : (
@@ -122,11 +147,13 @@ const ManagerUser = ({ them }) => {
     {
       title: "Action",
       key: "action",
+      fixed: "right",
+      width: 150,
       render: (text, record, index) => {
         return (
-          <div className="space-x-5">
+          <div className="space-x-1">
             <Button
-              icon={<LuPencilLine size={25} />}
+              icon={<LuPencilLine size={25} className="dark:text-white" />}
               color="default"
               type="text"
               onClick={() => {
@@ -135,7 +162,6 @@ const ManagerUser = ({ them }) => {
                 nguoiDungSerivce
                   .getUserByID(record.id)
                   .then((res) => {
-                    console.log(res);
                     setInitialValues(res.data.content);
                   })
                   .catch((err) => {
@@ -175,19 +201,20 @@ const ManagerUser = ({ them }) => {
   useEffect(() => {
     getAllUsers();
   }, [currentPage, keyword]);
+  useEffect(() => {}, [getAllUsers]);
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center border-gray-500 border-b-2">
+      <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white py-10
+          className="text-3xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
           Manager List User
         </h1>
-        <div className="flex space-x-3 w-1/3">
+        <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
             placeholder="enter search name's user..."
-            value={keyword}
+            value={value}
             onChange={handleChangeKeyword}
             className=""
             size="large"
@@ -211,10 +238,16 @@ const ManagerUser = ({ them }) => {
                 gender: true,
                 role: "",
               });
+              resetUserForm();
             }}
           />
           <Modal
-            title={isOnSubmit ? "Add User" : "Edit User Information"}
+            title={
+              <h2 className="dark:text-white text-2xl text-center">
+                {isOnSubmit ? "Add User" : "Edit User Information"}
+              </h2>
+            }
+            closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
             open={isModalOpen}
             onCancel={() => {
               setIsModalOpen(false);
@@ -228,6 +261,7 @@ const ManagerUser = ({ them }) => {
               getAllUsers={() => {
                 getAllUsers();
               }}
+              onResetForm={handleResetForm}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}
             />
