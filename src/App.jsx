@@ -18,6 +18,8 @@ import { SearchPageProvider } from "./store/SearchPageContext";
 import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
 import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
+import Payment from "./pages/Payment/Payment";
+import { BookingProvider } from "./store/BookingContext";
 
 export const NotificationContext = createContext();
 
@@ -80,6 +82,10 @@ const arrRoutes = [
     path: pathDefault.AuthPage,
     element: <AuthPage />,
   },
+  {
+    path: pathDefault.payment,
+    element: <Payment />,
+  },
 ];
 
 function App() {
@@ -101,10 +107,12 @@ function App() {
   return (
     <>
       <SearchPageProvider>
-        <NotificationContext.Provider value={{ handleNotification }}>
-          {routes}
-          <ToastContainer />
-        </NotificationContext.Provider>
+        <BookingProvider>
+          <NotificationContext.Provider value={{ handleNotification }}>
+            {routes}
+            <ToastContainer />
+          </NotificationContext.Provider>
+        </BookingProvider>
       </SearchPageProvider>
     </>
   );

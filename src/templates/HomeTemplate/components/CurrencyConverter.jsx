@@ -73,7 +73,7 @@ const CurrencyConverter = () => {
     <>
       <div
         onClick={showModal}
-        className="flex items-center justify-center space-x-2 hover:underline transition-all duration-300 font-semibold"
+        className="flex items-center cursor-pointer justify-center space-x-2 hover:underline transition-all duration-300 font-semibold"
       >
         <span>{currentSymbol}</span>
         <span>{currentCurrency}</span>
