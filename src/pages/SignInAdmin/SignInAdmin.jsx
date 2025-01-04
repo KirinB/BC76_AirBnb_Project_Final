@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Lottie from "react-lottie";
 import * as animationData from "../../assets/animation/Animation - 1733495021462.json";
 import { pathDefault } from "../../common/path";
@@ -15,12 +15,20 @@ import { ButtonIcon } from "../../components/ui/button/ButtonCustom";
 import { NotificationContext } from "../../App";
 import { authService } from "../../services/auth.service";
 import { useDispatch } from "react-redux";
-import { handleUpdateUser } from "../../store/slice/user.slice";
+import {
+  handleUpdateUser,
+  handleUpdateToken,
+} from "../../store/slice/user.slice";
+import { BsSunFill } from "react-icons/bs";
+import { FaMoon } from "react-icons/fa";
+import { useTheme } from "../../store/ThemeContext";
 const SignInAdmin = () => {
+  const [isStopped, setIsStopped] = useState(false);
   const { handleNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState("");
+  const { isDarkMode, setIsDarkMode } = useTheme();
   const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
     useFormik({
       initialValues: {
@@ -28,18 +36,19 @@ const SignInAdmin = () => {
         password: "",
       },
       onSubmit: (values) => {
-        console.log(values);
         authService
           .signIn(values)
           .then((res) => {
             localStorage.setItem("userInfo", JSON.stringify(res.data.content));
             dispatch(handleUpdateUser(res.data.content.user));
+            dispatch(handleUpdateToken(res.data.content.token));
             handleNotification("success", "Đăng nhập thành công");
             setTimeout(() => {
               navigate(pathDefault.admin);
             }, 1500);
           })
           .catch((err) => {
+            console.log(err);
             handleNotification("error", err.response.data.content);
           });
       },
@@ -47,17 +56,34 @@ const SignInAdmin = () => {
         email: Yup.string()
           .required("Vui lòng không bỏ trống")
           .email("Vui lòng nhập đúng định dạng email"),
-        password: Yup.string().required("Vui lòng không bỏ trống"),
+        password: Yup.string().when([], {
+          is: () => handleSubmit,
+          then: (schema) =>
+            schema
+              .required("Vui lòng không bỏ trống !")
+              .matches(
+                /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).*$/,
+                "Vui lòng nhập 1 ký tự đặc biệt, 1 in hoa, 1 số"
+              ),
+          otherwise: (schema) => schema.notRequired(),
+        }),
       }),
     });
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: JSON.parse(JSON.stringify(animationData)),
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
+  const defaultOptions = useMemo(
+    () => ({
+      loop: true,
+      autoplay: true,
+      animationData: JSON.parse(JSON.stringify(animationData)),
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice",
+      },
+    }),
+    []
+  );
+  const changeTheme = () => {
+    setIsDarkMode(!isDarkMode);
   };
+  const handleFocus = () => setIsStopped(true);
   const handleOnClick = () => {
     handleNotification("error", "Chức năng chưa được cập nhập");
   };
@@ -68,10 +94,10 @@ const SignInAdmin = () => {
     }
   }, []);
   return (
-    <div className="sign_in bg-red-400">
+    <div className="sign_in bg-red-400 dark:bg-slate-900">
       <div className="container">
-        <div className="h-screen grid grid-cols-3 py-10">
-          <div className="signin_animation h-full col-span-2 bg-pink-200 flex items-center rounded-s-2xl">
+        <div className="h-screen grid xl:grid-cols-3 lg:grid-cols-2 py-10">
+          <div className="signin_animation h-full  xl:col-span-2 lg:col-span-1 lg:flex hidden bg-pink-200 dark:bg-gray-700 items-center rounded-s-2xl">
             <Lottie
               options={defaultOptions}
               height={400}
@@ -79,8 +105,19 @@ const SignInAdmin = () => {
               isStopped={true}
             />
           </div>
-          <div className="signin_form h-full col-span-1 p-3 rounded-e-2xl bg-white flex items-center">
-            <div className="signIn_content w-full space-y-5">
+          <div className="signin_form relative h-full lg:col-span-1 p-3 lg:rounded-e-2xl bg-white dark:bg-slate-800 flex items-center">
+            <Button
+              onClick={changeTheme}
+              icon={
+                isDarkMode ? (
+                  <FaMoon size={15} fill="rgb(44, 181, 242)" />
+                ) : (
+                  <BsSunFill size={20} fill="#ffd700" />
+                )
+              }
+              className="absolute top-5 right-5 hover:!bg-transparent bg-transparent border-transparent"
+            />
+            <div className="signIn_content w-full space-y-10">
               <div className="sigin_title">
                 <Link to={pathDefault.homePage}>
                   <Icons.logoFull />
@@ -102,6 +139,7 @@ const SignInAdmin = () => {
                     value={values.email}
                     handleChange={handleChange}
                     handleBlur={handleBlur}
+                    handleFocus={handleFocus}
                     touched={touched.email}
                     error={errors.email}
                   />
@@ -112,6 +150,7 @@ const SignInAdmin = () => {
                     value={values.password}
                     handleChange={handleChange}
                     handleBlur={handleBlur}
+                    handleFocus={handleFocus}
                     touched={touched.password}
                     error={errors.password}
                   />
@@ -120,7 +159,7 @@ const SignInAdmin = () => {
                   </div>
                   <Button
                     htmlType="submit"
-                    className="w-full text-2xl bg-red-400 p-8 text-white font-bold mt-5 hover:!bg-red-500 hover:!text-white hover:!border-transparent"
+                    className="w-full text-2xl bg-red-400 p-8 text-white font-bold mt-5 hover:!bg-red-500 hover:!text-white hover:!border-transparent border-transparent"
                     variant="filled"
                   >
                     Sign In
@@ -128,14 +167,8 @@ const SignInAdmin = () => {
                 </form>
               </div>
               <div className="sign_Up text-center">
-                <p>
-                  Chưa có tài khoản ?{" "}
-                  <Link>
-                    <span className="text-red-500">Sign Up</span>
-                  </Link>
-                </p>
                 <div className="h-px px-5 w-full bg-gray-200 mt-10 relative">
-                  <span className="absolute top-2/4 right-2/4 -translate-y-2/4 translate-x-2/4 bg-white text-sm">
+                  <span className="absolute top-2/4 right-2/4 -translate-y-2/4 translate-x-2/4 bg-white dark:bg-slate-800 text-sm">
                     Or
                   </span>
                 </div>

@@ -1,5 +1,5 @@
 import { Button, Dropdown, Input, Modal, Popconfirm, Table } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { phongService } from "../../services/phong.service";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
 import { NotificationContext } from "../../App";
@@ -8,6 +8,7 @@ import FormAddRoom from "./components/FormAddRoom/FormAddRoom";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { locationService } from "../../services/viTri.service";
 import { TbHomePlus } from "react-icons/tb";
+import { CloseOutlined } from "@ant-design/icons";
 const ManagerRoom = () => {
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -30,6 +31,17 @@ const ManagerRoom = () => {
     maViTri: 0,
     hinhAnh: "",
   });
+  // Xử lý resetForm
+  const resetFormRef = useRef(null);
+  const handleResetForm = (resetForm) => {
+    resetFormRef.current = resetForm;
+  };
+  const resetRoomForm = () => {
+    if (resetFormRef.current) {
+      resetFormRef.current();
+    }
+  };
+
   //Xử lý hình ảnh
   const [previewImage, setPreviewImage] = useState(null);
   //Xử lý phần add , edit
@@ -44,14 +56,21 @@ const ManagerRoom = () => {
   const [totalRow, setTotalRow] = useState(0);
   // Xử lý InputSearch
   const [keyword, setKeyword] = useState("");
+  const [value, setValue] = useState("");
+  const timeOutRef = useRef(null);
   // Xử lý phần vị trí
   const [location, setLocation] = useState([]);
+  // Xử lý input Search
   const handleChangeKeyword = (e) => {
-    setKeyword(e.target.value);
+    setValue(e.target.value);
+    if (timeOutRef) {
+      clearTimeout(timeOutRef.current);
+    }
+    timeOutRef.current = setTimeout(() => {
+      setKeyword(value);
+    }, 1000);
   };
   const handlePageChange = (page, pageSize) => {
-    console.log("Current page:", page);
-    console.log("Page size:", pageSize);
     setCurrentPage(page);
   };
   const Render = (res) => {
@@ -66,7 +85,6 @@ const ManagerRoom = () => {
     phongService
       .searchByKeyword(currentPage, keyword)
       .then((res) => {
-        console.log(res);
         Render(res);
       })
       .catch((err) => {
@@ -77,7 +95,6 @@ const ManagerRoom = () => {
     locationService
       .getViTri()
       .then((res) => {
-        console.log(res);
         setLocation(res.data.content);
       })
       .catch((err) => {
@@ -89,6 +106,7 @@ const ManagerRoom = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 100,
     },
     {
       title: "Room's Name",
@@ -135,7 +153,7 @@ const ManagerRoom = () => {
         const items = [{ key: record.id, label: <p>{text}</p> }];
         return (
           <Dropdown
-            placement="topCenter"
+            placement="top"
             menu={{
               items,
             }}
@@ -143,7 +161,7 @@ const ManagerRoom = () => {
           >
             <a
               onClick={(e) => e.preventDefault()}
-              className="uppercase text-sm"
+              className="uppercase text-sm font-bold underline"
             >
               Infomation
             </a>
@@ -154,12 +172,19 @@ const ManagerRoom = () => {
     {
       title: "Action",
       key: "action",
+      fixed: "right",
+      width: 150,
       render: (text, record, index) => {
         return (
-          <div className="space-x-5">
+          <div className="space-x-1">
             {/* Nút sửa */}
             <Button
-              icon={<LuPencilLine size={25} />}
+              icon={
+                <LuPencilLine
+                  className="dark:text-white dark:hover:text-white "
+                  size={25}
+                />
+              }
               color="default"
               type="text"
               onClick={() => {
@@ -168,7 +193,6 @@ const ManagerRoom = () => {
                 phongService
                   .getRoomById(record.id)
                   .then((res) => {
-                    console.log(res);
                     setInitialValues(res.data.content);
                     setPreviewImage(record.hinhAnh);
                   })
@@ -215,17 +239,17 @@ const ManagerRoom = () => {
   }, []);
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center border-gray-500 border-b-2">
+      <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white py-10
-    "
+          className="text-3xl font-bold text-gray-800 dark:text-white mb-3
+        "
         >
           Manager List Room
         </h1>
-        <div className="flex space-x-3 w-1/3">
+        <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
             placeholder="enter search room's name..."
-            value={keyword}
+            value={value}
             onChange={handleChangeKeyword}
             className=""
             size="large"
@@ -258,14 +282,20 @@ const ManagerRoom = () => {
                 doXe: true,
                 hoBoi: true,
                 banUi: true,
-                maViTri: 0,
+                maViTri: "",
                 hinhAnh: "",
               });
               setPreviewImage(null);
+              resetRoomForm();
             }}
           />
           <Modal
-            title={isOnSubmit ? "Add Room" : "Edit Room Information"}
+            title={
+              <h2 className="dark:text-white text-2xl text-center">
+                {isOnSubmit ? "Add Room" : "Edit Room Information"}
+              </h2>
+            }
+            closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
             open={isModalOpen}
             onCancel={() => {
               setIsModalOpen(false);
@@ -281,6 +311,7 @@ const ManagerRoom = () => {
               getAllRoom={() => {
                 getAllRoom();
               }}
+              onResetForm={handleResetForm}
               location={location}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}
