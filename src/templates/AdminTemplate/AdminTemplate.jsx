@@ -328,13 +328,12 @@ const AdminTemplate = () => {
                 </div>
               )}
             </div>
-            <Space size={30} wrap className="mr-4">
+            <Space size={15} className="mr-4">
               <DropdownNoti
                 icon={
                   <IoMdNotificationsOutline
                     color="#969696"
-                    className="dark:fill-white"
-                    size={25}
+                    className="dark:fill-white md:size-7 size-5"
                   />
                 }
               />
@@ -343,24 +342,23 @@ const AdminTemplate = () => {
                 icon={
                   <IoMdCheckboxOutline
                     color="#969696"
-                    className="dark:fill-white"
-                    size={25}
+                    className="dark:fill-white md:size-7 size-5"
                   />
                 }
               />
               <DropdownNormal
                 content={width > 768 && "English"}
-                icon={
-                  <DownOutlined
-                    style={{ fontSize: "13px", marginLeft: "5px" }}
-                  />
-                }
+                className="hidden sm:inline"
+                icon={<DownOutlined style={{ fontSize: "13px" }} />}
               />
               <Button
                 onClick={changeTheme}
                 icon={
                   isDarkMode ? (
-                    <FaMoon size={15} fill="rgb(44, 181, 242)" />
+                    <FaMoon
+                      className="md:size-5 size-4"
+                      fill="rgb(44, 181, 242)"
+                    />
                   ) : (
                     <BsSunFill size={20} fill="#ffd700" />
                   )
@@ -378,10 +376,14 @@ const AdminTemplate = () => {
                     menu={{
                       items,
                     }}
+                    className="flex items-center"
                   >
                     {/* thông tin đăng nhập */}
                     <a onClick={(e) => e.preventDefault()}>
-                      <Avatar size={40} style={{ backgroundColor: "#f56a00" }}>
+                      <Avatar
+                        className="md:size-10 size-8"
+                        style={{ backgroundColor: "#f56a00" }}
+                      >
                         <span className="uppercase">{user.name[0]}</span>
                       </Avatar>
                     </a>

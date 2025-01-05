@@ -81,20 +81,31 @@ const FormAddRoom = ({
             .then((res) => {
               phongService
                 .postImageRoom(formData, values.id, token)
-                .then((res) => {})
+                .then((res) => {
+                  handleCloseModal(true);
+                  getAllRoom();
+                  handleNotification(
+                    "success",
+                    "Updated information successfully"
+                  );
+                })
                 .catch((err) => {
-                  console.log(err);
+                  handleNotification("error", err.response.data.content);
                 });
             })
             .catch((err) => {
-              console.log(err);
+              handleNotification("error", err.response.data.content);
             });
         } else {
           phongService
             .editRoom(values.id, token, values)
-            .then((res) => {})
+            .then((res) => {
+              handleCloseModal(true);
+              getAllRoom();
+              handleNotification("success", "Updated information successfully");
+            })
             .catch((err) => {
-              console.log(err);
+              handleNotification("error", err.response.data.content);
             });
         }
       }
@@ -170,6 +181,7 @@ const FormAddRoom = ({
           <SelectCustom
             labelContent={"Vị trí"}
             placeholder={"Vui lòng chọn vị trí"}
+            value={values.maViTri}
             handleChange={(value, option) => {
               setFieldValue("maViTri", value);
             }}

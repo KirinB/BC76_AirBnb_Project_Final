@@ -11,12 +11,8 @@ export const DatePickerCustom = ({
   labelContent,
   handleBlur,
   format,
+  disabledDate,
 }) => {
-  const handleDateChange = (date, dateString) => {
-    const formattedDate = date ? dayjs(date).format("DD/MM/YYYY") : null;
-    handleChange(formattedDate, dateString);
-  };
-
   return (
     <div className="space-y-1">
       <label htmlFor="" className="block font-medium text-sm">
@@ -25,7 +21,7 @@ export const DatePickerCustom = ({
       <DatePicker
         suffixIcon={<CalendarOutlined className="dark:text-white" size={20} />}
         allowClear={false}
-        disabledDate={() => {}}
+        disabledDate={disabledDate}
         className="w-full"
         id={id}
         name={name}
