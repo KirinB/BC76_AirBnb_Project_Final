@@ -105,7 +105,7 @@ const SignInAdmin = () => {
               isStopped={true}
             />
           </div>
-          <div className="signin_form relative h-full lg:col-span-1 p-3 lg:rounded-e-2xl bg-white dark:bg-slate-800 flex items-center">
+          <div className="signin_form relative h-full lg:col-span-1 p-3 lg:rounded-e-2xl lg:rounded-s-none rounded-2xl bg-white dark:bg-slate-800 flex items-center">
             <Button
               onClick={changeTheme}
               icon={

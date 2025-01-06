@@ -379,14 +379,14 @@ const AdminTemplate = () => {
                     className="flex items-center"
                   >
                     {/* thông tin đăng nhập */}
-                    <a onClick={(e) => e.preventDefault()}>
+                    <Link onClick={(e) => e.preventDefault()}>
                       <Avatar
                         className="md:size-10 size-8"
                         style={{ backgroundColor: "#f56a00" }}
                       >
                         <span className="uppercase">{user.name[0]}</span>
                       </Avatar>
-                    </a>
+                    </Link>
                   </Dropdown>
                 </div>
               ) : null}
