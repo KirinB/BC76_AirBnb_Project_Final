@@ -1,16 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   InputNormal,
   InputNumberCustom,
 } from "../../../../components/ui/input/InputCustom";
 import { useFormik } from "formik";
-import { Button, DatePicker } from "antd";
+import { Button } from "antd";
 import dayjs from "dayjs";
 import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePickerCustom";
 import { reservationService } from "../../../../services/reservation.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
-import { SiTrueup } from "react-icons/si";
 const FormEditBooking = ({
   initialValues,
   getAllReservation,
@@ -71,6 +70,10 @@ const FormEditBooking = ({
       ngayDi: Yup.string().required("Vui lòng chọn ngày đi"),
     }),
   });
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current < dayjs().startOf("day");
+  };
   return (
     <div>
       <form action="" className="space-y-5" onSubmit={handleSubmit}>
@@ -95,6 +98,7 @@ const FormEditBooking = ({
             id="ngayDen"
             name="ngayDen"
             labelContent="Ngày Đến"
+            disabledDate={disabledDate}
             value={values.ngayDen}
             format={"DD-MM-YYYY"}
             error={errors.ngayDen}
@@ -107,6 +111,7 @@ const FormEditBooking = ({
             id="ngayDi"
             name="ngayDi"
             labelContent="Ngày Đi"
+            disabledDate={disabledDate}
             value={values.ngayDi}
             error={errors.ngayDi}
             format={"DD-MM-YYYY"}

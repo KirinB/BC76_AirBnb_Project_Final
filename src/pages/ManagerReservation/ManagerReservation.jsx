@@ -8,7 +8,10 @@ import { CloseOutlined } from "@ant-design/icons";
 import { IoCheckmark } from "react-icons/io5";
 import { FcCancel } from "react-icons/fc";
 import FormEditBooking from "./components/FormEditBooking/FormEditBooking";
+import useViewPort from "../../hooks/useViewPort";
+import TableCustom from "../../components/ui/table/TableCustom";
 const ManagerReservation = ({ isDarkMode }) => {
+  const { width } = useViewPort();
   const { handleNotification } = useContext(NotificationContext);
   // tạo state quản lý dữ liệu
   const [listReservation, setListReservation] = useState([]);
@@ -182,7 +185,7 @@ const ManagerReservation = ({ isDarkMode }) => {
     <div className="space-y-5">
       <div className="md:flex md:justify-between items-center border-gray-500 border-b-2 space-y-3 py-5">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white
+          className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white
         "
         >
           Manager Booking
@@ -213,6 +216,7 @@ const ManagerReservation = ({ isDarkMode }) => {
             <FormEditBooking
               initialValues={initialValues}
               getAllReservation={getAllReservation}
+              setIsModalOpen={setIsModalOpen}
               handleCloseModal={() => {
                 setIsModalOpen(false);
               }}
@@ -220,11 +224,7 @@ const ManagerReservation = ({ isDarkMode }) => {
           </Modal>
         </div>
       </div>
-      <Table
-        dataSource={listReservation}
-        scroll={{ x: 1300 }}
-        columns={columns}
-      />
+      <TableCustom dataSource={listReservation} columns={columns} />
     </div>
   );
 };

@@ -80,7 +80,7 @@ export const DropdownNoti = ({ icon }) => {
     </Badge>
   );
 };
-export const DropdownNormal = ({ content, icon }) => {
+export const DropdownNormal = ({ content, icon, className }) => {
   const items = [
     {
       label: "The function is not working yet",
@@ -96,7 +96,7 @@ export const DropdownNormal = ({ content, icon }) => {
     >
       <a
         onClick={(e) => e.preventDefault()}
-        className="space-x-3 border p-3 rounded-3xl font-bold"
+        className={`space-x-3 border p-3 rounded-3xl font-bold ${className}`}
       >
         <Avatar
           src={
