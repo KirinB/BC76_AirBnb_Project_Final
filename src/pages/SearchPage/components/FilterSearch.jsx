@@ -8,10 +8,45 @@ import { Icons } from "../../../assets/Icons";
 import { InputNumber, Slider } from "antd";
 import { useSearchPageContext } from "../../../store/SearchPageContext";
 import { useSelector } from "react-redux";
+
+const currencySettings = {
+  VND: {
+    step: 100e3,
+    max: 2e6,
+    locale: "vi-VN",
+  },
+  USD: {
+    step: 10,
+    max: 1e3,
+    locale: "en-US",
+  },
+  THB: {
+    step: 50,
+    max: 5e3,
+    locale: "th-TH",
+  },
+  JPY: {
+    step: 100,
+    max: 10e3,
+    locale: "ja-JP",
+  },
+  KRW: {
+    step: 1000,
+    max: 1e5,
+    locale: "ko-KR",
+  },
+  SGD: {
+    step: 5,
+    max: 5e3,
+    locale: "en-SG",
+  },
+};
+
 const FilterSearch = () => {
   const { rates, currentCurrency } = useSelector((state) => state.exchangeRate);
   const { setListRoom, originalListRoom } = useSearchPageContext();
   const [range, setRange] = useState([0, 200e3]);
+  const { step, max, locale } = currencySettings[currentCurrency];
 
   const handleFilterPrice = () => {
     const [min, max] = range;
@@ -33,6 +68,7 @@ const FilterSearch = () => {
     newRange[index] = value || 0;
     setRange(newRange);
   };
+
   return (
     <div className="shadow-sm px-4 relative lg:sticky lg:top-24 hidden md:flex bg-white dark:bg-slate-800 items-center dark:shadow-white py-4 lg:z-10">
       <div className="container flex space-x-4">
@@ -44,7 +80,7 @@ const FilterSearch = () => {
                   <div
                     className="p-6 w-96"
                     onClick={(e) => {
-                      e.stopPropagation(); // Chặn sự kiện đóng dropdown
+                      e.stopPropagation();
                     }}
                   >
                     <p className="text-lg mb-4">
@@ -55,8 +91,8 @@ const FilterSearch = () => {
                       <p>Giá từ</p>
                       <InputNumber
                         min={0}
-                        max={1e6}
-                        step={100e3}
+                        max={max}
+                        step={step}
                         value={range[0]}
                         formatter={(value) =>
                           `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -65,21 +101,22 @@ const FilterSearch = () => {
                         onChange={(value) => handleInputChange(value, 0)}
                       />
                     </div>
-
-                    {/* Thanh slider */}
                     <Slider
                       className="w-full"
                       range
                       value={range}
-                      step={100e3}
-                      max={1e6}
+                      step={step}
+                      max={max}
                       onChange={handleSliderChange}
                       tooltip={{
                         formatter: (value) =>
-                          value.toLocaleString("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }),
+                          value.toLocaleString(
+                            currentCurrency === "USD" ? "en-US" : "vi-VN",
+                            {
+                              style: "currency",
+                              currency: currentCurrency,
+                            }
+                          ),
                       }}
                     />
 
@@ -88,8 +125,8 @@ const FilterSearch = () => {
                       <p>Giá đến</p>
                       <InputNumber
                         min={0}
-                        max={1e6}
-                        step={100e3}
+                        max={max}
+                        step={step}
                         value={range[1]}
                         formatter={(value) =>
                           `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -104,12 +141,6 @@ const FilterSearch = () => {
                         onClick={handleFilterPrice}
                         children={<span>Lọc</span>}
                       />
-                      {/* <ButtonOutLine
-                        children={<span>Hủy</span>}
-                        onClick={() => {
-                          setListRoom(originalListRoom);
-                        }}
-                      /> */}
                     </div>
                   </div>
                 ),
