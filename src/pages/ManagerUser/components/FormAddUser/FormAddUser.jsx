@@ -20,7 +20,6 @@ const FormAddUser = ({
   onResetForm,
 }) => {
   const { handleNotification } = useContext(NotificationContext);
-
   const handleOnSubmit = (data) => {
     if (isOnSubmit) {
       nguoiDungSerivce

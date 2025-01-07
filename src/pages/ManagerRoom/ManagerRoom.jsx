@@ -9,7 +9,10 @@ import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { locationService } from "../../services/viTri.service";
 import { TbHomePlus } from "react-icons/tb";
 import { CloseOutlined } from "@ant-design/icons";
+import useViewPort from "../../hooks/useViewPort";
+import TableCustom from "../../components/ui/table/TableCustom";
 const ManagerRoom = () => {
+  const { width } = useViewPort();
   const [initialValues, setInitialValues] = useState({
     id: 0,
     tenPhong: "",
@@ -41,7 +44,6 @@ const ManagerRoom = () => {
       resetFormRef.current();
     }
   };
-
   //Xử lý hình ảnh
   const [previewImage, setPreviewImage] = useState(null);
   //Xử lý phần add , edit
@@ -241,7 +243,7 @@ const ManagerRoom = () => {
     <div className="space-y-5">
       <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white mb-3
+          className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
           Manager List Room
@@ -259,7 +261,7 @@ const ManagerRoom = () => {
           />
           {/* Nút thêm */}
           <ButtonAdmin
-            content={"Add New Room"}
+            content={width > 768 && "Add New Room"}
             icon={<TbHomePlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
@@ -319,9 +321,8 @@ const ManagerRoom = () => {
           </Modal>
         </div>
       </div>
-      <Table
+      <TableCustom
         dataSource={listRoom}
-        scroll={{ x: 1300 }}
         columns={columns}
         pagination={{
           total: totalRow,

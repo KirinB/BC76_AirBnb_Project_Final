@@ -8,7 +8,10 @@ import { LuPencilLine, LuTrash } from "react-icons/lu";
 import FormAddLocation from "./FormAddLocation/FormAddLocation";
 import { BiSolidLocationPlus } from "react-icons/bi";
 import { CloseOutlined } from "@ant-design/icons";
+import useViewPort from "../../hooks/useViewPort";
+import TableCustom from "../../components/ui/table/TableCustom";
 const ManagerLocation = () => {
+  const { width } = useViewPort();
   const [initialValues, setInitialValues] = useState({
     id: 0,
     tenViTri: "",
@@ -176,7 +179,7 @@ const ManagerLocation = () => {
     <div className="space-y-5">
       <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white mb-3
+          className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
           Manager List Location
@@ -194,7 +197,7 @@ const ManagerLocation = () => {
           />
           {/* Nút thêm */}
           <ButtonAdmin
-            content={"Add New Location"}
+            content={width > 768 && "Add New Location"}
             icon={<BiSolidLocationPlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
@@ -240,9 +243,8 @@ const ManagerLocation = () => {
           </Modal>
         </div>
       </div>
-      <Table
+      <TableCustom
         dataSource={location}
-        scroll={{ x: 1300 }}
         columns={columns}
         pagination={{
           total: totalRow,

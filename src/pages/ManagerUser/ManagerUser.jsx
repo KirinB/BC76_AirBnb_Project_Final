@@ -1,16 +1,28 @@
-import { Avatar, Button, Input, Modal, Popconfirm, Table, Tag } from "antd";
+import {
+  Avatar,
+  Button,
+  ConfigProvider,
+  Input,
+  Modal,
+  Popconfirm,
+  Table,
+  Tag,
+} from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { NotificationContext } from "../../App";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
-import { useSelector } from "react-redux";
 import { FaUserPlus } from "react-icons/fa6";
 import dayjs from "dayjs";
 import { LuPencilLine, LuTrash } from "react-icons/lu";
 import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 import FormAddUser from "./components/FormAddUser/FormAddUser";
 import { CloseOutlined } from "@ant-design/icons";
+import useViewPort from "../../hooks/useViewPort";
+import { useTheme } from "../../store/ThemeContext";
+import TableCustom from "../../components/ui/table/TableCustom";
 
-const ManagerUser = ({ them }) => {
+const ManagerUser = () => {
+  const { isDarkMode, setIsDarkMode } = useTheme();
   const [initialValues, setInitialValues] = useState({
     id: 0,
     name: "",
@@ -21,6 +33,7 @@ const ManagerUser = ({ them }) => {
     gender: true,
     role: "",
   });
+  const { width } = useViewPort();
   // xử lý Input search
   const [keyword, setKeyword] = useState("");
   const [value, setValue] = useState("");
@@ -206,7 +219,7 @@ const ManagerUser = ({ them }) => {
     <div className="space-y-5">
       <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
         <h1
-          className="text-3xl font-bold text-gray-800 dark:text-white mb-3
+          className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
           Manager List User
@@ -223,7 +236,7 @@ const ManagerUser = ({ them }) => {
             }}
           />
           <ButtonAdmin
-            content={"Add New User"}
+            content={width > 768 && "Add New User"}
             icon={<FaUserPlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
@@ -268,9 +281,8 @@ const ManagerUser = ({ them }) => {
           </Modal>
         </div>
       </div>
-      <Table
+      <TableCustom
         dataSource={listUser}
-        scroll={{ x: 1300 }}
         columns={columns}
         pagination={{
           total: totalRow,
@@ -279,7 +291,6 @@ const ManagerUser = ({ them }) => {
           onChange: handlePageChange,
         }}
       />
-      ;
     </div>
   );
 };
