@@ -65,9 +65,7 @@ const FormAddRoom = ({
                 handleNotification("error", err.response.data.content);
               });
           })
-          .catch((err) => {
-            handleNotification("error", err.response.data.content);
-          });
+          .catch((err) => {});
       } else {
         if (values.hinhAnh instanceof File) {
           // phần xử lý hình ảnh trước khi up API

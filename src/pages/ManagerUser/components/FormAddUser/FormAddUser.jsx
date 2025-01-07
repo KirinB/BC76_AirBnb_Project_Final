@@ -1,6 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
+import {
+  Button,
+  ConfigProvider,
+  DatePicker,
+  Form,
+  Input,
+  Radio,
+  Select,
+} from "antd";
+import {
+  CalendarOutlined,
+  CloseCircleOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
 import { useFormik } from "formik";
 import {
   InputNormal,
@@ -14,7 +26,7 @@ import * as Yup from "yup";
 import dayjs from "dayjs";
 const FormAddUser = ({
   handleCloseModal,
-  getAllUsser,
+  getAllUsers,
   isOnSubmit,
   initialValues,
   onResetForm,
@@ -25,24 +37,24 @@ const FormAddUser = ({
       nguoiDungSerivce
         .postUsers(data)
         .then((res) => {
-          handleCloseModal();
-          getAllUsser();
           handleNotification("success", "User Created Successfully");
+          getAllUsers();
+          handleCloseModal();
         })
         .catch((err) => {
-          handleNotification("error", err.res.data.content);
+          handleNotification("error", err.response.data.content);
         });
     } else {
       delete data.password;
       nguoiDungSerivce
         .putUserByID(data.id, data)
         .then((res) => {
-          handleCloseModal();
-          getAllUsser();
           handleNotification("success", "Edit User Successfully");
+          getAllUsers();
+          handleCloseModal();
         })
         .catch((err) => {
-          handleNotification("error", err.res.data.content);
+          handleNotification("error", err.response.data.content);
         });
     }
   };
@@ -145,17 +157,20 @@ const FormAddUser = ({
           <label htmlFor="" className="block font-medium text-sm">
             Birthday
           </label>
+
           <DatePicker
             suffixIcon={
               <CalendarOutlined className="dark:text-white" size={20} />
             }
-            className="w-full text-white"
-            format={"DD-MM-YYYY"}
+            className="w-full dark:focus-within:bg-slate-800"
+            format={"DD/MM/YYYY"}
             onChange={(date, dateString) => {
-              setFieldValue("birthday", dateString);
+              setFieldValue("birthday", date);
             }}
             value={
-              values.birthday ? dayjs(values.birthday, "DD-MM-YYYY") : null
+              values.birthday
+                ? dayjs(values.birthday, "YYYY-MM-DDTHH:mm:ss")
+                : null
             }
           />
           {errors.birthday && touched.birthday && (

@@ -39,12 +39,13 @@ const ManagerUser = () => {
   const [value, setValue] = useState("");
   const timeOutRef = useRef(null);
   const handleChangeKeyword = (e) => {
-    setValue(e.target.value);
+    const newValue = e.target.value;
+    setValue(newValue);
     if (timeOutRef) {
       clearTimeout(timeOutRef.current);
     }
     timeOutRef.current = setTimeout(() => {
-      setKeyword(value);
+      setKeyword(newValue);
     }, 1000);
   };
   const [isOnSubmit, setIsOnSubmit] = useState(true);
@@ -80,11 +81,10 @@ const ManagerUser = () => {
     nguoiDungSerivce
       .getUserFind(currentPage, keyword)
       .then((res) => {
+        console.log(res);
         Render(res);
       })
-      .catch((err) => {
-        handleNotification("error", err.response.data.content.data);
-      });
+      .catch((err) => {});
   };
   const columns = [
     {
@@ -271,9 +271,7 @@ const ManagerUser = () => {
               handleCloseModal={() => {
                 setIsModalOpen(false);
               }}
-              getAllUsers={() => {
-                getAllUsers();
-              }}
+              getAllUsers={getAllUsers}
               onResetForm={handleResetForm}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}

@@ -42,11 +42,20 @@ const ManagerLocation = () => {
   const [totalRow, setTotalRow] = useState(0);
   // Xử lý InputSearch
   const [keyword, setKeyword] = useState("");
+  const [value, setValue] = useState("");
+  const timeOutRef = useRef(null);
   // Xử lý phần vị trí
   const [location, setLocation] = useState([]);
   // handleChange InputSearch
   const handleChangeKeyword = (e) => {
-    setKeyword(e.target.value);
+    const newValue = e.target.value;
+    setValue(newValue);
+    if (timeOutRef) {
+      clearTimeout(timeOutRef.current);
+    }
+    timeOutRef.current = setTimeout(() => {
+      setKeyword(newValue);
+    }, 1000);
   };
   //handleChange khi bấm chuyển page
   const handlePageChange = (page, pageSize) => {
@@ -187,7 +196,7 @@ const ManagerLocation = () => {
         <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
             placeholder="enter search location..."
-            value={keyword}
+            value={value}
             onChange={handleChangeKeyword}
             className=""
             size="large"
