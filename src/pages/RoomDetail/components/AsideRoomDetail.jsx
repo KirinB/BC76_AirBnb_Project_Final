@@ -5,7 +5,7 @@ import { formatISO, parse } from "date-fns";
 import { AiFillFlag } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../../App";
 import { formatCurrency } from "../../../common/formatCurrency";
 import { pathDefault } from "../../../common/path";
@@ -55,6 +55,7 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   useEffect(() => {
     setMaxPeople(max);
   }, []);
+  const navigate = useNavigate();
   const { handleNotification } = useContext(NotificationContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);

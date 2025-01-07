@@ -153,7 +153,7 @@ const Payment = () => {
   return (
     <div className="py-10 bg-primary/60 dark:bg-slate-900 min-h-screen flex justify-center items-center">
       <div className="container bg-white dark:bg-slate-800 shadow-lg border rounded-xl p-10">
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:gap-0 md:grid-cols-2">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-4">
               <IoArrowBack />

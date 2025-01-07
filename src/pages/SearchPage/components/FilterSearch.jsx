@@ -34,7 +34,7 @@ const FilterSearch = () => {
     setRange(newRange);
   };
   return (
-    <div className="shadow-sm relative lg:sticky lg:top-24 hidden md:flex bg-white dark:bg-slate-800 items-center dark:shadow-white py-4 lg:z-10">
+    <div className="shadow-sm px-4 relative lg:sticky lg:top-24 hidden md:flex bg-white dark:bg-slate-800 items-center dark:shadow-white py-4 lg:z-10">
       <div className="container flex space-x-4">
         <div className="border-r pr-4 border-gray-200 flex flex-wrap gap-2">
           <DropdownCustom
