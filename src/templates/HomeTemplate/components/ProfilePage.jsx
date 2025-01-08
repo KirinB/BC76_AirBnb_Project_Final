@@ -13,6 +13,7 @@ import "./ProfilePage.scss";
 
 import Slider from "react-slick";
 import { NotificationContext } from "../../../App";
+import { Helmet } from "react-helmet";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.userSlice.user);
@@ -169,6 +170,9 @@ const ProfilePage = () => {
 
   return (
     <div className="container ">
+      <Helmet>
+        <title>AirBnb - Quản lý hồ sơ</title>
+      </Helmet>
       <div className="block px-5 lg:px-6 lg:grid lg:grid-cols-12 gap-10">
         <div className="col-span-12 lg:col-span-4">
           <div className=" p-10 shadow-xl rounded-3xl my-10">

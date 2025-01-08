@@ -28,6 +28,7 @@ import useViewPort from "../../hooks/useViewPort";
 import { FaBars, FaMoon } from "react-icons/fa";
 import { BsSunFill } from "react-icons/bs";
 import { useTheme } from "../../store/ThemeContext";
+import { Helmet } from "react-helmet";
 const AdminTemplate = () => {
   const { width } = useViewPort();
   const { user } = useSelector((state) => state.userSlice);
@@ -78,6 +79,7 @@ const AdminTemplate = () => {
   const handleCloseNavbar = () => {
     setIsNavBar(false);
   };
+
   useEffect(() => {
     const dataString = localStorage.getItem("userInfo");
     if (!dataString) {
@@ -101,6 +103,9 @@ const AdminTemplate = () => {
           collapsed={collapsed}
           width={250}
         >
+          <Helmet>
+            <title>AirBnb - Admin Dashboard</title>
+          </Helmet>
           <div className="demo-logo-vertical " />
           <div className="my-4 flex justify-center">
             <Link to={pathDefault.homePage}>

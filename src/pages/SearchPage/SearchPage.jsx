@@ -8,6 +8,7 @@ import { useSearchPageContext } from "../../store/SearchPageContext";
 import FilterSearch from "./components/FilterSearch";
 import RoomSearch from "./components/RoomSearch";
 import MapSearch from "./components/MapSearch";
+import { Helmet } from "react-helmet";
 
 const SearchPage = () => {
   const { listRoom, setListRoom, originalListRoom, setOriginalListRoom } =
@@ -44,6 +45,9 @@ const SearchPage = () => {
         <LoadingCustom />
       ) : listRoom.length === 0 ? (
         <div className="my-6 px-6 md:px-10 flex flex-col items-center justify-center gap-10">
+          <Helmet>
+            <title>AirBnb - Không có kết quả nào</title>
+          </Helmet>
           <h2 className="text-center font-semibold">Không có kết quả nào</h2>
           <img src="/nodatafound.png" className="w-1/2" alt="" />
         </div>
