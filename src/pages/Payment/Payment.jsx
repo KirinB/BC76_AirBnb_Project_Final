@@ -1,21 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import { IoArrowBack } from "react-icons/io5";
-import { Icons } from "../../assets/Icons";
-import { Link, useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
 import { DatePicker, Input, Tag } from "antd";
+import { formatISO, parse } from "date-fns";
+import dayjs from "dayjs";
+import React, { useContext, useEffect, useState } from "react";
 import CreditCard from "react-credit-cards-2";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
-import { ButtonPrimary } from "../../components/ui/button/ButtonCustom";
-import { useBooking } from "../../store/BookingContext";
-import Counter from "../../components/Counter/Counter";
-import { phongService } from "../../services/phong.service";
-import { NotificationContext } from "../../App";
-import { setRoomService } from "../../services/setRoom.service";
-import { pathDefault } from "../../common/path";
+import { IoArrowBack } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { formatISO, parse } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { NotificationContext } from "../../App";
+import { Icons } from "../../assets/Icons";
 import { formatCurrency } from "../../common/formatCurrency";
+import { pathDefault } from "../../common/path";
+import Counter from "../../components/Counter/Counter";
+import { ButtonPrimary } from "../../components/ui/button/ButtonCustom";
+import { phongService } from "../../services/phong.service";
+import { setRoomService } from "../../services/setRoom.service";
+import { useBooking } from "../../store/BookingContext";
 const Payment = () => {
   const [roomDetail, setRoomDetail] = useState([]);
   const { rates, currentCurrency, currentSymbol } = useSelector(
@@ -25,7 +25,6 @@ const Payment = () => {
   const {
     isBlockMax,
     totalPerson,
-    isSelectedDay,
     setIsSelectedDay,
     daysSelected,
     setDaysSelected,
@@ -140,7 +139,7 @@ const Payment = () => {
     phongService
       .getRoomById(idRoomContext)
       .then((res) => {
-        console.log(res.data.content);
+        // console.log(res.data.content);
         setRoomDetail(res.data.content);
       })
       .catch((err) => {
@@ -148,16 +147,21 @@ const Payment = () => {
       });
   }, []);
 
-  console.log(dayStart);
-
   return (
     <div className="py-10 bg-primary/60 dark:bg-slate-900 min-h-screen flex justify-center items-center">
       <div className="container bg-white dark:bg-slate-800 shadow-lg border rounded-xl p-10">
         <div className="grid grid-cols-1 gap-6 md:gap-0 md:grid-cols-2">
           <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-4">
-              <IoArrowBack />
-              <Icons.logoFull />
+            <div className="flex items-center gap-4 cursor-pointer">
+              <div
+                onClick={() => {
+                  navigate(-1);
+                }}
+                className="flex gap-4 items-center"
+              >
+                <IoArrowBack />
+                <Icons.logoFull />
+              </div>
               <Tag color="magenta">Test Mode</Tag>
             </div>
             <div className="flex flex-col gap-6 w-full">

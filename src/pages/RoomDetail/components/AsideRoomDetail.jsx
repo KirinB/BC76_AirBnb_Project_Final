@@ -308,9 +308,16 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
           <div className="">
             {isSelectedDay ? (
               <Link
-                onClick={() => {
-                  console.log("nhan");
-                  setIdRoomContext(idRoom);
+                onClick={(e) => {
+                  if (!user) {
+                    e.preventDefault();
+                    handleNotification(
+                      "error",
+                      "Bạn cần đăng nhập để đặt phòng"
+                    );
+                  } else {
+                    setIdRoomContext(idRoom);
+                  }
                 }}
                 to={pathDefault.payment}
               >
