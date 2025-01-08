@@ -24,6 +24,7 @@ import { nguoiDungSerivce } from "../../../../services/nguoiDung.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
 import dayjs from "dayjs";
+import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePickerCustom";
 const FormAddUser = ({
   handleCloseModal,
   getAllUsers,
@@ -153,30 +154,22 @@ const FormAddUser = ({
         touched={touched.phone}
       />
       <div className="grid grid-cols-2 gap-5">
-        <div className="space-y-1">
-          <label htmlFor="" className="block font-medium text-sm">
-            Birthday
-          </label>
-
-          <DatePicker
-            suffixIcon={
-              <CalendarOutlined className="dark:text-white" size={20} />
-            }
-            className="w-full dark:focus-within:bg-slate-800"
-            format={"DD/MM/YYYY"}
-            onChange={(date, dateString) => {
-              setFieldValue("birthday", date);
-            }}
-            value={
-              values.birthday
-                ? dayjs(values.birthday, "YYYY-MM-DDTHH:mm:ss")
-                : null
-            }
-          />
-          {errors.birthday && touched.birthday && (
-            <p className="text-red-500 text-sm">{errors.birthday}</p>
-          )}
-        </div>
+        <DatePickerCustom
+          labelContent={"Birthday"}
+          id={"birthday"}
+          name={"birthday"}
+          format={"DD/MM/YYYY"}
+          handleChange={(date, dateString) => {
+            setFieldValue("birthday", date);
+          }}
+          value={
+            values.birthday
+              ? dayjs(values.birthday, "YYYY-MM-DDTHH:mm:ss")
+              : null
+          }
+          error={errors.birthday}
+          touched={touched.birthday}
+        />
         <div className="w-full">
           <SelectCustom
             labelContent={"Gender"}
@@ -208,7 +201,7 @@ const FormAddUser = ({
           htmlType="submit"
           className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
         >
-          {isOnSubmit ? "Add User" : "Edit"}
+          {isOnSubmit ? "Add User" : "Update"}
         </Button>
         <Button
           className="p-5"

@@ -115,23 +115,3 @@ export const InputNumberCustom = ({
     </div>
   );
 };
-// export const InputForm = ({
-//   labelContent,
-//   name,
-//   className = "",
-//   rules,
-//   placeholder,
-//   value,
-// }) => {
-//   return (
-//     <Form.Item
-//       label={labelContent}
-//       name={name}
-//       id={name}
-//       className={`${className} !mb-2`}
-//       rules={rules}
-//     >
-//       <Input placeholder={placeholder} />
-//     </Form.Item>
-//   );
-// };

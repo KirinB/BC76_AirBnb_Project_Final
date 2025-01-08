@@ -64,12 +64,14 @@ const ManagerRoom = () => {
   const [location, setLocation] = useState([]);
   // Xử lý input Search
   const handleChangeKeyword = (e) => {
-    setValue(e.target.value);
+    const newValue = e.target.value;
+    setValue(newValue);
     if (timeOutRef) {
       clearTimeout(timeOutRef.current);
     }
     timeOutRef.current = setTimeout(() => {
-      setKeyword(value);
+      setKeyword(newValue);
+      setCurrentPage(1);
     }, 1000);
   };
   const handlePageChange = (page, pageSize) => {
@@ -90,7 +92,7 @@ const ManagerRoom = () => {
         Render(res);
       })
       .catch((err) => {
-        handleNotification("error", err.response.data.content.data);
+        console.log(err);
       });
   };
   const getAllLocation = () => {
@@ -294,7 +296,7 @@ const ManagerRoom = () => {
           <Modal
             title={
               <h2 className="dark:text-white text-2xl text-center">
-                {isOnSubmit ? "Add Room" : "Edit Room Information"}
+                {isOnSubmit ? "Add New Room" : "Edit Room Information"}
               </h2>
             }
             closeIcon={<CloseOutlined size={20} className="dark:text-white" />}

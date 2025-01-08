@@ -49,7 +49,7 @@ const FormEditBooking = ({
         .then((res) => {
           getAllReservation();
           setIsModalOpen(false);
-          handleNotification("success", "Sửa thông tin đặt phòng thành công");
+          handleNotification("success", "Updated information successfully");
         })
         .catch((err) => {
           console.error("Error:", err);
@@ -145,7 +145,7 @@ const FormEditBooking = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {"Put Form"}
+            {"Update"}
           </Button>
           <Button
             className="p-5"

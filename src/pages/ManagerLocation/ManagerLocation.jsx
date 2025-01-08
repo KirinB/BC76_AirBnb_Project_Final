@@ -55,6 +55,7 @@ const ManagerLocation = () => {
     }
     timeOutRef.current = setTimeout(() => {
       setKeyword(newValue);
+      setCurrentPage(1);
     }, 1000);
   };
   //handleChange khi bấm chuyển page

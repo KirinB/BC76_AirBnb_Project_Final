@@ -72,7 +72,10 @@ const FormAddLocation = ({
               locationService
                 .uploadImgLocation(formData, values.id, token)
                 .then((res) => {
-                  handleNotification("success", "Chỉnh sửa thành công");
+                  handleNotification(
+                    "success",
+                    "Edited room information successfully"
+                  );
                   getAllLocation();
                   resetForm();
                   handleCloseModal(false);
@@ -88,7 +91,10 @@ const FormAddLocation = ({
           locationService
             .editLocation(values.id, values, token)
             .then((res) => {
-              handleNotification("success", "Chỉnh sửa thành công");
+              handleNotification(
+                "success",
+                "Edited room information successfully"
+              );
               getAllLocation();
               resetForm();
               handleCloseModal(false);
@@ -163,7 +169,7 @@ const FormAddLocation = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {isOnSubmit ? "Add Location" : "Edit"}
+            {isOnSubmit ? "Add Location" : "Update"}
           </Button>
           <Button
             className="p-5"

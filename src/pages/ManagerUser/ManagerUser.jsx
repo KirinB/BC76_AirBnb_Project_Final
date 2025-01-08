@@ -46,6 +46,7 @@ const ManagerUser = () => {
     }
     timeOutRef.current = setTimeout(() => {
       setKeyword(newValue);
+      setCurrentPage(1);
     }, 1000);
   };
   const [isOnSubmit, setIsOnSubmit] = useState(true);
@@ -189,8 +190,8 @@ const ManagerUser = () => {
                 nguoiDungSerivce
                   .deleteUsers(record.id)
                   .then((res) => {
-                    getAllUsers();
                     handleNotification("success", res.data.message);
+                    getAllUsers();
                   })
                   .catch((err) => {
                     getAllUsers();

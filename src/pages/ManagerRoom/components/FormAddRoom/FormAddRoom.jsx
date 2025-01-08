@@ -374,7 +374,7 @@ const FormAddRoom = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {isOnSubmit ? "Add Room" : "Edit"}
+            {isOnSubmit ? "Add Room" : "Update"}
           </Button>
           <Button
             className="p-5"
