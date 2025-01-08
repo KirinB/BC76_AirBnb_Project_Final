@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { RiGlobalLine } from "react-icons/ri";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaSquareInstagram, FaSquareTwitter } from "react-icons/fa6";
+import CurrencyConverter from "./CurrencyConverter";
 
 const FooterHomeTemplate = () => {
   return (
@@ -49,10 +50,7 @@ const FooterHomeTemplate = () => {
             <button className="flex items-center justify-center space-x-2 hover:underline transition-all duration-300 font-semibold">
               <RiGlobalLine /> <span>Tiếng Việt (VN)</span>
             </button>
-            <button className="flex items-center justify-center space-x-2 hover:underline transition-all duration-300 font-semibold">
-              <span>₫</span>
-              <span>VND</span>
-            </button>
+            <CurrencyConverter />
             <div>
               <Link>
                 <FaFacebookSquare size={20} />

@@ -25,7 +25,9 @@ import HeaderSearchMobile from "./HeaderSearchMobile";
 const HeaderHomeTemplate = () => {
   const { width } = useViewPort();
   const { setListRoom, originalListRoom } = useSearchPageContext();
-  const rate = useSelector((state) => state.exchangeRate.rate);
+  const { rates, currentCurrency, currentSymbol } = useSelector(
+    (state) => state.exchangeRate
+  );
   const { isDarkMode, setIsDarkMode } = useTheme();
   const user = useSelector((state) => state.userSlice.user);
   const location = useLocation();
@@ -87,7 +89,10 @@ const HeaderHomeTemplate = () => {
   const handleFilterPrice = () => {
     const [min, max] = range;
     const dataFilter = originalListRoom.filter((room) => {
-      return room.giaTien >= min / rate && room.giaTien <= max / rate;
+      return (
+        room.giaTien >= min / rates[currentCurrency] &&
+        room.giaTien <= max / rates[currentCurrency]
+      );
     });
     setListRoom(dataFilter);
     setIsOpenFilterMobile(false);

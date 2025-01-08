@@ -31,3 +31,9 @@ h6 {
 .ant-modal-header {
   @apply bg-white dark:bg-slate-800 text-[#222222] dark:text-slate-400;
 }
+
+.ant-picker-range-separator > span,
+.ant-picker-suffix > span,
+.ant-picker-clear > span {
+  @apply dark:text-white;
+}

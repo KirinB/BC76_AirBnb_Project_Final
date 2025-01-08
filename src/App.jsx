@@ -1,25 +1,25 @@
+import { createContext } from "react";
 import { useRoutes } from "react-router-dom";
-import { pathDefault } from "./common/path";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
-import SearchPage from "./pages/SearchPage/SearchPage";
-import HomePage from "./pages/HomePage/HomePage";
-import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
+import { pathDefault } from "./common/path";
+import AuthPage from "./pages/AuthPage/AuthPage";
 import DashBoard from "./pages/DashBoard/DashBoard";
-import ManagerUser from "./pages/ManagerUser/ManagerUser";
+import HomePage from "./pages/HomePage/HomePage";
 import ManagerLocation from "./pages/ManagerLocation/ManagerLocation";
 import ManagerReservation from "./pages/ManagerReservation/ManagerReservation";
 import ManagerRoom from "./pages/ManagerRoom/ManagerRoom";
-import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
-import AuthPage from "./pages/AuthPage/AuthPage";
-import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
+import ManagerUser from "./pages/ManagerUser/ManagerUser";
 import RoomDetail from "./pages/RoomDetail/RoomDetail";
-import { SearchPageProvider } from "./store/SearchPageContext";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
 import { RoomDetailProvider } from "./store/RoomDetailContext";
-import { createContext, useEffect } from "react";
-import { Bounce, toast, ToastContainer } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { fetchExchangeRate } from "./store/slice/exchangeRateSlice";
+import { SearchPageProvider } from "./store/SearchPageContext";
+import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
+import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
+import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
+import Payment from "./pages/Payment/Payment";
+import { BookingProvider } from "./store/BookingContext";
 
 export const NotificationContext = createContext();
 
@@ -82,6 +82,10 @@ const arrRoutes = [
     path: pathDefault.AuthPage,
     element: <AuthPage />,
   },
+  {
+    path: pathDefault.payment,
+    element: <Payment />,
+  },
 ];
 
 function App() {
@@ -99,20 +103,16 @@ function App() {
     });
   };
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchExchangeRate());
-  }, [dispatch]);
-
   const routes = useRoutes(arrRoutes);
   return (
     <>
       <SearchPageProvider>
-        <NotificationContext.Provider value={{ handleNotification }}>
-          {routes}
-          <ToastContainer />
-        </NotificationContext.Provider>
+        <BookingProvider>
+          <NotificationContext.Provider value={{ handleNotification }}>
+            {routes}
+            <ToastContainer />
+          </NotificationContext.Provider>
+        </BookingProvider>
       </SearchPageProvider>
     </>
   );

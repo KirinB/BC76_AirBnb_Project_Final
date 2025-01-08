@@ -1,40 +1,65 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { DatePicker, Modal } from "antd";
-import Counter from "../../../components/Counter/Counter";
-import { DropdownCustom } from "../../../components/ui/dropdown/DropdownCustom";
-import { ButtonPrimary } from "../../../components/ui/button/ButtonCustom";
-import LineSpace from "./LineSpace";
+import { formatISO, parse } from "date-fns";
 import { AiFillFlag } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import useViewPort from "../../../hooks/useViewPort";
-import { useSelector } from "react-redux";
-import { setRoomService } from "../../../services/setRoom.service";
-import { parse, formatISO } from "date-fns";
-import { NotificationContext } from "../../../App";
-import SignInPage from "../../AuthPage/components/SignInPage";
-import ModalLogin from "../../../components/ModalLogin/ModalLogin";
-import { formatCurrency } from "../../../common/formatCurrency";
 import { IoMdClose } from "react-icons/io";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { NotificationContext } from "../../../App";
+import { formatCurrency } from "../../../common/formatCurrency";
+import { pathDefault } from "../../../common/path";
+import Counter from "../../../components/Counter/Counter";
+import ModalLogin from "../../../components/ModalLogin/ModalLogin";
+import { ButtonPrimary } from "../../../components/ui/button/ButtonCustom";
+import { DropdownCustom } from "../../../components/ui/dropdown/DropdownCustom";
+import useViewPort from "../../../hooks/useViewPort";
+import { setRoomService } from "../../../services/setRoom.service";
+import { useBooking } from "../../../store/BookingContext";
+import LineSpace from "./LineSpace";
+import dayjs from "dayjs";
 const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   const { width } = useViewPort();
   const user = useSelector((state) => {
     return state.userSlice.user;
   });
-  const rate = useSelector((state) => state.exchangeRate.rate);
+  const { rates, currentCurrency, currentSymbol } = useSelector(
+    (state) => state.exchangeRate
+  );
+
+  const {
+    isBlockMax,
+    totalPerson,
+    isSelectedDay,
+    setIsSelectedDay,
+    daysSelected,
+    setDaysSelected,
+    dayStart,
+    setDayStart,
+    dayEnd,
+    setDayEnd,
+    counterAdult,
+    counterChild,
+    counterBaby,
+    setMaxPeople,
+    handleDecreasesAdult,
+    handleIncreasesAdult,
+    handleDecreasesChild,
+    handleIncreasesChild,
+    handleDecreasesBaby,
+    handleIncreasesBaby,
+    idRoomContext,
+    setIdRoomContext,
+  } = useBooking();
+
+  useEffect(() => {
+    setMaxPeople(max);
+  }, []);
+  const navigate = useNavigate();
   const { handleNotification } = useContext(NotificationContext);
-  const [counterAdult, setConterAdult] = useState(1);
-  const [counterChild, setCounterChild] = useState(0);
-  const [counterBaby, setCounterBaby] = useState(0);
-  const [isSelectedDay, setIsSelectedDay] = useState(false);
-  const [daysSelected, setDaysSelected] = useState(0);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
-  const [dayStart, setDayStart] = useState();
-  const [dayEnd, setDayEnd] = useState();
-
-  const totalPerson = counterAdult + counterChild;
-  const isBlockMax = totalPerson >= max;
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -53,41 +78,6 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
 
   const handleChangeDayEnd = (date, dateString) => {
     setDayEnd(dateString);
-  };
-
-  const handleDecreasesAdult = () => {
-    if (counterAdult > 1) {
-      setConterAdult((prev) => prev - 1);
-    }
-  };
-
-  const handleIncreasesAdult = () => {
-    if (totalPerson < max) {
-      setConterAdult((prev) => prev + 1);
-    }
-  };
-
-  const handleDecreasesChild = () => {
-    if (counterChild > 0) {
-      setCounterChild((prev) => prev - 1);
-    }
-  };
-  const handleIncreasesChild = () => {
-    if (totalPerson < max) {
-      setCounterChild((prev) => prev + 1);
-    }
-  };
-
-  const handleDecreasesBaby = () => {
-    if (counterBaby > 0) {
-      setCounterBaby((prev) => prev - 1);
-    }
-  };
-
-  const handleIncreasesBaby = () => {
-    if (counterBaby < 5) {
-      setCounterBaby((prev) => prev + 1);
-    }
   };
 
   const handleRangeChange = (dates, dateStrings) => {
@@ -157,7 +147,8 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         <div className="w-1/2 flex items-center ">
           {isSelectedDay ? (
             <h2 className="text-lg font-semibold">
-              ₫{formatCurrency(priceRoom * rate)}{" "}
+              {currentSymbol}
+              {formatCurrency(priceRoom * rates[currentCurrency])}{" "}
               <span className="font-normal text-base">/ đêm</span>
             </h2>
           ) : (
@@ -166,7 +157,10 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         </div>
         <div className="w-1/2 cursor-pointer">
           {isSelectedDay ? (
-            <ButtonPrimary className={"w-full text-wrap py-6"}>
+            <ButtonPrimary
+              className={"w-full text-wrap py-6"}
+              onClick={handleSetRoom}
+            >
               <span className="text-sm">Đặt phòng</span>
             </ButtonPrimary>
           ) : (
@@ -216,7 +210,8 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
         <div className="border w-full border-gray-200 shadow-lg rounded-xl p-6 space-y-6">
           {isSelectedDay ? (
             <h2 className="text-xl font-semibold">
-              ₫{formatCurrency(priceRoom * rate)}{" "}
+              {currentSymbol}
+              {formatCurrency(priceRoom * rates[currentCurrency])}{" "}
               <span className="font-normal text-base">/ đêm</span>
             </h2>
           ) : (
@@ -312,11 +307,34 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
 
           <div className="">
             {isSelectedDay ? (
-              <ButtonPrimary className={"w-full py-6"} onClick={handleSetRoom}>
-                Đặt phòng
-              </ButtonPrimary>
+              <Link
+                onClick={(e) => {
+                  if (!user) {
+                    e.preventDefault();
+                    handleNotification(
+                      "error",
+                      "Bạn cần đăng nhập để đặt phòng"
+                    );
+                  } else {
+                    setIdRoomContext(idRoom);
+                  }
+                }}
+                to={pathDefault.payment}
+              >
+                <ButtonPrimary className={"w-full py-6"}>
+                  Đặt phòng
+                </ButtonPrimary>
+              </Link>
             ) : (
-              <ButtonPrimary className={"w-full md:py-10 lg:py-6 text-wrap"}>
+              <ButtonPrimary
+                className={"w-full md:py-10 lg:py-6 text-wrap"}
+                onClick={() => {
+                  handleNotification(
+                    "error",
+                    "Vui lòng chọn ngày nhận, trả phòng"
+                  );
+                }}
+              >
                 <span className="md:text-sm">
                   Kiểm tra tình trạng còn phòng
                 </span>
@@ -330,23 +348,35 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
                 <div className="flex flex-col gap-4 mt-4">
                   <div className="flex justify-between items-center gap-2">
                     <h4 className="text-sm lg:text-base underline">
-                      ₫{formatCurrency(priceRoom * rate)} x {daysSelected} đêm
+                      {currentSymbol}
+                      {formatCurrency(
+                        priceRoom * rates[currentCurrency]
+                      )} x {daysSelected} đêm
                     </h4>
                     <h4 className="text-sm lg:text-base">
-                      ₫{formatCurrency(priceRoom * rate * daysSelected)}
+                      {currentSymbol}
+                      {formatCurrency(
+                        priceRoom * rates[currentCurrency] * daysSelected
+                      )}
                     </h4>
                   </div>
                   <div className="flex justify-between items-center gap-2">
                     <h4 className="text-sm lg:text-base underline">
                       Phí vệ sinh
                     </h4>
-                    <h4 className="text-sm lg:text-base">₫150.000</h4>
+                    <h4 className="text-sm lg:text-base">
+                      {currentSymbol}
+                      {formatCurrency(5 * rates[currentCurrency])}
+                    </h4>
                   </div>
                   <div className="flex justify-between items-center">
                     <h4 className="text-sm lg:text-base underline">
                       Phí dịch vụ AirBnb
                     </h4>
-                    <h4 className="text-sm lg:text-base">₫200.000</h4>
+                    <h4 className="text-sm lg:text-base">
+                      {currentSymbol}
+                      {formatCurrency(2 * rates[currentCurrency])}
+                    </h4>
                   </div>
                 </div>
                 <LineSpace />
@@ -355,9 +385,11 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
                     Tổng trước thuế
                   </h4>
                   <h4 className="text-sm lg:text-base font-semibold">
-                    ₫
+                    {currentSymbol}
                     {formatCurrency(
-                      priceRoom * rate * daysSelected + 150e3 + 200e3
+                      priceRoom * rates[currentCurrency] * daysSelected +
+                        5 * rates[currentCurrency] +
+                        2 * rates[currentCurrency]
                     )}
                   </h4>
                 </div>

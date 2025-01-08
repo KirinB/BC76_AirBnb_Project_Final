@@ -13,4 +13,5 @@ export const pathDefault = {
   AuthPage: "/Auth",
   Profile: "/profile",
   roomDetailPage: "/rooms/:id",
+  payment: "/payment",
 };
