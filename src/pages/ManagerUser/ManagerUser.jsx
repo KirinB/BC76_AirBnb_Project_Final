@@ -82,7 +82,6 @@ const ManagerUser = () => {
     nguoiDungSerivce
       .getUserFind(currentPage, keyword)
       .then((res) => {
-        console.log(res);
         Render(res);
       })
       .catch((err) => {});

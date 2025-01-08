@@ -42,7 +42,6 @@ const DashBoard = () => {
     userService
       .getListUser()
       .then((res) => {
-        console.log(res.data.content);
         setListUser(res.data.content);
       })
       .catch((err) => {
@@ -58,7 +57,6 @@ const DashBoard = () => {
       });
     phongService.getListPhong().then((res) => {
       setListRoom(res.data.content);
-      console.log(res.data.content);
     });
   }, []);
   return (
