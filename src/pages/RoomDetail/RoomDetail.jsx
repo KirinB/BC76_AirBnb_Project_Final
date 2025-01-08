@@ -82,8 +82,8 @@ const RoomDetail = () => {
               alt=""
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 relative md:px-10 lg:px-4">
-            <div className="col-span-2 px-6 md:px-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative md:px-10 lg:px-4">
+            <div className="lg:col-span-2 px-6 md:px-0">
               <div className="pt-6">
                 <h2 className="text-2xl font-semibold">
                   {roomDetail.tenPhong}
