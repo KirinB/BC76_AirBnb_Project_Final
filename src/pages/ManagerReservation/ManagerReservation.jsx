@@ -157,7 +157,7 @@ const ManagerReservation = ({ isDarkMode }) => {
                   .deleteReservation(record.id)
                   .then((res) => {
                     getAllReservation();
-                    handleNotification("success", res.data.message);
+                    handleNotification("success", "Deleted successfully");
                   })
                   .catch((err) => {
                     getAllReservation();
@@ -203,7 +203,7 @@ const ManagerReservation = ({ isDarkMode }) => {
           <Modal
             title={
               <h2 className="dark:text-white text-center text-2xl">
-                Edit Booking
+                Update Booking
               </h2>
             }
             closeIcon={<CloseOutlined size={20} className="dark:text-white" />}

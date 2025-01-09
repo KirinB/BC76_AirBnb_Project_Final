@@ -9,7 +9,7 @@ import { Button } from "antd";
 import * as Yup from "yup";
 const FormAddLocation = ({
   handleCloseModal,
-  getAllRoom,
+  getAllLocation,
   isOnSubmit,
   initialValues,
   previewImage,
@@ -17,7 +17,7 @@ const FormAddLocation = ({
   onResetForm,
 }) => {
   const { handleNotification } = useContext(NotificationContext);
-  const { user, token } = useSelector((state) => state.userSlice);
+  const { token } = useSelector((state) => state.userSlice);
   const {
     errors,
     touched,
@@ -48,7 +48,7 @@ const FormAddLocation = ({
                 //Đẩy hình lên API upload hình ảnh
                 handleNotification("success", "New room created successfully");
                 handleCloseModal(true);
-                getAllRoom();
+                getAllLocation();
                 resetForm();
               })
               .catch((err) => {
@@ -72,23 +72,35 @@ const FormAddLocation = ({
               locationService
                 .uploadImgLocation(formData, values.id, token)
                 .then((res) => {
-                  handleNotification("success", "Chỉnh sửa thành công");
+                  handleNotification(
+                    "success",
+                    "Edited room information successfully"
+                  );
+                  getAllLocation();
+                  resetForm();
+                  handleCloseModal(false);
                 })
                 .catch((err) => {
-                  console.log(err);
+                  handleNotification("error", err.response.data.content);
                 });
             })
             .catch((err) => {
-              console.log(err);
+              handleNotification("error", err.response.data.content);
             });
         } else {
           locationService
-            .editLocation(values.id, token, values)
+            .editLocation(values.id, values, token)
             .then((res) => {
-              handleNotification("success", "Chỉnh sửa thành công");
+              handleNotification(
+                "success",
+                "Edited room information successfully"
+              );
+              getAllLocation();
+              resetForm();
+              handleCloseModal(false);
             })
             .catch((err) => {
-              console.log(err);
+              handleNotification("error", err.response.data.content);
             });
         }
       }
@@ -157,7 +169,7 @@ const FormAddLocation = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {isOnSubmit ? "Add Location" : "Edit"}
+            {isOnSubmit ? "Add Location" : "Update"}
           </Button>
           <Button
             className="p-5"

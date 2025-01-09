@@ -1,6 +1,6 @@
 import { Form, Input, InputNumber } from "antd";
 import React from "react";
-
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 export const InputNormal = ({
   type = "text",
   className,
@@ -51,7 +51,6 @@ export const InputPasswordCustom = ({
   value,
   error,
   touched,
-  readOnly = false,
   disabled = false,
   handleFocus,
 }) => {
@@ -69,6 +68,13 @@ export const InputPasswordCustom = ({
         placeholder={placeholder}
         disabled={disabled}
         onFocus={handleFocus}
+        iconRender={(visible) =>
+          visible ? (
+            <EyeOutlined style={{ color: disabled ? "white" : "" }} />
+          ) : (
+            <EyeInvisibleOutlined style={{ color: disabled ? "white" : "" }} />
+          )
+        }
       />
       {touched && error ? (
         <p className="text-red-500 mt-1 text-sm">{error}</p>
@@ -109,23 +115,3 @@ export const InputNumberCustom = ({
     </div>
   );
 };
-// export const InputForm = ({
-//   labelContent,
-//   name,
-//   className = "",
-//   rules,
-//   placeholder,
-//   value,
-// }) => {
-//   return (
-//     <Form.Item
-//       label={labelContent}
-//       name={name}
-//       id={name}
-//       className={`${className} !mb-2`}
-//       rules={rules}
-//     >
-//       <Input placeholder={placeholder} />
-//     </Form.Item>
-//   );
-// };

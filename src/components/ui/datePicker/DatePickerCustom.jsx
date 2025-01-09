@@ -1,6 +1,7 @@
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
-import { CalendarOutlined } from "@ant-design/icons";
+import { CalendarOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { useTheme } from "../../../store/ThemeContext";
 export const DatePickerCustom = ({
   id,
   name,
@@ -13,6 +14,7 @@ export const DatePickerCustom = ({
   format,
   disabledDate,
 }) => {
+  const { isDarkMode, setIsDarkMode } = useTheme();
   return (
     <div className="space-y-1">
       <label htmlFor="" className="block font-medium text-sm">
@@ -20,9 +22,15 @@ export const DatePickerCustom = ({
       </label>
       <DatePicker
         suffixIcon={<CalendarOutlined className="dark:text-white" size={20} />}
-        allowClear={false}
+        allowClear={
+          isDarkMode
+            ? {
+                clearIcon: <CloseCircleOutlined className="dark:text-white" />,
+              }
+            : true
+        }
         disabledDate={disabledDate}
-        className="w-full"
+        className="w-full dark:focus-within:bg-slate-800"
         id={id}
         name={name}
         format={format}
