@@ -32,7 +32,7 @@ const FooterHomeTemplate = () => {
         </div>
       </footer>
       <div className="relative md:sticky border-t py-2 bg-[#F7F7F7] dark:bg-slate-700 dark:text-slate-200 text-[#222222] bottom-0 md:z-50">
-        <div className="container flex flex-col-reverse gap-6 md:gap-0 lg:flex-row justify-between items-center ">
+        <div className="container flex px-6 md:px-10 flex-col-reverse gap-6 md:gap-0 lg:flex-row justify-between items-center ">
           <div className="">
             <span className="text-sm">
               © 2024 Airbnb, Inc.<span className="mx-2">·</span>

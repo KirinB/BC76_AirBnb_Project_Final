@@ -274,7 +274,7 @@ const CommentRoom = ({ roomName, imageRoom, roomId }) => {
                   setIsModalOpenWriteReview(true);
                 }}
                 className={
-                  "border-[#222] font-semibold px-6 !py-6 text-[#222] hover:!bg-gray-100 hover:shadow-md transition-all duration-200"
+                  "border-[#222] font-semibold px-6 !py-6 hover:!bg-gray-100 hover:shadow-md transition-all duration-200"
                 }
               >
                 Viết đánh giá

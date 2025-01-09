@@ -37,3 +37,48 @@ h6 {
 .ant-picker-clear > span {
   @apply dark:text-white;
 }
+
+.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-range-end .ant-picker-cell-inner {
+  @apply !bg-primary text-white;
+}
+
+.ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-range-start:not(
+    .ant-picker-cell-disabled
+  ):before,
+.ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-range-end:not(
+    .ant-picker-cell-disabled
+  ):before,
+.ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-in-range:not(
+    .ant-picker-cell-disabled
+  ):before {
+  @apply bg-primary/20;
+}
+
+.ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-today
+  .ant-picker-cell-inner::before {
+  @apply border-primary;
+}
+
+.ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-selected:not(
+    .ant-picker-cell-disabled
+  )
+  .ant-picker-cell-inner {
+  @apply bg-primary;
+}
+.ant-picker-outlined:focus-within {
+  @apply bg-transparent;
+}
+
+.ant-picker-range .ant-picker-active-bar {
+  @apply bg-primary;
+}
+
+.ant-picker-outlined:focus-within {
+  @apply dark:border-white;
+}
