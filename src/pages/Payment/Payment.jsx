@@ -125,6 +125,7 @@ const Payment = () => {
         })
         .catch((err) => {
           console.log(err);
+          handleNotification("error", err.response.data.content);
         });
     } else {
       handleNotification("error", "Bạn cần đăng nhập để đặt phòng");

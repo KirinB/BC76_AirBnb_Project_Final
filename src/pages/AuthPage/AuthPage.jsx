@@ -45,7 +45,11 @@ const AuthPage = () => {
               handle ? "translate-x-full" : ""
             }`}
           >
-            <SignUpPage styleIcon={styleIcon} />
+            <SignUpPage
+              setHandle={setHandle}
+              handle={handle}
+              styleIcon={styleIcon}
+            />
           </div>
         )}
 
