@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Button,
-  ConfigProvider,
-  Input,
-  Modal,
-  Popconfirm,
-  Table,
-  Tag,
-} from "antd";
+import { Avatar, Button, Input, Modal, Popconfirm, Tag } from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { NotificationContext } from "../../App";
 import { ButtonAdmin } from "../../components/ui/button/ButtonCustom";
@@ -22,7 +13,6 @@ import { useTheme } from "../../store/ThemeContext";
 import TableCustom from "../../components/ui/table/TableCustom";
 
 const ManagerUser = () => {
-  const { isDarkMode, setIsDarkMode } = useTheme();
   const [initialValues, setInitialValues] = useState({
     id: 0,
     name: "",
@@ -66,7 +56,7 @@ const ManagerUser = () => {
     }
   };
 
-  const handlePageChange = (page, pageSize) => {
+  const handlePageChange = (page) => {
     setCurrentPage(page);
   };
   const Render = (res) => {

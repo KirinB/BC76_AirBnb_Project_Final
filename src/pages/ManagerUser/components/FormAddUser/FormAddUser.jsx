@@ -162,11 +162,7 @@ const FormAddUser = ({
           handleChange={(date, dateString) => {
             setFieldValue("birthday", date);
           }}
-          value={
-            values.birthday
-              ? dayjs(values.birthday, "YYYY-MM-DDTHH:mm:ss")
-              : null
-          }
+          value={values.birthday ? dayjs(values.birthday) : null}
           error={errors.birthday}
           touched={touched.birthday}
         />
@@ -182,7 +178,6 @@ const FormAddUser = ({
             }}
             value={values.gender}
             error={errors.gender}
-            // touched={touched.gender}
           />
         </div>
       </div>
