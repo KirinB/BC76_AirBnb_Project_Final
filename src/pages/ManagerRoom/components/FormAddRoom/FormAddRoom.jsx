@@ -65,9 +65,7 @@ const FormAddRoom = ({
                 handleNotification("error", err.response.data.content);
               });
           })
-          .catch((err) => {
-            handleNotification("error", err.response.data.content);
-          });
+          .catch((err) => {});
       } else {
         if (values.hinhAnh instanceof File) {
           // phần xử lý hình ảnh trước khi up API
@@ -376,7 +374,7 @@ const FormAddRoom = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {isOnSubmit ? "Add Room" : "Edit"}
+            {isOnSubmit ? "Add Room" : "Update"}
           </Button>
           <Button
             className="p-5"

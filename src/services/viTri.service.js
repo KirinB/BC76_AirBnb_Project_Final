@@ -17,8 +17,8 @@ export const locationService = {
   getLocationByID: (id) => {
     return http.get(`/vi-tri/${id}`);
   },
-  editLocation: (id, token, data) => {
-    return http.put(`/vi-tri/${id}`, { headers: { token } }, data);
+  editLocation: (id, data, token) => {
+    return http.put(`/vi-tri/${id}`, data, { headers: { token } });
   },
   deleteLocation: (id, token) => {
     return http.delete(`/vi-tri/${id}`, { headers: { token } });

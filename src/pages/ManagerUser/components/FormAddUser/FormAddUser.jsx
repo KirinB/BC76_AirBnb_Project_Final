@@ -1,6 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
+import {
+  Button,
+  ConfigProvider,
+  DatePicker,
+  Form,
+  Input,
+  Radio,
+  Select,
+} from "antd";
+import {
+  CalendarOutlined,
+  CloseCircleOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
 import { useFormik } from "formik";
 import {
   InputNormal,
@@ -12,9 +24,10 @@ import { nguoiDungSerivce } from "../../../../services/nguoiDung.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
 import dayjs from "dayjs";
+import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePickerCustom";
 const FormAddUser = ({
   handleCloseModal,
-  getAllUsser,
+  getAllUsers,
   isOnSubmit,
   initialValues,
   onResetForm,
@@ -25,24 +38,24 @@ const FormAddUser = ({
       nguoiDungSerivce
         .postUsers(data)
         .then((res) => {
-          handleCloseModal();
-          getAllUsser();
           handleNotification("success", "User Created Successfully");
+          getAllUsers();
+          handleCloseModal();
         })
         .catch((err) => {
-          handleNotification("error", err.res.data.content);
+          handleNotification("error", err.response.data.content);
         });
     } else {
       delete data.password;
       nguoiDungSerivce
         .putUserByID(data.id, data)
         .then((res) => {
-          handleCloseModal();
-          getAllUsser();
           handleNotification("success", "Edit User Successfully");
+          getAllUsers();
+          handleCloseModal();
         })
         .catch((err) => {
-          handleNotification("error", err.res.data.content);
+          handleNotification("error", err.response.data.content);
         });
     }
   };
@@ -143,27 +156,22 @@ const FormAddUser = ({
         touched={touched.phone}
       />
       <div className="grid grid-cols-2 gap-5">
-        <div className="space-y-1">
-          <label htmlFor="" className="block font-medium text-sm">
-            Birthday
-          </label>
-          <DatePicker
-            suffixIcon={
-              <CalendarOutlined className="dark:text-white" size={20} />
-            }
-            className="w-full text-white"
-            format={"DD-MM-YYYY"}
-            onChange={(date, dateString) => {
-              setFieldValue("birthday", dateString);
-            }}
-            value={
-              values.birthday ? dayjs(values.birthday, "DD-MM-YYYY") : null
-            }
-          />
-          {errors.birthday && touched.birthday && (
-            <p className="text-red-500 text-sm">{errors.birthday}</p>
-          )}
-        </div>
+        <DatePickerCustom
+          labelContent={"Birthday"}
+          id={"birthday"}
+          name={"birthday"}
+          format={"DD/MM/YYYY"}
+          handleChange={(date, dateString) => {
+            setFieldValue("birthday", date);
+          }}
+          value={
+            values.birthday
+              ? dayjs(values.birthday, "YYYY-MM-DDTHH:mm:ss")
+              : null
+          }
+          error={errors.birthday}
+          touched={touched.birthday}
+        />
         <div className="w-full">
           <SelectCustom
             labelContent={"Gender"}
@@ -195,7 +203,7 @@ const FormAddUser = ({
           htmlType="submit"
           className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
         >
-          {isOnSubmit ? "Add User" : "Edit"}
+          {isOnSubmit ? "Add User" : "Update"}
         </Button>
         <Button
           className="p-5"
