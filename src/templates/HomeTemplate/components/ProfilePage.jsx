@@ -1,18 +1,26 @@
+import { CalendarOutlined, CameraOutlined } from "@ant-design/icons";
+import { DatePicker, Input } from "antd";
+import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
-import { CameraOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { userService } from "../../../services/users.service";
 import { Link, useNavigate } from "react-router-dom";
 import { pathDefault } from "../../../common/path";
-import { handleUpdateUser } from "../../../store/slice/user.slice";
-import { Button, Carousel, DatePicker, Input, Modal } from "antd";
-import dayjs from "dayjs";
 import { phongService } from "../../../services/phong.service";
+import { userService } from "../../../services/users.service";
+import { handleUpdateUser } from "../../../store/slice/user.slice";
 import "./ProfilePage.scss";
 
+import { Helmet } from "react-helmet";
 import Slider from "react-slick";
 import { NotificationContext } from "../../../App";
+import { ButtonPrimary } from "../../../components/ui/button/ButtonCustom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import {
+  InputNormal,
+  InputPasswordCustom,
+} from "../../../components/ui/input/InputCustom";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.userSlice.user);
@@ -57,8 +65,50 @@ const ProfilePage = () => {
     name: user.name,
     email: user.email,
     phone: user.phone,
-    birthday: user.birthday,
   });
+
+  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
+    useFormik({
+      initialValues: valueUser,
+      onSubmit: (values) => {
+        userService
+          .thayDoiThongTinNguoiDung(user.id, values)
+          .then((res) => {
+            const updatedUser = res.data.content;
+            dispatch(handleUpdateUser(updatedUser));
+
+            const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            localStorage.setItem(
+              "userInfo",
+              JSON.stringify({
+                ...userInfo,
+                user: updatedUser,
+              })
+            );
+            handleNotification("success", "Thông tin đã được cập nhật");
+          })
+          .catch((err) => {
+            handleNotification("error", err.response.data.content);
+          });
+      },
+      validationSchema: yup.object({
+        name: yup
+          .string()
+          .required("Vui lòng không bỏ trống")
+          .matches(/^[\p{L}\s]+$/u, "Vui lòng không nhập ký tự đặc biệt, số"),
+        email: yup
+          .string()
+          .required("Vui lòng không bỏ trống")
+          .email("Vui lòng nhập đúng định dạng email"),
+        phone: yup
+          .string()
+          .required("Vui lòng không bỏ trống")
+          .matches(
+            /^(0(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])\d{7})$/,
+            "Vui lòng nhập đúng định dạng số điện thoại Việt Nam"
+          ),
+      }),
+    });
 
   const dispatch = useDispatch();
 
@@ -115,28 +165,6 @@ const ProfilePage = () => {
       });
   };
 
-  const handleOk = () => {
-    userService
-      .thayDoiThongTinNguoiDung(user.id, valueUser)
-      .then((res) => {
-        const updatedUser = res.data.content;
-        dispatch(handleUpdateUser(updatedUser));
-
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        localStorage.setItem(
-          "userInfo",
-          JSON.stringify({
-            ...userInfo,
-            user: updatedUser,
-          })
-        );
-        handleNotification("success", "Thông tin đã được cập nhật");
-      })
-      .catch((err) => {
-        console.error("Lỗi khi cập nhật thông tin:", err);
-      });
-  };
-
   useEffect(() => {
     phongService
       .getRoomByNguoiDung(user.id)
@@ -169,6 +197,9 @@ const ProfilePage = () => {
 
   return (
     <div className="container ">
+      <Helmet>
+        <title>AirBnb - Quản lý hồ sơ</title>
+      </Helmet>
       <div className="block px-5 lg:px-6 lg:grid lg:grid-cols-12 gap-10">
         <div className="col-span-12 lg:col-span-4">
           <div className=" p-10 shadow-xl rounded-3xl my-10">
@@ -214,96 +245,93 @@ const ProfilePage = () => {
           <h2 className="text-3xl font-bold mt-5">
             Thông tin về <span>{user.name}</span>
           </h2>
-          <div className="grid grid-cols-2 gap-5 my-5">
-            <div className="space-y-3">
-              <label className="font-medium">Tên người dùng</label>
-              <Input
-                onChange={(e) =>
-                  setValueUser((prev) => ({
-                    ...prev,
-                    name: e.target.value,
-                  }))
-                }
-                value={valueUser.name}
-              />
+          <form className="grid grid-cols-2 gap-5 my-5" onSubmit={handleSubmit}>
+            <InputNormal
+              labelContent={"Name"}
+              id="name"
+              name={"name"}
+              placeholder={"Vui lòng nhập tên"}
+              value={values.name}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              error={errors.name}
+              touched={touched.name}
+            />
+            <InputNormal
+              labelContent={"Email"}
+              id="email"
+              name={"email"}
+              placeholder={"Vui lòng nhập email"}
+              value={values.email}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              error={errors.email}
+              touched={touched.email}
+            />
+            <InputNormal
+              labelContent={"Phone"}
+              id="phone"
+              name={"phone"}
+              placeholder={"Vui lòng nhập số điện thoại"}
+              value={values.phone}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              error={errors.phone}
+              touched={touched.phone}
+            />
+
+            <div className="lg:col-span-2 items-end flex justify-center lg:justify-start">
+              <ButtonPrimary type="submit" className={"py-4"}>
+                Xác nhận thông tin
+              </ButtonPrimary>
             </div>
-            <div className="space-y-3">
-              <label className="font-medium">Email</label>
-              <Input
-                onChange={(e) =>
-                  setValueUser((prev) => ({
-                    ...prev,
-                    email: e.target.value,
-                  }))
-                }
-                value={valueUser.email}
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="font-medium">Số điện thoại</label>
-              <Input
-                onChange={(e) =>
-                  setValueUser((prev) => ({
-                    ...prev,
-                    phone: e.target.value,
-                  }))
-                }
-                value={valueUser.phone}
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="font-medium">Ngày sinh nhật</label>
-              <DatePicker
-                className="block"
-                format={"DD-MM-YYYY"}
-                value={valueUser.birthday ? dayjs(valueUser.birthday) : null}
-                onChange={(dateString) =>
-                  setValueUser((prev) => ({
-                    ...prev,
-                    birthday: dateString,
-                  }))
-                }
-              />
-            </div>
-          </div>
-          <Button onClick={handleOk}>Xác nhận thông tin</Button>
+          </form>
           <h2 className="text-3xl font-bold my-4">Thông tin đặt phòng</h2>
 
-          <div className="px-6 md:px-10 lg:px-6">
-            <Slider
-              {...settings}
-              className="carousel_custom max-w-full mr-0 lg:mr-10"
-            >
-              {rooms.map((item, index) => {
-                const roomDetail = roomDetails[item.maPhong];
-                return (
-                  <div key={index} className="p-3">
-                    <Link
-                      to={`/rooms/${item.maPhong}`}
-                      className="p-3 rounded-xl border space-y-3 border-none"
-                    >
-                      {roomDetail ? (
-                        <>
-                          <img
-                            src={roomDetail.hinhAnh}
-                            alt={roomDetail.tenPhong}
-                            className="h-32 w-full object-cover rounded-xl"
-                          />
-                          <h2 className="font-medium line-clamp-1">
-                            {roomDetail.tenPhong}
-                          </h2>
-                        </>
-                      ) : (
-                        <p>Đang tải...</p>
-                      )}
-                      <p>Ngày đặt: {formatDate(item.ngayDen)}</p>
-                      <p>Ngày trả: {formatDate(item.ngayDi)}</p>
-                    </Link>
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
+          {rooms.length > 0 ? (
+            <div className="px-6 md:px-10 lg:px-6">
+              <Slider
+                {...settings}
+                className="carousel_custom max-w-full mr-0 lg:mr-10"
+              >
+                {rooms.map((item, index) => {
+                  const roomDetail = roomDetails[item.maPhong];
+                  return (
+                    <div key={index} className="p-3">
+                      <Link
+                        to={`/rooms/${item.maPhong}`}
+                        className="p-3 rounded-xl border space-y-3 border-none"
+                      >
+                        {roomDetail ? (
+                          <>
+                            <img
+                              src={roomDetail.hinhAnh}
+                              alt={roomDetail.tenPhong}
+                              className="h-32 w-full object-cover rounded-xl"
+                            />
+                            <h2 className="font-medium line-clamp-1">
+                              {roomDetail.tenPhong}
+                            </h2>
+                          </>
+                        ) : (
+                          <p>Đang tải...</p>
+                        )}
+                        <p>Ngày đặt: {formatDate(item.ngayDen)}</p>
+                        <p>Ngày trả: {formatDate(item.ngayDi)}</p>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </Slider>
+            </div>
+          ) : (
+            <div>
+              <h2 className="text-lg">Bạn chưa từng đặt phòng</h2>
+              <div className="flex justify-center">
+                <img src="/nodatafound.png" alt="" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

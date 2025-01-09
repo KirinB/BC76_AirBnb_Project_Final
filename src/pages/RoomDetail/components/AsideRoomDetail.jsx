@@ -81,9 +81,10 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   };
 
   const handleRangeChange = (dates, dateStrings) => {
+    console.log(dateStrings);
     setDayStart(dateStrings[0]);
     setDayEnd(dateStrings[1]);
-    const totalDays = calculateTotalDays(dateStrings);
+    const totalDays = calculateTotalDays([dateStrings]);
     setDaysSelected(totalDays);
     setIsSelectedDay(totalDays > 0);
   };
@@ -190,6 +191,7 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
             <DatePicker
               format={"DD-MM-YYYY"}
               placeholder="Ngày nhận phòng"
+              defaultValue={dayjs(dayStart, "DD-MM-YYYY")}
               onChange={handleChangeDayStart}
             />
           </div>
@@ -197,6 +199,7 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
             <h2 className="text-sm">Ngày trả phòng</h2>
             <DatePicker
               format={"DD-MM-YYYY"}
+              defaultValue={dayEnd ? dayjs(dayEnd, "DD-MM-YYYY") : null}
               placeholder="Ngày trả phòng"
               onChange={handleChangeDayEnd}
             />
@@ -219,6 +222,10 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
           )}
           <div className="space-y-2">
             <DatePicker.RangePicker
+              defaultValue={[
+                dayjs(dayStart, "DD-MM-YYYY"),
+                dayEnd ? dayjs(dayEnd, "DD-MM-YYYY") : null,
+              ]}
               format={"DD-MM-YYYY"}
               placeholder={["Nhận phòng", "Trả phòng"]}
               onChange={handleRangeChange}
