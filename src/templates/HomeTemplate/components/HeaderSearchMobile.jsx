@@ -4,8 +4,11 @@ import { useHeaderContext } from "../../../store/HeaderContext";
 import removeVietnameseTones from "../../../common/removeVietnameseTones";
 import { IoCloseCircle } from "react-icons/io5";
 import { useDebounce } from "use-debounce";
+import dayjs from "dayjs";
+import { useBooking } from "../../../store/BookingContext";
 
 const HeaderSearchMobile = () => {
+  const { dayStart, setDayStart, dayEnd, setDayEnd } = useBooking();
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [listSearch, setListSearch] = useState([]);
@@ -74,6 +77,14 @@ const HeaderSearchMobile = () => {
     });
   }
 
+  const handleChangeDayStart = (date, dateString) => {
+    setDayStart(dateString);
+  };
+
+  const handleChangeDayEnd = (date, dateString) => {
+    setDayEnd(dateString);
+  };
+
   return (
     <div className="flex flex-col gap-4 py-3">
       <div className="flex flex-col gap-2">
@@ -119,8 +130,18 @@ const HeaderSearchMobile = () => {
       <div className="flex flex-col gap-2">
         <h3>Thời gian</h3>
         <div className="grid grid-cols-2 gap-4">
-          <DatePicker placeholder="Ngày đi" onChange={() => {}} />
-          <DatePicker placeholder="Ngày về" onChange={() => {}} />
+          <DatePicker
+            placeholder="Ngày đi"
+            onChange={handleChangeDayStart}
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(dayStart, "DD-MM-YYYY")}
+          />
+          <DatePicker
+            placeholder="Ngày về"
+            onChange={handleChangeDayEnd}
+            format={"DD-MM-YYYY"}
+            defaultValue={dayEnd ? dayjs(dayEnd, "DD-MM-YYYY") : null}
+          />
         </div>
       </div>
     </div>

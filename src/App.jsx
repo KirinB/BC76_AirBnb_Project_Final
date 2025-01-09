@@ -20,6 +20,7 @@ import ProfilePage from "./templates/HomeTemplate/components/ProfilePage";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import Payment from "./pages/Payment/Payment";
 import { BookingProvider } from "./store/BookingContext";
+import FavoriteRoom from "./pages/Favorite/FavoriteRoom";
 
 export const NotificationContext = createContext();
 
@@ -47,6 +48,10 @@ const arrRoutes = [
       {
         path: pathDefault.Profile,
         element: <ProfilePage />,
+      },
+      {
+        path: pathDefault.favorite,
+        element: <FavoriteRoom />,
       },
     ],
   },

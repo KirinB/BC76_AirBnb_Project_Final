@@ -19,7 +19,7 @@ export const ButtonOutLine = ({
   return (
     <Button
       type={type}
-      className={`py-[10px] px-4 text-[#222222] dark:text-slate-200 dark:hover:!text-white border border-gray-200 hover:!border-black hover:!text-black ${className} ${
+      className={`py-[10px] px-4 text-[#222222] dark:text-slate-200 dark:hover:!text-black border border-gray-200 hover:!border-black hover:!text-black ${className} ${
         roundedfull ? "rounded-full" : ""
       }`}
       onClick={onClick}
@@ -41,7 +41,7 @@ export const ButtonPrimary = ({
     <Button
       className={`!bg-primary text-white font-semibold text-base !outline-none !border-none hover:!text-white hover:!bg-primary/80 ${className}`}
       onClick={onClick}
-      type={type}
+      htmlType={type}
       {...props}
     >
       {children}
