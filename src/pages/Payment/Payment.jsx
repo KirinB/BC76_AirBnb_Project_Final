@@ -103,7 +103,8 @@ const Payment = () => {
     return formatISO(parsedDate);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (!dayStart || !dayEnd)
       return handleNotification("error", "Vui lòng nhập đầy đủ thông tin");
     if (user) {
@@ -121,7 +122,9 @@ const Payment = () => {
         })
         .then((res) => {
           handleNotification("success", "Bạn đã đặt phòng thành công!");
-          navigate(pathDefault.homePage);
+          setTimeout(() => {
+            navigate(pathDefault.homePage);
+          }, 3000);
         })
         .catch((err) => {
           console.log(err);
@@ -140,7 +143,7 @@ const Payment = () => {
     phongService
       .getRoomById(idRoomContext)
       .then((res) => {
-        // console.log(res.data.content);
+        console.log(res.data.content);
         setRoomDetail(res.data.content);
       })
       .catch((err) => {
