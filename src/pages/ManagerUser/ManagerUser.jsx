@@ -9,10 +9,11 @@ import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 import FormAddUser from "./components/FormAddUser/FormAddUser";
 import { CloseOutlined } from "@ant-design/icons";
 import useViewPort from "../../hooks/useViewPort";
-import { useTheme } from "../../store/ThemeContext";
 import TableCustom from "../../components/ui/table/TableCustom";
+import { useTranslation } from "react-i18next";
 
 const ManagerUser = () => {
+  const { t } = useTranslation("user");
   const [initialValues, setInitialValues] = useState({
     id: 0,
     name: "",
@@ -84,7 +85,7 @@ const ManagerUser = () => {
       width: 100,
     },
     {
-      title: "Name",
+      title: t("name"),
       dataIndex: "name",
       key: "name",
       render: (text, record, index) => {
@@ -92,7 +93,7 @@ const ManagerUser = () => {
       },
     },
     {
-      title: "Avatar",
+      title: t("avatar"),
       dataIndex: "avatar",
       key: "avatar",
       render: (text, record, index) => {
@@ -119,12 +120,12 @@ const ManagerUser = () => {
     },
 
     {
-      title: "Phone",
+      title: t("phone"),
       dataIndex: "phone",
       key: "phone",
     },
     {
-      title: "Birthday",
+      title: t("birthday"),
       dataIndex: "birthday",
       key: "birthday",
       render: (text, record, index) => {
@@ -132,7 +133,7 @@ const ManagerUser = () => {
       },
     },
     {
-      title: "Role",
+      title: t("role"),
       dataIndex: "role",
       key: "role",
       render: (text, record, index) => {
@@ -148,7 +149,7 @@ const ManagerUser = () => {
       },
     },
     {
-      title: "Action",
+      title: t("action"),
       key: "action",
       fixed: "right",
       width: 150,
@@ -212,11 +213,11 @@ const ManagerUser = () => {
           className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
-          Manager List User
+          {t("titleUser")}
         </h1>
         <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
-            placeholder="enter search name's user..."
+            placeholder={t("phSearchUser")}
             value={value}
             onChange={handleChangeKeyword}
             className=""
@@ -226,7 +227,7 @@ const ManagerUser = () => {
             }}
           />
           <ButtonAdmin
-            content={width > 768 && "Add New User"}
+            content={width > 768 && t("addUser")}
             icon={<FaUserPlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
@@ -247,7 +248,7 @@ const ManagerUser = () => {
           <Modal
             title={
               <h2 className="dark:text-white text-2xl text-center">
-                {isOnSubmit ? "Add User" : "Edit User Information"}
+                {isOnSubmit ? t("addUser") : t("updateUser")}
               </h2>
             }
             closeIcon={<CloseOutlined size={20} className="dark:text-white" />}

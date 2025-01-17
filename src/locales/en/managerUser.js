@@ -1,0 +1,18 @@
+export const managerUserEN = {
+  titleUser: "Manager List User",
+  name: "Name",
+  password: "Password",
+  avatar: "Avatar",
+  action: "Action",
+  role: "Role",
+  birthday: "Birthday",
+  gender: "Gender",
+  male: "Male",
+  female: "Female",
+  phone: "Phone",
+  addUser: "Add New User",
+  btnAddUser: "Add User",
+  btnUpdateUser: "Update",
+  updateUser: "Edit User Information",
+  phSearchUser: "enter search name's user...",
+};

@@ -6,7 +6,16 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, Layout, Menu, Space, theme } from "antd";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Layout,
+  Menu,
+  Select,
+  Space,
+  theme,
+} from "antd";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { pathDefault } from "../../common/path";
 import { MdMyLocation } from "react-icons/md";
@@ -28,12 +37,17 @@ import useViewPort from "../../hooks/useViewPort";
 import { FaBars, FaMoon } from "react-icons/fa";
 import { BsSunFill } from "react-icons/bs";
 import { useTheme } from "../../store/ThemeContext";
+import { useTranslation } from "react-i18next";
 const AdminTemplate = () => {
+  const { t, i18n } = useTranslation();
   const { width } = useViewPort();
   const { user } = useSelector((state) => state.userSlice);
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(true);
   const { isDarkMode, setIsDarkMode } = useTheme();
+  const changeLangue = (value) => {
+    i18n.changeLanguage(value);
+  };
   const location = useLocation();
   const menuKeyMapping = {
     [pathDefault.dashBoard]: "1",
@@ -144,7 +158,7 @@ const AdminTemplate = () => {
                     }}
                     to={pathDefault.managerUser}
                   >
-                    Manager User
+                    {t("userLink")}
                   </NavLink>
                 ),
               },
@@ -160,7 +174,7 @@ const AdminTemplate = () => {
                     }}
                     to={pathDefault.managerLocation}
                   >
-                    Manager Location
+                    {t("locationLink")}
                   </NavLink>
                 ),
               },
@@ -176,7 +190,7 @@ const AdminTemplate = () => {
                     }}
                     to={pathDefault.managerRoom}
                   >
-                    Manager Room
+                    {t("roomLink")}
                   </NavLink>
                 ),
               },
@@ -192,7 +206,7 @@ const AdminTemplate = () => {
                     }}
                     to={pathDefault.managerReservation}
                   >
-                    Manager Booking
+                    {t("bookingLink")}
                   </NavLink>
                 ),
               },
@@ -291,7 +305,7 @@ const AdminTemplate = () => {
                         }}
                         to={pathDefault.managerUser}
                       >
-                        <span>Manager User</span>
+                        <span>{t("userLink")}</span>
                       </NavLink>
                       <NavLink
                         className={({ isActive, isPending }) => {
@@ -301,7 +315,7 @@ const AdminTemplate = () => {
                         }}
                         to={pathDefault.managerLocation}
                       >
-                        <span>Manager Location</span>
+                        <span>{t("locationLink")}</span>
                       </NavLink>
                       <NavLink
                         className={({ isActive, isPending }) => {
@@ -311,7 +325,7 @@ const AdminTemplate = () => {
                         }}
                         to={pathDefault.managerRoom}
                       >
-                        <span>Manager Room</span>
+                        <span>{t("roomLink")}</span>
                       </NavLink>
                       <NavLink
                         className={({ isActive, isPending }) => {
@@ -321,7 +335,7 @@ const AdminTemplate = () => {
                         }}
                         to={pathDefault.managerReservation}
                       >
-                        <span>Manager Booking</span>
+                        <span>{t("bookingLink")}</span>
                       </NavLink>
                     </div>
                   </div>
@@ -346,10 +360,48 @@ const AdminTemplate = () => {
                   />
                 }
               />
-              <DropdownNormal
+              {/* <DropdownNormal
                 content={width > 768 && "English"}
                 className="hidden sm:inline"
                 icon={<DownOutlined style={{ fontSize: "13px" }} />}
+              /> */}
+              <Select
+                style={{ width: 100 }}
+                options={[
+                  {
+                    key: "1",
+                    value: "en",
+                    label: (
+                      <p
+                        onClick={(e) => {
+                          changeLangue("en");
+                        }}
+                        className="flex gap-3 items-center"
+                      >
+                        {width > 768 && "Eng"}
+                        <Avatar
+                          src={
+                            "http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"
+                          }
+                          size={25}
+                        />
+                      </p>
+                    ),
+                  },
+                  {
+                    value: "vi",
+                    label: (
+                      <p
+                        onClick={(e) => {
+                          changeLangue("vi");
+                        }}
+                      >
+                        {width > 768 && "VIE"}
+                      </p>
+                    ),
+                  },
+                ]}
+                // width > 768 && "English"
               />
               <Button
                 onClick={changeTheme}
@@ -369,7 +421,7 @@ const AdminTemplate = () => {
                 <div className="flex items-center space-x-3 font-semibold">
                   {width > 768 && (
                     <p>
-                      Hello, <i>{user.name}</i>
+                      {t("hello")}, <i>{user.name}</i>
                     </p>
                   )}
                   <Dropdown

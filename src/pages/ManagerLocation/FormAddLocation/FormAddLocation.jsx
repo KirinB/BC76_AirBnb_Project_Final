@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { Button } from "antd";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 const FormAddLocation = ({
   handleCloseModal,
   getAllLocation,
@@ -16,6 +17,7 @@ const FormAddLocation = ({
   setPreviewImage,
   onResetForm,
 }) => {
+  const { t } = useTranslation(["location", "admin"]);
   const { handleNotification } = useContext(NotificationContext);
   const { token } = useSelector((state) => state.userSlice);
   const {
@@ -132,7 +134,7 @@ const FormAddLocation = ({
           }}
         />
         <InputNormal
-          labelContent={"Location Name"}
+          labelContent={t("locationName")}
           name={"tenViTri"}
           id="tenViTri"
           value={values.tenViTri}
@@ -143,7 +145,7 @@ const FormAddLocation = ({
           error={errors.tenViTri}
         />
         <InputNormal
-          labelContent={"Province"}
+          labelContent={t("province")}
           name={"tinhThanh"}
           id="tinhThanh"
           value={values.tinhThanh}
@@ -154,7 +156,7 @@ const FormAddLocation = ({
           error={errors.tinhThanh}
         />
         <InputNormal
-          labelContent={"Country"}
+          labelContent={t("country")}
           name={"quocGia"}
           id="quocGia"
           value={values.quocGia}
@@ -169,7 +171,7 @@ const FormAddLocation = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {isOnSubmit ? "Add Location" : "Update"}
+            {isOnSubmit ? t("btnAddForm") : t("btnUpdate")}
           </Button>
           <Button
             className="p-5"
@@ -178,7 +180,7 @@ const FormAddLocation = ({
               resetForm();
             }}
           >
-            Cancel
+            {t("btnCancel", { ns: "admin" })}
           </Button>
         </div>
       </form>

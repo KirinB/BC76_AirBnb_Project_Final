@@ -10,6 +10,7 @@ import { BiSolidLocationPlus } from "react-icons/bi";
 import { CloseOutlined } from "@ant-design/icons";
 import useViewPort from "../../hooks/useViewPort";
 import TableCustom from "../../components/ui/table/TableCustom";
+import { useTranslation } from "react-i18next";
 const ManagerLocation = () => {
   const { width } = useViewPort();
   const [initialValues, setInitialValues] = useState({
@@ -28,7 +29,7 @@ const ManagerLocation = () => {
       resetFormRef.current();
     }
   };
-
+  const { t } = useTranslation("location");
   const [previewImage, setPreviewImage] = useState(null);
   //Xử lý phần add , edit
   const [isOnSubmit, setIsOnSubmit] = useState(true);
@@ -88,7 +89,7 @@ const ManagerLocation = () => {
       width: 100,
     },
     {
-      title: "Image",
+      title: t("image"),
       dataIndex: "hinhAnh",
       key: "hinhAnh",
       render: (text, record, index) => {
@@ -105,7 +106,7 @@ const ManagerLocation = () => {
       },
     },
     {
-      title: "Province",
+      title: t("province"),
       dataIndex: "tinhThanh",
       key: "tinhThanh",
       render: (text, record, index) => {
@@ -113,7 +114,7 @@ const ManagerLocation = () => {
       },
     },
     {
-      title: "Country",
+      title: t("country"),
       dataIndex: "quocGia",
       key: "quocGia",
       render: (text, record, index) => {
@@ -121,7 +122,7 @@ const ManagerLocation = () => {
       },
     },
     {
-      title: "Action",
+      title: t("action"),
       key: "action",
       fixed: "right",
       width: 150,
@@ -192,11 +193,11 @@ const ManagerLocation = () => {
           className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
-          Manager List Location
+          {t("title")}
         </h1>
         <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
-            placeholder="enter search location..."
+            placeholder={t("phSearch")}
             value={value}
             onChange={handleChangeKeyword}
             className=""
@@ -207,7 +208,7 @@ const ManagerLocation = () => {
           />
           {/* Nút thêm */}
           <ButtonAdmin
-            content={width > 768 && "Add New Location"}
+            content={width > 768 && t("btnAdd")}
             icon={<BiSolidLocationPlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
@@ -226,7 +227,7 @@ const ManagerLocation = () => {
           <Modal
             title={
               <h2 className="dark:text-white text-2xl text-center">
-                {isOnSubmit ? "Add Location" : "Edit Location"}
+                {isOnSubmit ? t("titleAdd") : t("titleUpdate")}
               </h2>
             }
             closeIcon={<CloseOutlined size={20} className="dark:text-white" />}

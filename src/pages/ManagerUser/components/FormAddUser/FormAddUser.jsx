@@ -1,18 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Button,
-  ConfigProvider,
-  DatePicker,
-  Form,
-  Input,
-  Radio,
-  Select,
-} from "antd";
-import {
-  CalendarOutlined,
-  CloseCircleOutlined,
-  SyncOutlined,
-} from "@ant-design/icons";
+import { Button } from "antd";
 import { useFormik } from "formik";
 import {
   InputNormal,
@@ -25,6 +12,7 @@ import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
 import dayjs from "dayjs";
 import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePickerCustom";
+import { useTranslation } from "react-i18next";
 const FormAddUser = ({
   handleCloseModal,
   getAllUsers,
@@ -32,6 +20,7 @@ const FormAddUser = ({
   initialValues,
   onResetForm,
 }) => {
+  const { t } = useTranslation(["user", "admin"]);
   const { handleNotification } = useContext(NotificationContext);
   const handleOnSubmit = (data) => {
     if (isOnSubmit) {
@@ -109,7 +98,7 @@ const FormAddUser = ({
   return (
     <form action="" onSubmit={handleSubmit} className="space-y-5">
       <InputNormal
-        labelContent={"Name"}
+        labelContent={t("name")}
         id="name"
         name={"name"}
         placeholder={"Vui lòng nhập tên"}
@@ -131,7 +120,7 @@ const FormAddUser = ({
         touched={touched.email}
       />
       <InputPasswordCustom
-        labelContent={"Password"}
+        labelContent={t("password")}
         id="password"
         name={"password"}
         placeholder={isOnSubmit ? "Vui lòng nhập password" : ""}
@@ -143,7 +132,7 @@ const FormAddUser = ({
         disabled={isOnSubmit ? false : true}
       />
       <InputNormal
-        labelContent={"Phone"}
+        labelContent={t("phone")}
         id="phone"
         name={"phone"}
         placeholder={"Vui lòng nhập số điện thoại"}
@@ -155,7 +144,7 @@ const FormAddUser = ({
       />
       <div className="grid grid-cols-2 gap-5">
         <DatePickerCustom
-          labelContent={"Birthday"}
+          labelContent={t("birthday")}
           id={"birthday"}
           name={"birthday"}
           format={"DD/MM/YYYY"}
@@ -168,10 +157,10 @@ const FormAddUser = ({
         />
         <div className="w-full">
           <SelectCustom
-            labelContent={"Gender"}
+            labelContent={t("gender")}
             options={[
-              { label: "Male", value: true },
-              { label: "Female", value: false },
+              { label: t("male"), value: true },
+              { label: t("female"), value: false },
             ]}
             handleChange={(value, option) => {
               setFieldValue("gender", value);
@@ -183,7 +172,7 @@ const FormAddUser = ({
       </div>
 
       <RadioCustom
-        labelContent={"ROLE"}
+        labelContent={t("role")}
         handleChange={(e) => {
           setFieldValue("role", e.target.value);
         }}
@@ -196,7 +185,7 @@ const FormAddUser = ({
           htmlType="submit"
           className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
         >
-          {isOnSubmit ? "Add User" : "Update"}
+          {isOnSubmit ? t("btnAddUser") : t("btnUpdateUser")}
         </Button>
         <Button
           className="p-5"
@@ -205,7 +194,7 @@ const FormAddUser = ({
             resetForm();
           }}
         >
-          Cancel
+          {t("btnCancel", { ns: "admin" })}
         </Button>
       </div>
     </form>

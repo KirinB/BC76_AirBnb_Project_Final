@@ -83,7 +83,12 @@ export const DropdownNoti = ({ icon }) => {
 export const DropdownNormal = ({ content, icon, className }) => {
   const items = [
     {
+      key: "1",
       label: "The function is not working yet",
+    },
+    {
+      key: "2",
+      label: "aaaa",
     },
   ];
   return (

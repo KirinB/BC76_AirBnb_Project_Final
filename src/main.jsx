@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/configStore.js";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./store/ThemeContext.jsx";
-
+import "./i18n/i18n.js";
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
