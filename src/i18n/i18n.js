@@ -10,6 +10,7 @@ import { RoomEN } from "../locales/en/managerRoom";
 import { RoomVi } from "../locales/vi/managerRoom";
 import { BookingEN } from "../locales/en/managerBooking";
 import { BookingVI } from "../locales/vi/managerBooking";
+// Xử lý onload trang k hiện select
 export const locales = {
   en: "ENG",
   vi: "VIE",
