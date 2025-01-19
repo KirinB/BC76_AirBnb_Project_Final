@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import {
-  DownOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
@@ -22,10 +21,7 @@ import { MdMyLocation } from "react-icons/md";
 import { BiHomeHeart } from "react-icons/bi";
 import { TbDeviceDesktopCog } from "react-icons/tb";
 import { Icons } from "../../assets/Icons";
-import {
-  DropdownNormal,
-  DropdownNoti,
-} from "../../components/ui/dropdown/DropdownCustom";
+import { DropdownNoti } from "../../components/ui/dropdown/DropdownCustom";
 import { useSelector } from "react-redux";
 import {
   IoMdCheckboxOutline,
@@ -38,6 +34,7 @@ import { FaBars, FaMoon } from "react-icons/fa";
 import { BsSunFill } from "react-icons/bs";
 import { useTheme } from "../../store/ThemeContext";
 import { useTranslation } from "react-i18next";
+
 const AdminTemplate = () => {
   const { t, i18n } = useTranslation();
   const { width } = useViewPort();
@@ -45,10 +42,13 @@ const AdminTemplate = () => {
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(true);
   const { isDarkMode, setIsDarkMode } = useTheme();
+
   const changeLangue = (value) => {
     i18n.changeLanguage(value);
+    localStorage.setItem("language", value);
   };
   const location = useLocation();
+  // xử lý onload sidebar
   const menuKeyMapping = {
     [pathDefault.dashBoard]: "1",
     [pathDefault.managerUser]: "2",
@@ -57,7 +57,7 @@ const AdminTemplate = () => {
     [pathDefault.managerReservation]: "5",
   };
   const selectedKey = menuKeyMapping[location.pathname] || "1";
-
+  // xử lý onload Translation
   const changeTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -103,7 +103,10 @@ const AdminTemplate = () => {
       }
     }
   }, []);
+  // useEffect(()=>{
+  //   const currenLang = localStorage.getItem('language');
 
+  // })
   return (
     <Layout className="h-full">
       {width >= 1024 && (
@@ -360,16 +363,11 @@ const AdminTemplate = () => {
                   />
                 }
               />
-              {/* <DropdownNormal
-                content={width > 768 && "English"}
-                className="hidden sm:inline"
-                icon={<DownOutlined style={{ fontSize: "13px" }} />}
-              /> */}
               <Select
-                style={{ width: 100 }}
+                style={{ width: 80 }}
+                defaultValue={i18n.language}
                 options={[
                   {
-                    key: "1",
                     value: "en",
                     label: (
                       <p
@@ -378,13 +376,7 @@ const AdminTemplate = () => {
                         }}
                         className="flex gap-3 items-center"
                       >
-                        {width > 768 && "Eng"}
-                        <Avatar
-                          src={
-                            "http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"
-                          }
-                          size={25}
-                        />
+                        ENG
                       </p>
                     ),
                   },
@@ -396,12 +388,11 @@ const AdminTemplate = () => {
                           changeLangue("vi");
                         }}
                       >
-                        {width > 768 && "VIE"}
+                        VIE
                       </p>
                     ),
                   },
                 ]}
-                // width > 768 && "English"
               />
               <Button
                 onClick={changeTheme}

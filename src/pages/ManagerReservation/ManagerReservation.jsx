@@ -10,7 +10,9 @@ import { FcCancel } from "react-icons/fc";
 import FormEditBooking from "./components/FormEditBooking/FormEditBooking";
 import useViewPort from "../../hooks/useViewPort";
 import TableCustom from "../../components/ui/table/TableCustom";
+import { useTranslation } from "react-i18next";
 const ManagerReservation = ({ isDarkMode }) => {
+  const { t } = useTranslation("booking");
   const { width } = useViewPort();
   const { handleNotification } = useContext(NotificationContext);
   // tạo state quản lý dữ liệu
@@ -72,23 +74,23 @@ const ManagerReservation = ({ isDarkMode }) => {
   // columns set dữ liệu cho table
   const columns = [
     {
-      title: "Mã đặt phòng",
+      title: "ID",
       dataIndex: "id",
       key: "id",
       width: 100,
     },
     {
-      title: "Mã phòng",
+      title: t("roomCode"),
       dataIndex: "maPhong",
       key: "maPhong",
     },
     {
-      title: "Mã người dùng",
+      title: t("userCode"),
       dataIndex: "maNguoiDung",
       key: "maNguoiDung",
     },
     {
-      title: "Ngày đến",
+      title: t("arrival"),
       dataIndex: "ngayDen",
       key: "ngayDen",
       render: (text, record, index) => {
@@ -96,7 +98,7 @@ const ManagerReservation = ({ isDarkMode }) => {
       },
     },
     {
-      title: "Ngày đi",
+      title: t("departure"),
       dataIndex: "ngayDi",
       key: "ngayDi",
       render: (text, record, index) => {
@@ -104,12 +106,12 @@ const ManagerReservation = ({ isDarkMode }) => {
       },
     },
     {
-      title: "Số khách",
+      title: t("guest"),
       dataIndex: "soLuongKhach",
       key: "soLuongKhach",
     },
     {
-      title: "Trạng thái",
+      title: t("status"),
       render: (text, record, index) => {
         const currentDay = dayjs();
         const checkBooking = currentDay.isBefore(dayjs(record.ngayDi));
@@ -121,7 +123,7 @@ const ManagerReservation = ({ isDarkMode }) => {
       },
     },
     {
-      title: "Action",
+      title: t("action"),
       key: "action",
       fixed: "right",
       width: 150,
@@ -188,11 +190,11 @@ const ManagerReservation = ({ isDarkMode }) => {
           className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white
         "
         >
-          Manager Booking
+          {t("title")}
         </h1>
         <div className="flex w-full md:w-1/3">
           <Input.Search
-            placeholder="enter search user's code..."
+            placeholder={t("phSearch")}
             value={value}
             onChange={handleChangeKeyword}
             size="large"
@@ -203,7 +205,7 @@ const ManagerReservation = ({ isDarkMode }) => {
           <Modal
             title={
               <h2 className="dark:text-white text-center text-2xl">
-                Update Booking
+                {t("titleUpdate")}
               </h2>
             }
             closeIcon={<CloseOutlined size={20} className="dark:text-white" />}

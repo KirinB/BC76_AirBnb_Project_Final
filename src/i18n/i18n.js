@@ -6,22 +6,35 @@ import { managerUserVI } from "../locales/vi/managerUser";
 import { managerUserEN } from "../locales/en/managerUser";
 import { LocationEN } from "../locales/en/managerLocation";
 import { LocationVI } from "../locales/vi/managerLocation";
+import { RoomEN } from "../locales/en/managerRoom";
+import { RoomVi } from "../locales/vi/managerRoom";
+import { BookingEN } from "../locales/en/managerBooking";
+import { BookingVI } from "../locales/vi/managerBooking";
+export const locales = {
+  en: "ENG",
+  vi: "VIE",
+};
+const saveLangue = localStorage.getItem("language" || "vi");
 const resources = {
   en: {
     admin: adminEn,
     user: managerUserEN,
     location: LocationEN,
+    room: RoomEN,
+    booking: BookingEN,
   },
   vi: {
     admin: adminVi,
     user: managerUserVI,
     location: LocationVI,
+    room: RoomVi,
+    booking: BookingVI,
   },
 };
 i18n.use(initReactI18next).init({
   resources,
-  lng: "vi",
-  ns: ["admin", "user", "location"],
+  lng: saveLangue,
+  ns: ["admin", "user", "location", "room", "booking"],
   fallbackLng: "en",
   interpolation: {
     escapeValue: false,

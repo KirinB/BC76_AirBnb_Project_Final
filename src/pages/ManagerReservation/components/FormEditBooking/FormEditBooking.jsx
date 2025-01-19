@@ -10,66 +10,61 @@ import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePicke
 import { reservationService } from "../../../../services/reservation.service";
 import { NotificationContext } from "../../../../App";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 const FormEditBooking = ({
   initialValues,
   getAllReservation,
   setIsModalOpen,
   handleCloseModal,
 }) => {
+  const { t } = useTranslation(["booking", "admin"]);
   const { handleNotification } = useContext(NotificationContext);
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    errors,
-    touched,
-    setFieldValue,
-  } = useFormik({
-    initialValues: {
-      ...initialValues,
-      ngayDen: dayjs(initialValues.ngayDen),
-      ngayDi: dayjs(initialValues.ngayDi),
-    },
-    enableReinitialize: true,
+  const { values, handleSubmit, handleBlur, errors, touched, setFieldValue } =
+    useFormik({
+      initialValues: {
+        ...initialValues,
+        ngayDen: dayjs(initialValues.ngayDen),
+        ngayDi: dayjs(initialValues.ngayDi),
+      },
+      enableReinitialize: true,
 
-    onSubmit: (values) => {
-      const ngayDenISO = dayjs(values.ngayDen, "DD-MM-YYYY").format(
-        "YYYY-MM-DDTHH:mm:ss"
-      );
-      const ngayDiISO = dayjs(values.ngayDi, "DD-MM-YYYY").format(
-        "YYYY-MM-DDTHH:mm:ss"
-      );
-      reservationService
-        .putReservation(values.id, {
-          ...values,
-          ngayDen: ngayDenISO,
-          ngayDi: ngayDiISO,
-        })
-        .then((res) => {
-          getAllReservation();
-          setIsModalOpen(false);
-          handleNotification("success", "Updated information successfully");
-        })
-        .catch((err) => {
-          console.error("Error:", err);
-          getAllReservation();
-          handleNotification(
-            "error",
-            err?.response?.data?.content || "Có lỗi xảy ra"
-          );
-        });
-    },
+      onSubmit: (values) => {
+        const ngayDenISO = dayjs(values.ngayDen, "DD-MM-YYYY").format(
+          "YYYY-MM-DDTHH:mm:ss"
+        );
+        const ngayDiISO = dayjs(values.ngayDi, "DD-MM-YYYY").format(
+          "YYYY-MM-DDTHH:mm:ss"
+        );
+        reservationService
+          .putReservation(values.id, {
+            ...values,
+            ngayDen: ngayDenISO,
+            ngayDi: ngayDiISO,
+          })
+          .then((res) => {
+            getAllReservation();
+            setIsModalOpen(false);
+            handleNotification("success", "Updated information successfully");
+          })
+          .catch((err) => {
+            console.error("Error:", err);
+            getAllReservation();
+            handleNotification(
+              "error",
+              err?.response?.data?.content || "Có lỗi xảy ra"
+            );
+          });
+      },
 
-    validationSchema: Yup.object({
-      soLuongKhach: Yup.number()
-        .required("Vui lòng không bỏ trống")
-        .min(1, "Vui lòng nhập trên 1 khách"),
+      validationSchema: Yup.object({
+        soLuongKhach: Yup.number()
+          .required("Vui lòng không bỏ trống")
+          .min(1, "Vui lòng nhập trên 1 khách"),
 
-      ngayDen: Yup.string().required("Vui lòng chọn ngày đến"),
-      ngayDi: Yup.string().required("Vui lòng chọn ngày đi"),
-    }),
-  });
+        ngayDen: Yup.string().required("Vui lòng chọn ngày đến"),
+        ngayDi: Yup.string().required("Vui lòng chọn ngày đi"),
+      }),
+    });
   const disabledDate = (current) => {
     // Can not select days before today and today
     return current && current < dayjs().startOf("day");
@@ -78,7 +73,7 @@ const FormEditBooking = ({
     <div>
       <form action="" className="space-y-5" onSubmit={handleSubmit}>
         <InputNormal
-          labelContent={"Mã đặt phòng"}
+          labelContent="ID"
           id="id"
           name={"id"}
           value={values.id}
@@ -86,7 +81,7 @@ const FormEditBooking = ({
           className="dark:text-slate-500"
         />
         <InputNormal
-          labelContent={"Mã phòng"}
+          labelContent={t("roomCode")}
           id="maPhong"
           name={"maPhong"}
           value={values.maPhong}
@@ -97,7 +92,7 @@ const FormEditBooking = ({
           <DatePickerCustom
             id="ngayDen"
             name="ngayDen"
-            labelContent="Ngày Đến"
+            labelContent={t("arrival")}
             disabledDate={disabledDate}
             value={values.ngayDen}
             format={"DD-MM-YYYY"}
@@ -110,7 +105,7 @@ const FormEditBooking = ({
           <DatePickerCustom
             id="ngayDi"
             name="ngayDi"
-            labelContent="Ngày Đi"
+            labelContent={t("departure")}
             disabledDate={disabledDate}
             value={values.ngayDi}
             error={errors.ngayDi}
@@ -121,7 +116,7 @@ const FormEditBooking = ({
           />
         </div>
         <InputNumberCustom
-          labelContent={"Số lượng khách"}
+          labelContent={t("guest")}
           id="soLuongKhach"
           name={"soLuongKhach"}
           value={values.soLuongKhach}
@@ -134,7 +129,7 @@ const FormEditBooking = ({
         />
         <InputNormal
           className="dark:text-slate-500"
-          labelContent={"Mã người dùng"}
+          labelContent={t("userCode")}
           id="maNguoiDung"
           name={"maNguoiDung"}
           value={values.maNguoiDung}
@@ -145,7 +140,7 @@ const FormEditBooking = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {"Update"}
+            {t("btnUpdate")}
           </Button>
           <Button
             className="p-5"
@@ -154,7 +149,7 @@ const FormEditBooking = ({
               resetForm();
             }}
           >
-            Cancel
+            {t("btnCancel", { ns: "admin" })}
           </Button>
         </div>
       </form>

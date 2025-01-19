@@ -13,6 +13,7 @@ import { Button } from "antd";
 import { NotificationContext } from "../../../../App";
 import { UploadRoomPicture } from "../../../../components/ui/upload/UploadCustom";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 const FormAddRoom = ({
   handleCloseModal,
   getAllRoom,
@@ -23,8 +24,8 @@ const FormAddRoom = ({
   location,
   onResetForm,
 }) => {
+  const { t } = useTranslation(["room", "admin"]);
   // Xử lý hình ảnh
-
   const { handleNotification } = useContext(NotificationContext);
   const { user, token } = useSelector((state) => state.userSlice);
 
@@ -153,7 +154,7 @@ const FormAddRoom = ({
 
         <div className="grid grid-cols-2 gap-5">
           <InputNormal
-            labelContent={"Room's Name"}
+            labelContent={t("roomName")}
             name={"tenPhong"}
             id="tenPhong"
             value={values.tenPhong}
@@ -164,7 +165,7 @@ const FormAddRoom = ({
             error={errors.tenPhong}
           />
           <InputNormal
-            labelContent={"Description"}
+            labelContent={t("description")}
             name={"moTa"}
             id="moTa"
             placeholder={"Nhập mô tả vào đây"}
@@ -177,7 +178,7 @@ const FormAddRoom = ({
         </div>
         <div className="grid grid-cols-2 gap-5">
           <SelectCustom
-            labelContent={"Vị trí"}
+            labelContent={t("location")}
             placeholder={"Vui lòng chọn vị trí"}
             value={values.maViTri}
             handleChange={(value, option) => {
@@ -202,7 +203,7 @@ const FormAddRoom = ({
             touched={touched.maViTri}
           />
           <InputNumberCustom
-            labelContent={"Số khách"}
+            labelContent={t("persons")}
             placeholder="2"
             id="khach"
             name={"khach"}
@@ -221,7 +222,7 @@ const FormAddRoom = ({
         </div>
         <div className="grid grid-cols-2 gap-5">
           <InputNumberCustom
-            labelContent={"Số phòng ngủ"}
+            labelContent={t("bedroom")}
             placeholder="2"
             id="phongNgu"
             name={"phongNgu"}
@@ -238,7 +239,7 @@ const FormAddRoom = ({
             touched={touched.phongNgu}
           />
           <InputNumberCustom
-            labelContent={"Số giường ngủ"}
+            labelContent={t("bed")}
             placeholder="2"
             id="giuong"
             name={"giuong"}
@@ -257,7 +258,7 @@ const FormAddRoom = ({
         </div>
         <div className="grid grid-cols-2 gap-5">
           <InputNumberCustom
-            labelContent={"Số phòng tắm"}
+            labelContent={t("bathRoom")}
             placeholder="2"
             id="phongTam"
             name={"phongTam"}
@@ -274,7 +275,7 @@ const FormAddRoom = ({
             touched={touched.phongTam}
           />
           <InputNumberCustom
-            labelContent={"Giá phòng"}
+            labelContent={t("price")}
             placeholder="Đơn vị $"
             id="giaTien"
             name={"giaTien"}
@@ -293,7 +294,7 @@ const FormAddRoom = ({
         </div>
         <div className="grid grid-cols-3 gap-5">
           <SwitchRoom
-            labelContent={"Máy giặt"}
+            labelContent={t("washing")}
             id={"mayGiat"}
             name={"mayGiat"}
             value={values.mayGiat}
@@ -302,7 +303,7 @@ const FormAddRoom = ({
             }}
           />
           <SwitchRoom
-            labelContent={"Bàn là"}
+            labelContent={t("flatIron")}
             id={"banLa"}
             name={"banLa"}
             value={values.banLa}
@@ -311,7 +312,7 @@ const FormAddRoom = ({
             }}
           />
           <SwitchRoom
-            labelContent={"Tivi"}
+            labelContent={t("television")}
             id={"tivi"}
             name={"tivi"}
             value={values.tivi}
@@ -322,7 +323,7 @@ const FormAddRoom = ({
         </div>
         <div className="grid grid-cols-3 gap-5">
           <SwitchRoom
-            labelContent={"Điều hòa"}
+            labelContent={t("airConditioner")}
             id={"dieuHoa"}
             name={"dieuHoa"}
             value={values.dieuHoa}
@@ -340,7 +341,7 @@ const FormAddRoom = ({
             }}
           />
           <SwitchRoom
-            labelContent={"Bếp"}
+            labelContent={t("kitchen")}
             id={"bep"}
             name={"bep"}
             value={values.bep}
@@ -351,7 +352,7 @@ const FormAddRoom = ({
         </div>
         <div className="grid grid-cols-3 gap-5">
           <SwitchRoom
-            labelContent={"Đỗ xe"}
+            labelContent={t("parkingLot")}
             id={"doXe"}
             name={"doXe"}
             value={values.doXe}
@@ -360,7 +361,7 @@ const FormAddRoom = ({
             }}
           />
           <SwitchRoom
-            labelContent={"Hồ bơi"}
+            labelContent={t("pool")}
             id={"hoBoi"}
             name={"hoBoi"}
             value={values.hoBoi}
@@ -374,7 +375,7 @@ const FormAddRoom = ({
             htmlType="submit"
             className="p-5 bg-red-400 hover:!bg-red-600 text-white hover:!text-white !border-transparent"
           >
-            {isOnSubmit ? "Add Room" : "Update"}
+            {isOnSubmit ? t("btnAdd") : t("btnUpdate")}
           </Button>
           <Button
             className="p-5"
@@ -383,7 +384,7 @@ const FormAddRoom = ({
               resetForm();
             }}
           >
-            Cancel
+            {t("btnCancel", { ns: "admin" })}
           </Button>
         </div>
       </form>

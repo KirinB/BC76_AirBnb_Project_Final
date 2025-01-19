@@ -1,5 +1,5 @@
 export const LocationVI = {
-  title: "Quản Lý Vị Trí",
+  title: "Quản Lý Danh Sách Vị Trí",
   btnAdd: "Thêm Vị Trí",
   titleAdd: "Thêm Vị Trí",
   titleUpdate: "Chỉnh Sửa Vị Trí",

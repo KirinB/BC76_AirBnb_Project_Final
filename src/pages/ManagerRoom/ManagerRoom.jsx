@@ -11,7 +11,10 @@ import { TbHomePlus } from "react-icons/tb";
 import { CloseOutlined } from "@ant-design/icons";
 import useViewPort from "../../hooks/useViewPort";
 import TableCustom from "../../components/ui/table/TableCustom";
+import { useTranslation } from "react-i18next";
+
 const ManagerRoom = () => {
+  const { t } = useTranslation("room");
   const { width } = useViewPort();
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -113,7 +116,7 @@ const ManagerRoom = () => {
       width: 100,
     },
     {
-      title: "Room's Name",
+      title: t("roomName"),
       dataIndex: "tenPhong",
       key: "tenPhong",
       render: (text, record, index) => {
@@ -121,7 +124,7 @@ const ManagerRoom = () => {
       },
     },
     {
-      title: "Image",
+      title: t("image"),
       dataIndex: "hinhAnh",
       key: "hinhAnh",
       render: (text, record, index) => {
@@ -135,7 +138,7 @@ const ManagerRoom = () => {
       },
     },
     {
-      title: "Location",
+      title: t("location"),
       dataIndex: "maViTri",
       key: "maViTri",
       render: (text, record, index) => {
@@ -150,7 +153,7 @@ const ManagerRoom = () => {
       },
     },
     {
-      title: "Information",
+      title: t("information"),
       dataIndex: "moTa",
       key: "moTa",
       render: (text, record, index) => {
@@ -167,14 +170,14 @@ const ManagerRoom = () => {
               onClick={(e) => e.preventDefault()}
               className="uppercase text-sm font-bold underline"
             >
-              Infomation
+              {t("information")}
             </a>
           </Dropdown>
         );
       },
     },
     {
-      title: "Action",
+      title: t("action"),
       key: "action",
       fixed: "right",
       width: 150,
@@ -248,11 +251,11 @@ const ManagerRoom = () => {
           className="xl:text-3xl md:2xl text-xl font-bold text-gray-800 dark:text-white mb-3
         "
         >
-          Manager List Room
+          {t("title")}
         </h1>
         <div className="flex space-x-3 lg:w-1/2 w-full">
           <Input.Search
-            placeholder="enter search room's name..."
+            placeholder={t("phSearch")}
             value={value}
             onChange={handleChangeKeyword}
             className=""
@@ -263,7 +266,7 @@ const ManagerRoom = () => {
           />
           {/* Nút thêm */}
           <ButtonAdmin
-            content={width > 768 && "Add New Room"}
+            content={width > 768 && t("btnAddNew")}
             icon={<TbHomePlus size={20} />}
             onClick={() => {
               setIsModalOpen(true);
@@ -296,7 +299,7 @@ const ManagerRoom = () => {
           <Modal
             title={
               <h2 className="dark:text-white text-2xl text-center">
-                {isOnSubmit ? "Add New Room" : "Edit Room Information"}
+                {isOnSubmit ? t("btnAddNew") : t("editRoom")}
               </h2>
             }
             closeIcon={<CloseOutlined size={20} className="dark:text-white" />}
