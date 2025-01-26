@@ -4,15 +4,15 @@ import * as yup from "yup";
 import { authService } from "../../../services/auth.service";
 import { Input } from "antd";
 import { FaFacebookF, FaGooglePlusG, FaTwitter } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../../assets/Icons";
 import { pathDefault } from "../../../common/path";
 import InputCustom from "../../../components/ui/inputCustom/InputCustom";
 import { NotificationContext } from "../../../App";
 
-const SignUpPage = ({ styleIcon }) => {
+const SignUpPage = ({ styleIcon, setHandle, handle }) => {
   const { handleNotification } = useContext(NotificationContext);
-
+  const navigate = useNavigate();
   const { handleBlur, handleChange, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues: {
@@ -25,10 +25,12 @@ const SignUpPage = ({ styleIcon }) => {
           .signUp(values)
           .then((res) => {
             handleNotification("success", "Đăng kí thành công", 3000);
-            window.location.reload();
+            navigate(`${pathDefault.AuthPage}?type=signin`);
+            setHandle(!handle);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
+            handleNotification("error", err.response.data.content);
           });
       },
       validationSchema: yup.object({

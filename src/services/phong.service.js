@@ -32,4 +32,9 @@ export const phongService = {
   getRoomByNguoiDung: (id) => {
     return http.get(`/dat-phong/lay-theo-nguoi-dung/${id}`);
   },
+  getRoomWithPagination: (pageIndex = 1, pageSize = 12) => {
+    return http.get(
+      `phong-thue/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}`
+    );
+  },
 };

@@ -16,6 +16,7 @@ import DetailRoom from "./components/DetailRoom";
 import HighlightsRoom from "./components/HighlightsRoom";
 import LineSpace from "./components/LineSpace";
 import { useRoomDetailContext } from "../../store/RoomDetailContext";
+import { Helmet } from "react-helmet";
 const RoomDetail = () => {
   const { id } = useParams();
   const { listComment } = useRoomDetailContext();
@@ -43,6 +44,9 @@ const RoomDetail = () => {
       </div>
     ) : (
       <div className="container py-6">
+        <Helmet>
+          <title>AirBnb - {roomDetail.tenPhong}</title>
+        </Helmet>
         <div className="flex flex-col space-y-6">
           <div className="flex justify-between px-4 md:px-10 lg:px-4">
             <h1 className="text-2xl flex-1 font-semibold hidden md:block">

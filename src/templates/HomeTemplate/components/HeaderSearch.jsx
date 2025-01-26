@@ -11,7 +11,11 @@ import LineSpace from "../../../pages/RoomDetail/components/LineSpace";
 import useViewPort from "../../../hooks/useViewPort";
 import { useHeaderContext } from "../../../store/HeaderContext";
 import { IoCloseCircle } from "react-icons/io5";
+import { useBooking } from "../../../store/BookingContext";
+import dayjs from "dayjs";
+
 const HeaderSearch = () => {
+  const { dayStart, setDayStart, dayEnd, setDayEnd } = useBooking();
   const { width } = useViewPort();
   const [keyword, setKeyword] = useState("");
   const [value] = useDebounce(keyword, 1000);
@@ -38,6 +42,14 @@ const HeaderSearch = () => {
   } = useHeaderContext();
 
   const navigate = useNavigate();
+
+  const handleChangeDayStart = (date, dateString) => {
+    setDayStart(dateString);
+  };
+
+  const handleChangeDayEnd = (date, dateString) => {
+    setDayEnd(dateString);
+  };
 
   const handleChangeKeyword = (e) => {
     setKeyword(e.target.value);
@@ -193,11 +205,12 @@ const HeaderSearch = () => {
         >
           <p className="text-xs">Nhận phòng</p>
           <DatePicker
-            onChange={() => {}}
+            onChange={handleChangeDayStart}
             className="!w-full !border-none !p-0"
             format={"DD-MM-YYYY"}
             id="inpt_daystart"
             placeholder="Ngày nhận"
+            defaultValue={dayjs(dayStart, "DD-MM-YYYY")}
             suffixIcon={null}
           />
         </label>
@@ -208,10 +221,11 @@ const HeaderSearch = () => {
           <p className="text-xs">Trả phòng</p>
           <DatePicker
             id="inpt_dayend"
-            onChange={() => {}}
+            onChange={handleChangeDayEnd}
             format={"DD-MM-YYYY"}
             className="!w-full !border-none !p-0"
             placeholder="Ngày trả"
+            defaultValue={dayEnd ? dayjs(dayEnd, "DD-MM-YYYY") : null}
             suffixIcon={null}
           />
         </label>

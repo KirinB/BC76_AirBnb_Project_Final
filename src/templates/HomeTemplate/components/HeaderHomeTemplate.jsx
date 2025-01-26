@@ -297,12 +297,19 @@ const HeaderHomeTemplate = () => {
           </div>
           <h3 className="text-[10px]">Khám phá</h3>
         </NavLink>
-        <div className="flex flex-col items-center gap-1">
+        <NavLink
+          to={pathDefault.favorite}
+          className={({ isActive }) =>
+            isActive
+              ? "flex flex-col items-center gap-1 text-primary"
+              : "flex flex-col items-center gap-1"
+          }
+        >
           <div className="w-10 flex justify-center">
             <FaRegHeart size={20} />
           </div>
           <h3 className="text-[10px]">Yêu thích</h3>
-        </div>
+        </NavLink>
         <div
           className="flex flex-col items-center gap-1"
           onClick={() => {
@@ -392,7 +399,7 @@ const HeaderHomeTemplate = () => {
                       <div className="flex flex-col">
                         <Link
                           to={`${pathDefault.AuthPage}?type=signup`}
-                          className="py-2 px-4 hover:bg-gray-100 font-semibold"
+                          className="py-2 px-4 hover:bg-gray-100 font-semibold hover:text-current"
                         >
                           Đăng ký
                         </Link>
@@ -401,6 +408,12 @@ const HeaderHomeTemplate = () => {
                           className="py-2 px-4 hover:bg-gray-100 hover:text-current"
                         >
                           Đăng nhập
+                        </Link>
+                        <Link
+                          to={`${pathDefault.favorite}`}
+                          className="py-2 px-4 hover:bg-gray-100 hover:text-current"
+                        >
+                          Đã yêu thích
                         </Link>
                         <LineSpace className="my-1" />
                         <div className="py-2 px-4 hover:bg-gray-100">
@@ -445,9 +458,15 @@ const HeaderHomeTemplate = () => {
                         </div>
                         <Link
                           to={pathDefault.Profile}
-                          className="py-2 px-4 hover:bg-gray-100"
+                          className="py-2 px-4 hover:bg-gray-100 hover:text-current"
                         >
                           Quản lý hồ sơ
+                        </Link>
+                        <Link
+                          to={`${pathDefault.favorite}`}
+                          className="py-2 px-4 hover:bg-gray-100 hover:text-current"
+                        >
+                          Đã yêu thích
                         </Link>
                         <LineSpace className="my-1" />
                         <div className="py-2 px-4 hover:bg-gray-100">
@@ -461,12 +480,15 @@ const HeaderHomeTemplate = () => {
                         </div>
                         <LineSpace className="my-1" />
                         {user.role === "ADMIN" && (
-                          <Link to={pathDefault.admin}>
-                            <div className="py-2 px-4 hover:bg-gray-100">
+                          <>
+                            <Link
+                              to={pathDefault.admin}
+                              className="py-2 px-4 hover:bg-gray-100 hover:text-current"
+                            >
                               Admin dashboard
-                            </div>
+                            </Link>
                             <LineSpace className="my-1" />
-                          </Link>
+                          </>
                         )}
                         <div
                           className="py-2 px-4 hover:bg-gray-100"

@@ -7,7 +7,7 @@ export const fetchExchangeRates = createAsyncThunk(
     const response = await axios.get(
       "https://api.exchangerate-api.com/v4/latest/USD"
     );
-    return response.data.rates; // Trả về toàn bộ rates
+    return response.data.rates;
   }
 );
 
@@ -23,17 +23,17 @@ const currencySymbols = {
 const exchangeRateSlice = createSlice({
   name: "exchangeRate",
   initialState: {
-    rates: {}, // Chứa tất cả các rates
-    status: "idle", // idle | loading | succeeded | failed
+    rates: {},
+    status: "idle",
     error: null,
-    currentCurrency: "VND", // Loại tiền hiện tại
-    currentSymbol: "₫", // Ký hiệu của loại tiền hiện tại
+    currentCurrency: "VND",
+    currentSymbol: "₫",
   },
   reducers: {
     setCurrency: (state, action) => {
       const currency = action.payload;
       state.currentCurrency = currency;
-      state.currentSymbol = currencySymbols[currency] || ""; // Lấy ký hiệu tương ứng
+      state.currentSymbol = currencySymbols[currency] || "";
     },
   },
   extraReducers: (builder) => {

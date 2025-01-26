@@ -87,7 +87,9 @@ const FormAddUser = ({
         ),
       role: Yup.string().required("Vui lòng không bỏ trống !"),
       birthday: Yup.string().required("Vui lòng không bỏ trống !"),
-      gender: Yup.boolean("Vui lòng chọn giới tính").required("aaaaa"),
+      gender: Yup.boolean("Vui lòng chọn giới tính").required(
+        "Vui lòng không bỏ trống !"
+      ),
     }),
   });
   useEffect(() => {

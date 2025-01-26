@@ -36,11 +36,13 @@ const SignInPage = ({ styleIcon, handle }) => {
             dispatch(handleUpdateToken(res.data.content.token));
             localStorage.setItem("userInfo", JSON.stringify(res.data.content));
             handleNotification("success", "Đăng nhập thành công", 3000);
-
-            navigate(pathDefault.homePage);
+            setTimeout(() => {
+              navigate(pathDefault.homePage);
+            }, 3000);
           })
           .catch((err) => {
             console.log(err);
+            handleNotification("error", err.response.data.content);
           });
       },
       // validationSchema
