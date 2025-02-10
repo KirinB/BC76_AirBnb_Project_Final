@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { database, ref, get, set } from "../firebase/configFireBase";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 const VisitContext = createContext();
 export const VisitCounterProvider = ({ children }) => {
   const [todayVisits, setTodayVisits] = useState(0);
@@ -44,7 +46,11 @@ export const VisitCounterProvider = ({ children }) => {
     getLast7DaysVisits();
   }, []);
   if (labels.length === 0 || weekVisits.length === 0) {
-    return <h2>Đang tải dữ liệu...</h2>;
+    return (
+      <div className="bg-white flex justify-center items-center h-screen">
+        <Spin tip="Loading" size="large" />
+      </div>
+    );
   }
   return (
     <VisitContext.Provider value={{ labels, weekVisits }}>
