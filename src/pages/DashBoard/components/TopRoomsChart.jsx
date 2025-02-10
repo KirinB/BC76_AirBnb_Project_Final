@@ -8,10 +8,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const TopRoomsChart = ({ bookingData, roomData }) => {
+  const { t } = useTranslation("dashboard");
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const TopRoomsChart = ({ bookingData, roomData }) => {
       ),
       datasets: [
         {
-          label: "Số lần đặt phòng",
+          label: t("label1"),
           data: counts,
           backgroundColor: [
             "#FF6384",
@@ -56,9 +58,7 @@ const TopRoomsChart = ({ bookingData, roomData }) => {
 
   return (
     <div>
-      <h3 className="text-2xl text-center mb-10">
-        Top 5 Phòng Được Đặt Nhiều Nhất
-      </h3>
+      <h3 className="text-2xl text-center mb-10">{t("chartTitle1")}</h3>
       <div>
         <Bar
           data={chartData}

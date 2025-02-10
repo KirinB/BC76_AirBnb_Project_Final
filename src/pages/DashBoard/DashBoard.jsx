@@ -6,38 +6,42 @@ import { userService } from "../../services/users.service";
 import TopRoomsChart from "./components/TopRoomsChart";
 import { setRoomService } from "../../services/setRoom.service";
 import { phongService } from "../../services/phong.service";
-
-const MOCKUP_DATA_DASHBOARD = [
-  {
-    title: "Revenue",
-    value: "$25K",
-  },
-  {
-    title: "Brand 1",
-    value: "$3,500",
-  },
-  {
-    title: "Brand 2",
-    value: "$2,387",
-  },
-  {
-    title: "Wishlist",
-    value: "500",
-  },
-  {
-    title: "Cart",
-    value: "150",
-  },
-  {
-    title: "Payment",
-    value: "100",
-  },
-];
+import VisitCounterChart from "./components/VisitCounterChart";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 const DashBoard = () => {
+  const { t } = useTranslation("dashboard");
   const [listUser, setListUser] = useState([]);
   const [listSetRoom, setListSetRoom] = useState([]);
   const [listRoom, setListRoom] = useState([]);
+  const MOCKUP_DATA_DASHBOARD = [
+    {
+      title: t("revenue"),
+      value: "$25K",
+    },
+    {
+      title: `${t("brand")} 1`,
+      value: "$3,500",
+    },
+    {
+      title: `${t("brand")} 2`,
+      value: "$2,387",
+    },
+    {
+      title: t("wishlist"),
+      value: "500",
+    },
+    {
+      title: t("cart"),
+      value: "150",
+    },
+    {
+      title: t("payment"),
+      value: "100",
+    },
+  ];
+
   useEffect(() => {
     userService
       .getListUser()
@@ -61,7 +65,7 @@ const DashBoard = () => {
   }, []);
   return (
     <div>
-      <h1 className="text-xl font-semibold">Summary Dashboard</h1>
+      <h1 className="text-xl font-semibold">{t("title")}</h1>
       <LineSpace />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="flex gap-6">
@@ -89,8 +93,12 @@ const DashBoard = () => {
         </div>
       </div>
       <LineSpace />
-      <div className="w-full rounded-2xl bg-white p-12 hidden md:block">
+
+      <div className="w-full rounded-2xl bg-white p-12 hidden md:block mb-10">
         <TopRoomsChart bookingData={listSetRoom} roomData={listRoom} />
+      </div>
+      <div className="w-full rounded-2xl bg-white p-12 hidden md:block">
+        <VisitCounterChart />
       </div>
     </div>
   );

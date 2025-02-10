@@ -1,0 +1,16 @@
+export const dashBoardVI = {
+  title: "Bảng Điều Khiển",
+  totalUsers: "Số lượng thành viên",
+  gender: "Giới tính khách hàng",
+  male: "Nam",
+  female: "Nữ",
+  revenue: "Doanh thu",
+  brand: "Thương hiệu",
+  wishlist: "Danh sách yêu thích",
+  cart: "Giỏ hàng",
+  payment: "Thanh toán",
+  chartTitle1: "Top 5 phòng được đặt nhiều nhất",
+  label1: "Số lần đặt phòng",
+  chartTitle2: "Thống kê số lượt truy cập 7 ngày gần nhất",
+  label2: "Lượt truy cập",
+};

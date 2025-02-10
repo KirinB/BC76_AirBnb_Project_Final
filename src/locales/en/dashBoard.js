@@ -1,0 +1,16 @@
+export const dashBoardEN = {
+  title: "Dashboard",
+  totalUsers: "Total Users",
+  gender: "Customers Gender",
+  male: "Male",
+  female: "Female",
+  revenue: "Revenue",
+  brand: "Brand",
+  wishlist: "Wishlist",
+  cart: "Cart",
+  payment: "Payment",
+  chartTitle1: "Top 5 Most Booked Rooms",
+  label1: "Number of Bookings",
+  chartTitle2: "7-Day Visit Statistics",
+  label2: "Visits",
+};

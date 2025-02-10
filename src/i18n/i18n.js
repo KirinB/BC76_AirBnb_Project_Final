@@ -10,6 +10,8 @@ import { RoomEN } from "../locales/en/managerRoom";
 import { RoomVi } from "../locales/vi/managerRoom";
 import { BookingEN } from "../locales/en/managerBooking";
 import { BookingVI } from "../locales/vi/managerBooking";
+import { dashBoardEN } from "../locales/en/dashBoard";
+import { dashBoardVI } from "../locales/vi/dashBoard";
 // Xử lý onload trang k hiện select
 export const locales = {
   en: "ENG",
@@ -19,6 +21,7 @@ const saveLangue = localStorage.getItem("language" || "vi");
 const resources = {
   en: {
     admin: adminEn,
+    dashboard: dashBoardEN,
     user: managerUserEN,
     location: LocationEN,
     room: RoomEN,
@@ -26,6 +29,7 @@ const resources = {
   },
   vi: {
     admin: adminVi,
+    dashboard: dashBoardVI,
     user: managerUserVI,
     location: LocationVI,
     room: RoomVi,
@@ -35,7 +39,7 @@ const resources = {
 i18n.use(initReactI18next).init({
   resources,
   lng: saveLangue,
-  ns: ["admin", "user", "location", "room", "booking"],
+  ns: ["admin", "user", "dashboard", "location", "room", "booking"],
   fallbackLng: "en",
   interpolation: {
     escapeValue: false,

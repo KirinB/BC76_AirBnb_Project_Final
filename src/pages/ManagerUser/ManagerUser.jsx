@@ -11,8 +11,14 @@ import { CloseOutlined } from "@ant-design/icons";
 import useViewPort from "../../hooks/useViewPort";
 import TableCustom from "../../components/ui/table/TableCustom";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers } from "../../store/slice/managerUser.slice";
 
 const ManagerUser = () => {
+  // xử lý api với redux
+  const dispatch = useDispatch();
+  const { listUsers, totalRow } = useSelector((state) => state.users);
+  // xử lý translate
   const { t } = useTranslation("user");
   const [initialValues, setInitialValues] = useState({
     id: 0,
@@ -41,10 +47,8 @@ const ManagerUser = () => {
     }, 1000);
   };
   const [isOnSubmit, setIsOnSubmit] = useState(true);
-  const [listUser, setListUser] = useState([]);
   const { handleNotification } = useContext(NotificationContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalRow, setTotalRow] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Xử lý resetForm
   const resetFormRef = useRef(null);
@@ -60,23 +64,7 @@ const ManagerUser = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  const Render = (res) => {
-    const setUser = res.data.content.data.map((user) => ({
-      ...user,
-      key: user.id,
-    }));
-    setListUser(setUser);
-    setTotalRow(res.data.content.totalRow);
-  };
 
-  const getAllUsers = () => {
-    nguoiDungSerivce
-      .getUserFind(currentPage, keyword)
-      .then((res) => {
-        Render(res);
-      })
-      .catch((err) => {});
-  };
   const columns = [
     {
       title: "ID",
@@ -118,7 +106,6 @@ const ManagerUser = () => {
         );
       },
     },
-
     {
       title: t("phone"),
       dataIndex: "phone",
@@ -181,10 +168,10 @@ const ManagerUser = () => {
                   .deleteUsers(record.id)
                   .then((res) => {
                     handleNotification("success", res.data.message);
-                    getAllUsers();
+                    dispatch(fetchAllUsers({ currentPage, keyword }));
                   })
                   .catch((err) => {
-                    getAllUsers();
+                    dispatch(fetchAllUsers({ currentPage, keyword }));
                     handleNotification("error", err.response.data.content);
                   });
               }}
@@ -201,11 +188,10 @@ const ManagerUser = () => {
       },
     },
   ];
-  // thiếu put user khi thay đổi chưa render lại được dannh sách
   useEffect(() => {
-    getAllUsers();
+    dispatch(fetchAllUsers({ currentPage, keyword }));
   }, [currentPage, keyword]);
-  useEffect(() => {}, [getAllUsers]);
+
   return (
     <div className="space-y-5">
       <div className="lg:flex lg:justify-between items-center border-gray-500 border-b-2 py-3">
@@ -262,7 +248,8 @@ const ManagerUser = () => {
               handleCloseModal={() => {
                 setIsModalOpen(false);
               }}
-              getAllUsers={getAllUsers}
+              currentPage={currentPage}
+              keyword={keyword}
               onResetForm={handleResetForm}
               isOnSubmit={isOnSubmit}
               initialValues={initialValues}
@@ -271,7 +258,7 @@ const ManagerUser = () => {
         </div>
       </div>
       <TableCustom
-        dataSource={listUser}
+        dataSource={listUsers}
         columns={columns}
         pagination={{
           total: totalRow,

@@ -13,13 +13,17 @@ import * as Yup from "yup";
 import dayjs from "dayjs";
 import { DatePickerCustom } from "../../../../components/ui/datePicker/DatePickerCustom";
 import { useTranslation } from "react-i18next";
+import { fetchAllUsers } from "../../../../store/slice/managerUser.slice";
+import { useDispatch } from "react-redux";
 const FormAddUser = ({
   handleCloseModal,
-  getAllUsers,
+  currentPage,
+  keyword,
   isOnSubmit,
   initialValues,
   onResetForm,
 }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation(["user", "admin"]);
   const { handleNotification } = useContext(NotificationContext);
   const handleOnSubmit = (data) => {
@@ -28,10 +32,11 @@ const FormAddUser = ({
         .postUsers(data)
         .then((res) => {
           handleNotification("success", "User Created Successfully");
-          getAllUsers();
+          dispatch(fetchAllUsers({ currentPage, keyword }));
           handleCloseModal();
         })
         .catch((err) => {
+          console.log(err);
           handleNotification("error", err.response.data.content);
         });
     } else {
@@ -40,7 +45,7 @@ const FormAddUser = ({
         .putUserByID(data.id, data)
         .then((res) => {
           handleNotification("success", "Edit User Successfully");
-          getAllUsers();
+          dispatch(fetchAllUsers({ currentPage, keyword }));
           handleCloseModal();
         })
         .catch((err) => {

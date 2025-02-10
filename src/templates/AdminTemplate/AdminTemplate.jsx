@@ -105,10 +105,6 @@ const AdminTemplate = () => {
       }
     }
   }, []);
-  // useEffect(()=>{
-  //   const currenLang = localStorage.getItem('language');
-
-  // })
   return (
     <Layout className="h-full">
       {width >= 1024 && (
@@ -148,7 +144,7 @@ const AdminTemplate = () => {
                     }}
                     to={pathDefault.dashBoard}
                   >
-                    DashBoard
+                    {t("dashboard")}
                   </NavLink>
                 ),
               },
@@ -428,12 +424,19 @@ const AdminTemplate = () => {
                   >
                     {/* thông tin đăng nhập */}
                     <Link onClick={(e) => e.preventDefault()}>
-                      <Avatar
-                        className="md:size-10 size-8"
-                        style={{ backgroundColor: "#f56a00" }}
-                      >
-                        <span className="uppercase">{user.name[0]}</span>
-                      </Avatar>
+                      {user.avatar ? (
+                        <Avatar
+                          className="md:size-10 size-8"
+                          src={user.avatar}
+                        />
+                      ) : (
+                        <Avatar
+                          className="md:size-10 size-8"
+                          style={{ backgroundColor: "#f56a00" }}
+                        >
+                          <span className="uppercase">{user.name[0]}</span>
+                        </Avatar>
+                      )}
                     </Link>
                   </Dropdown>
                 </div>

@@ -21,6 +21,7 @@ import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import Payment from "./pages/Payment/Payment";
 import { BookingProvider } from "./store/BookingContext";
 import FavoriteRoom from "./pages/Favorite/FavoriteRoom";
+import { VisitCounterProvider } from "./store/VisitCounterContext";
 
 export const NotificationContext = createContext();
 
@@ -111,14 +112,16 @@ function App() {
   const routes = useRoutes(arrRoutes);
   return (
     <>
-      <SearchPageProvider>
-        <BookingProvider>
-          <NotificationContext.Provider value={{ handleNotification }}>
-            {routes}
-            <ToastContainer />
-          </NotificationContext.Provider>
-        </BookingProvider>
-      </SearchPageProvider>
+      <VisitCounterProvider>
+        <SearchPageProvider>
+          <BookingProvider>
+            <NotificationContext.Provider value={{ handleNotification }}>
+              {routes}
+              <ToastContainer />
+            </NotificationContext.Provider>
+          </BookingProvider>
+        </SearchPageProvider>
+      </VisitCounterProvider>
     </>
   );
 }
