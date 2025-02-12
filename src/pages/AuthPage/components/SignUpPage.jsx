@@ -110,7 +110,7 @@ const SignUpPage = ({ styleIcon, setHandle, handle }) => {
           </div>
           <button
             type="submit"
-            className="bg-primary text-white px-14 py-4 rounded-full w-full mt-3"
+            className="bg-red-500 text-white px-14 py-4 rounded-full w-full mt-3"
           >
             Sign Up
           </button>

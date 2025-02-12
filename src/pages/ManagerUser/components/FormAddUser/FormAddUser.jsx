@@ -92,9 +92,13 @@ const FormAddUser = ({
         ),
       role: Yup.string().required("Vui lòng không bỏ trống !"),
       birthday: Yup.string().required("Vui lòng không bỏ trống !"),
-      gender: Yup.boolean("Vui lòng chọn giới tính").required(
-        "Vui lòng không bỏ trống !"
-      ),
+      gender: Yup.mixed()
+        .required("Vui lòng không bỏ trống!")
+        .test(
+          "is-valid-gender",
+          "Vui lòng chọn giới tính hợp lệ",
+          (value) => value !== ""
+        ),
     }),
   });
   useEffect(() => {
@@ -164,6 +168,7 @@ const FormAddUser = ({
         />
         <div className="w-full">
           <SelectCustom
+            placeholder="Vui lòng chọn giới tính"
             labelContent={t("gender")}
             options={[
               { label: t("male"), value: true },
@@ -174,6 +179,7 @@ const FormAddUser = ({
             }}
             value={values.gender}
             error={errors.gender}
+            touched={touched.gender}
           />
         </div>
       </div>

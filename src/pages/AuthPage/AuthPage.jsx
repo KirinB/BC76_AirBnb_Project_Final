@@ -54,7 +54,7 @@ const AuthPage = () => {
         )}
 
         <div
-          className={`hidden lg:flex h-full w-1/2 duration-700 translate-x-0 bg-primary z-[5] opacity-100 overflow-hidden ${
+          className={`hidden lg:flex h-full w-1/2 duration-700 translate-x-0 bg-red-500 z-[5] opacity-100 overflow-hidden ${
             handle ? "!-translate-x-full" : ""
           }`}
         >
@@ -63,34 +63,62 @@ const AuthPage = () => {
               handle ? "opacity-0 -ml-[100%]" : ""
             }`}
           >
-            <div className="bg-primary lg:flex hidden justify-center items-center flex-col p-20 space-y-5 text-white">
-              <h2 className="font-bold text-3xl ">Welcome Back!</h2>
-              <p>Email your personal details and start journey with us</p>
-              <button
-                type="text"
-                onClick={toggleForm}
-                className="bg-primary text-white px-14 py-4 rounded-full w-full border border-white font-bold"
-              >
-                Sign Up
-              </button>
-            </div>
+            {pageType === "signin" ? (
+              <div className="bg-red-500 lg:flex hidden justify-center items-center flex-col p-20 space-y-5 text-white">
+                <h2 className="font-bold text-3xl ">Welcome Back!</h2>
+                <p>Email your personal details and start journey with us</p>
+                <button
+                  type="text"
+                  onClick={toggleForm}
+                  className="bg-red-500 text-white px-14 py-4 rounded-full w-full border border-white font-bold"
+                >
+                  Sign Up
+                </button>
+              </div>
+            ) : (
+              <div className="bg-red-500 lg:flex hidden justify-center items-center flex-col p-20 space-y-5 text-white">
+                <h2 className="font-bold text-3xl ">Hello, Friend!</h2>
+                <p>Email your personal details and start journey with us</p>
+                <button
+                  type="text"
+                  onClick={toggleForm}
+                  className="bg-red-500 text-white px-14 py-4 rounded-full w-full border border-white font-bold"
+                >
+                  Sign In
+                </button>
+              </div>
+            )}
           </div>
           <div
             className={`h-full min-w-full flex flex-col justify-center items-center text-center duration-700 opacity-100 ${
               handle ? "ml-0" : ""
             }`}
           >
-            <div className="bg-primary lg:flex hidden justify-center items-center flex-col p-20 space-y-5 text-white">
-              <h2 className="font-bold text-3xl ">Hello, Friend!</h2>
-              <p>Email your personal details and start journey with us</p>
-              <button
-                type="text"
-                onClick={toggleForm}
-                className="bg-primary text-white px-14 py-4 rounded-full w-full border border-white font-bold"
-              >
-                Sign In
-              </button>
-            </div>
+            {pageType === "signup" ? (
+              <div className="bg-red-500 lg:flex hidden justify-center items-center flex-col p-20 space-y-5 text-white">
+                <h2 className="font-bold text-3xl ">Hello, Friend!</h2>
+                <p>Email your personal details and start journey with us</p>
+                <button
+                  type="text"
+                  onClick={toggleForm}
+                  className="bg-red-500 text-white px-14 py-4 rounded-full w-full border border-white font-bold"
+                >
+                  Sign In
+                </button>
+              </div>
+            ) : (
+              <div className="bg-red-500 lg:flex hidden justify-center items-center flex-col p-20 space-y-5 text-white">
+                <h2 className="font-bold text-3xl ">Welcome Back!</h2>
+                <p>Email your personal details and start journey with us</p>
+                <button
+                  type="text"
+                  onClick={toggleForm}
+                  className="bg-red-500 text-white px-14 py-4 rounded-full w-full border border-white font-bold"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

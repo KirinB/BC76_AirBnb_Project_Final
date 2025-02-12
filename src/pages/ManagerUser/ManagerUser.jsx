@@ -27,7 +27,7 @@ const ManagerUser = () => {
     password: "",
     phone: "",
     birthday: "",
-    gender: true,
+    gender: "",
     role: "",
   });
   const { width } = useViewPort();
@@ -225,7 +225,7 @@ const ManagerUser = () => {
                 password: "",
                 phone: "",
                 birthday: "",
-                gender: true,
+                gender: "",
                 role: "",
               });
               resetUserForm();

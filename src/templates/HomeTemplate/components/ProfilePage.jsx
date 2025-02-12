@@ -65,6 +65,9 @@ const ProfilePage = () => {
     name: user.name,
     email: user.email,
     phone: user.phone,
+    role: user.role,
+    gender: user.gender,
+    birthday: user.birthday,
   });
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
@@ -74,6 +77,7 @@ const ProfilePage = () => {
         userService
           .thayDoiThongTinNguoiDung(user.id, values)
           .then((res) => {
+            delete res.data.content.password;
             const updatedUser = res.data.content;
             dispatch(handleUpdateUser(updatedUser));
 

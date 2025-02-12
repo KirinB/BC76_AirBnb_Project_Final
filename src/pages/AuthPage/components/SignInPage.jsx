@@ -51,7 +51,17 @@ const SignInPage = ({ styleIcon, handle }) => {
           .string()
           .email("Vui lòng nhập đúng định dạng Email")
           .required("Vui lòng không bỏ trống"),
-        password: yup.string().required("Vui lòng không bỏ trống"),
+        password: yup.string().when([], {
+          is: () => handleSubmit,
+          then: (schema) =>
+            schema
+              .required("Vui lòng không bỏ trống !")
+              .matches(
+                /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).*$/,
+                "Vui lòng nhập 1 ký tự đặc biệt, 1 in hoa, 1 số"
+              ),
+          otherwise: (schema) => schema.notRequired(),
+        }),
       }),
     });
 
@@ -109,7 +119,7 @@ const SignInPage = ({ styleIcon, handle }) => {
 
           <button
             type="submit"
-            className="bg-primary text-white px-14 py-4 rounded-full w-full mt-3"
+            className="bg-red-500 text-white px-14 py-4 rounded-full w-full mt-3"
           >
             Sign In
           </button>

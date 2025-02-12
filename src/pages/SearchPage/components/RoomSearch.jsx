@@ -34,7 +34,10 @@ const RoomSearch = ({ id, image, title, description, price, giuong }) => {
   };
 
   return (
-    <Link to={`/rooms/${id}`} className="flex flex-col space-y-4">
+    <Link
+      to={`/rooms/${id}`}
+      className="flex flex-col space-y-4 hover:scale-x-105 hover:scale-y-105 hover:shadow-xl duration-200"
+    >
       <div className="relative">
         <img
           src={image}
