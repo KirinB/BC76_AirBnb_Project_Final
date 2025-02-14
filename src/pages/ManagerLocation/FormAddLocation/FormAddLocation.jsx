@@ -48,7 +48,10 @@ const FormAddLocation = ({
               .uploadImgLocation(formData, res.data.content.id, token)
               .then((res) => {
                 //Đẩy hình lên API upload hình ảnh
-                handleNotification("success", "New room created successfully");
+                handleNotification(
+                  "success",
+                  "New Location created successfully"
+                );
                 handleCloseModal(true);
                 getAllLocation();
                 resetForm();

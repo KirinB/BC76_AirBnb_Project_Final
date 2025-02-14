@@ -1,9 +1,16 @@
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import {
+  ArcElement,
+  Chart as ChartJS,
+  Legend,
+  plugins,
+  Tooltip,
+} from "chart.js";
+import plugin from "chartjs-plugin-datalabels";
 import React from "react";
 import { Doughnut, Pie } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
+import ChartDataLabels from "chartjs-plugin-datalabels";
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 const UserChartGender = ({ listUser }) => {
   const { t } = useTranslation("dashboard");
   const maleCount = Array.isArray(listUser)
@@ -24,11 +31,26 @@ const UserChartGender = ({ listUser }) => {
       },
     ],
   };
+  const ChartOptions = {
+    plugins: {
+      datalabels: {
+        formatter: (value, context) => {
+          const total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+          const percentage = ((value / total) * 100).toFixed(2);
+          return `${percentage}%`;
+        },
+        color: "#000",
+        font: {
+          weight: "semi-bold",
+        },
+      },
+    },
+  };
   return (
     <div>
       <h3 className="text-black/70 dark:text-black/70">{t("gender")}</h3>
       <p className="text-lg">{listUser.length}</p>
-      <Doughnut data={chartData} />
+      <Pie options={ChartOptions} data={chartData} />
     </div>
   );
 };

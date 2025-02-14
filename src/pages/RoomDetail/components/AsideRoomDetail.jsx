@@ -81,7 +81,6 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
   };
 
   const handleRangeChange = (dates, dateStrings) => {
-    console.log(dateStrings);
     setDayStart(dateStrings[0]);
     setDayEnd(dateStrings[1]);
     const totalDays = calculateTotalDays([dateStrings]);
@@ -227,6 +226,9 @@ const AsideRoomDetail = ({ max, priceRoom, idRoom }) => {
                 dayEnd ? dayjs(dayEnd, "DD-MM-YYYY") : null,
               ]}
               format={"DD-MM-YYYY"}
+              disabledDate={(current) => {
+                return current && current < dayjs().startOf("day");
+              }}
               placeholder={["Nhận phòng", "Trả phòng"]}
               onChange={handleRangeChange}
               className="w-full"

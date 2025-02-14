@@ -52,8 +52,8 @@ const FormAddRoom = ({
         //Đẩy dữ liệu lên API post Room
         phongService
           .postPhong(valuesClone, token)
-          .then((res) => {
-            phongService
+          .then(async (res) => {
+            await phongService
               .postImageRoom(formData, res.data.content.id, token)
               .then((res) => {
                 //Đẩy hình lên API upload hình ảnh
@@ -66,7 +66,9 @@ const FormAddRoom = ({
                 handleNotification("error", err.response.data.content);
               });
           })
-          .catch((err) => {});
+          .catch((err) => {
+            handleNotification("err", err.response.data.content);
+          });
       } else {
         if (values.hinhAnh instanceof File) {
           // phần xử lý hình ảnh trước khi up API

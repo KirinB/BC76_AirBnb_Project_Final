@@ -210,6 +210,9 @@ const HeaderSearch = () => {
             format={"DD-MM-YYYY"}
             id="inpt_daystart"
             placeholder="Ngày nhận"
+            disabledDate={(current) => {
+              return current && current < dayjs().startOf("day");
+            }}
             defaultValue={dayjs(dayStart, "DD-MM-YYYY")}
             suffixIcon={null}
           />
@@ -225,6 +228,9 @@ const HeaderSearch = () => {
             format={"DD-MM-YYYY"}
             className="!w-full !border-none !p-0"
             placeholder="Ngày trả"
+            disabledDate={(current) => {
+              return current && current < dayjs().startOf("day");
+            }}
             defaultValue={dayEnd ? dayjs(dayEnd, "DD-MM-YYYY") : null}
             suffixIcon={null}
           />
