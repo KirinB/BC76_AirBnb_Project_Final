@@ -1,6 +1,9 @@
 import { http } from "./config";
 
 export const nguoiDungSerivce = {
+  getUsers: () => {
+    return http.get("/users");
+  },
   postUsers: (data) => {
     return http.post("/users", data);
   },

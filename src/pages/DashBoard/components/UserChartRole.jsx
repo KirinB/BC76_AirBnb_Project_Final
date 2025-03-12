@@ -1,7 +1,7 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import React from "react";
-import { Doughnut, Pie } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
@@ -25,6 +25,7 @@ const UserChartRole = ({ listUser }) => {
     ],
   };
   const chartOptions = {
+    responsive: true,
     plugins: {
       datalabels: {
         formatter: (value, context) => {

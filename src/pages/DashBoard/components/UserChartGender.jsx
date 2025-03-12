@@ -1,15 +1,9 @@
-import {
-  ArcElement,
-  Chart as ChartJS,
-  Legend,
-  plugins,
-  Tooltip,
-} from "chart.js";
-import plugin from "chartjs-plugin-datalabels";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React from "react";
-import { Doughnut, Pie } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 const UserChartGender = ({ listUser }) => {
   const { t } = useTranslation("dashboard");
@@ -32,6 +26,7 @@ const UserChartGender = ({ listUser }) => {
     ],
   };
   const ChartOptions = {
+    responsive: true,
     plugins: {
       datalabels: {
         formatter: (value, context) => {

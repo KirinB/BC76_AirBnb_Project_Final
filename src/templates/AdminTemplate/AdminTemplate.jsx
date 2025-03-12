@@ -27,6 +27,7 @@ import {
   IoMdCheckboxOutline,
   IoMdClose,
   IoMdNotificationsOutline,
+  IoMdStats,
 } from "react-icons/io";
 import "./adminTemplate.scss";
 import useViewPort from "../../hooks/useViewPort";
@@ -62,9 +63,6 @@ const AdminTemplate = () => {
   const changeTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
-  const {
-    token: { borderRadiusLG },
-  } = theme.useToken();
   const items = [
     {
       key: "1",
@@ -82,6 +80,90 @@ const AdminTemplate = () => {
         >
           Đăng xuất
         </Link>
+      ),
+    },
+  ];
+  const itemsSider = [
+    {
+      key: "1",
+      icon: <IoMdStats size={23} />,
+      label: (
+        <NavLink
+          className={({ isActive, isPending }) => {
+            return `px-3 rounded-md inline-block ${
+              isActive || location.pathname === "/admin" ? "item-active" : ""
+            }`;
+          }}
+          to={pathDefault.dashBoard}
+        >
+          {t("dashboard")}
+        </NavLink>
+      ),
+    },
+    {
+      key: "2",
+      icon: <UserOutlined />,
+      label: (
+        <NavLink
+          className={({ isActive, isPending }) => {
+            return `px-3 rounded-md inline-block ${
+              isActive || location.pathname === "/admin/manager-user"
+                ? "item-active"
+                : ""
+            }`;
+          }}
+          to={pathDefault.managerUser}
+        >
+          {t("userLink")}
+        </NavLink>
+      ),
+    },
+    {
+      key: "3",
+      icon: <MdMyLocation />,
+      label: (
+        <NavLink
+          className={({ isActive }) => {
+            return `px-3 rounded-md inline-block ${
+              isActive ? "item-active" : ""
+            }`;
+          }}
+          to={pathDefault.managerLocation}
+        >
+          {t("locationLink")}
+        </NavLink>
+      ),
+    },
+    {
+      key: "4",
+      icon: <BiHomeHeart />,
+      label: (
+        <NavLink
+          className={({ isActive }) => {
+            return `px-3 rounded-md inline-block ${
+              isActive ? "item-active" : ""
+            }`;
+          }}
+          to={pathDefault.managerRoom}
+        >
+          {t("roomLink")}
+        </NavLink>
+      ),
+    },
+    {
+      key: "5",
+      icon: <TbDeviceDesktopCog />,
+      label: (
+        <NavLink
+          className={({ isActive }) => {
+            return `px-3 rounded-md inline-block ${
+              isActive ? "item-active" : ""
+            }`;
+          }}
+          to={pathDefault.managerReservation}
+        >
+          {t("bookingLink")}
+        </NavLink>
       ),
     },
   ];
@@ -110,7 +192,7 @@ const AdminTemplate = () => {
       {width >= 1024 && (
         <Sider
           theme="light"
-          className="shadow-md shadow-fuchsia-500 dark:bg-slate-900 rounded-e-2xl bg-white"
+          className="dark:bg-slate-900 bg-gray-800"
           trigger={null}
           collapsible
           collapsed={collapsed}
@@ -119,109 +201,26 @@ const AdminTemplate = () => {
           <Helmet>
             <title>AirBnb - Admin Dashboard</title>
           </Helmet>
-          <div className="demo-logo-vertical " />
+          <div className="demo-logo-vertical" />
           <div className="my-4 flex justify-center">
             <Link to={pathDefault.homePage}>
               {collapsed ? <Icons.logo fill="#FF385C" /> : <Icons.logoFull />}
             </Link>
           </div>
           <Menu
+            theme="dark"
             mode="inline"
-            className="dark:bg-slate-900"
+            className="bg-transparent"
             defaultSelectedKeys={[selectedKey]}
-            items={[
-              {
-                key: "1",
-                icon: <AiOutlineClockCircle />,
-                label: (
-                  <NavLink
-                    className={({ isActive, isPending }) => {
-                      return `px-3 rounded-md inline-block ${
-                        isActive || location.pathname === "/admin"
-                          ? "item-active"
-                          : ""
-                      }`;
-                    }}
-                    to={pathDefault.dashBoard}
-                  >
-                    {t("dashboard")}
-                  </NavLink>
-                ),
-              },
-              {
-                key: "2",
-                icon: <UserOutlined />,
-                label: (
-                  <NavLink
-                    className={({ isActive, isPending }) => {
-                      return `px-3 rounded-md inline-block ${
-                        isActive || location.pathname === "/admin/manager-user"
-                          ? "item-active"
-                          : ""
-                      }`;
-                    }}
-                    to={pathDefault.managerUser}
-                  >
-                    {t("userLink")}
-                  </NavLink>
-                ),
-              },
-              {
-                key: "3",
-                icon: <MdMyLocation />,
-                label: (
-                  <NavLink
-                    className={({ isActive }) => {
-                      return `px-3 rounded-md inline-block ${
-                        isActive ? "item-active" : ""
-                      }`;
-                    }}
-                    to={pathDefault.managerLocation}
-                  >
-                    {t("locationLink")}
-                  </NavLink>
-                ),
-              },
-              {
-                key: "4",
-                icon: <BiHomeHeart />,
-                label: (
-                  <NavLink
-                    className={({ isActive }) => {
-                      return `px-3 rounded-md inline-block ${
-                        isActive ? "item-active" : ""
-                      }`;
-                    }}
-                    to={pathDefault.managerRoom}
-                  >
-                    {t("roomLink")}
-                  </NavLink>
-                ),
-              },
-              {
-                key: "5",
-                icon: <TbDeviceDesktopCog />,
-                label: (
-                  <NavLink
-                    className={({ isActive }) => {
-                      return `px-3 rounded-md inline-block ${
-                        isActive ? "item-active" : ""
-                      }`;
-                    }}
-                    to={pathDefault.managerReservation}
-                  >
-                    {t("bookingLink")}
-                  </NavLink>
-                ),
-              },
-            ]}
+            selectedKeys={[selectedKey]}
+            items={itemsSider}
           />
         </Sider>
       )}
 
       <Layout>
         <Header
-          className="bg-white rounded-s-xl dark:bg-slate-900 dark:border-y-white dark:border-y dark:text-white dark:fill-white"
+          className="bg-white dark:bg-slate-900 dark:border-y-white dark:border-y dark:text-white dark:fill-white"
           style={{
             padding: 0,
           }}
@@ -375,7 +374,7 @@ const AdminTemplate = () => {
                         onClick={(e) => {
                           changeLangue("en");
                         }}
-                        className="flex gap-3 items-center"
+                        className="text-center"
                       >
                         ENG
                       </p>
@@ -388,6 +387,7 @@ const AdminTemplate = () => {
                         onClick={(e) => {
                           changeLangue("vi");
                         }}
+                        className="text-center"
                       >
                         VIE
                       </p>
@@ -446,16 +446,13 @@ const AdminTemplate = () => {
         </Header>
         <Content
           className={
-            isDarkMode
-              ? "bg-slate-900"
-              : "bg-gradient-to-tr from-blue-300 via-purple-300 to-pink-400"
+            isDarkMode ? "bg-slate-900" : "bg-gray-100"
+            // : "bg-gradient-to-tr from-blue-300 via-purple-300 to-pink-400"
           }
           style={{
             margin: "0px",
-            padding: 30,
+            padding: 20,
             minHeight: 1000,
-
-            borderRadius: borderRadiusLG,
           }}
         >
           <Outlet isDarkMode={isDarkMode} />

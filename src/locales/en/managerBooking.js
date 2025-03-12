@@ -1,8 +1,9 @@
 export const BookingEN = {
   title: "Manager List Booking",
-  phSearch: "enter search user's code...",
+  phSearch: "enter search user's name or email...",
   roomCode: "Room Code",
-  userCode: "User Code",
+  userName: "User Name",
+  userEmail: "User Email",
   arrival: "Arrival Day",
   departure: "Departure Day",
   guest: "Guest",

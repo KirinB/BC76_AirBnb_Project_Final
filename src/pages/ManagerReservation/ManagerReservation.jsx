@@ -11,6 +11,7 @@ import FormEditBooking from "./components/FormEditBooking/FormEditBooking";
 import useViewPort from "../../hooks/useViewPort";
 import TableCustom from "../../components/ui/table/TableCustom";
 import { useTranslation } from "react-i18next";
+import { nguoiDungSerivce } from "../../services/nguoiDung.service";
 const ManagerReservation = ({ isDarkMode }) => {
   const { t } = useTranslation("booking");
   const { width } = useViewPort();
@@ -19,6 +20,7 @@ const ManagerReservation = ({ isDarkMode }) => {
   const [listReservation, setListReservation] = useState([]);
   const [originalListReservation, setOriginalListReservation] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [listUsers, setListUsers] = useState([]);
   const [initialValues, setInitialValues] = useState({
     id: 0,
     maPhong: 0,
@@ -46,6 +48,17 @@ const ManagerReservation = ({ isDarkMode }) => {
         console.log(err);
       });
   };
+  const getAllUsers = () => {
+    nguoiDungSerivce
+      .getUsers()
+      .then((res) => {
+        setListUsers(res.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   // quản lý dữ liệu search
   const [keyword, setKeyword] = useState("");
   const [value, setValue] = useState("");
@@ -53,7 +66,12 @@ const ManagerReservation = ({ isDarkMode }) => {
   const searchKeyWord = (data) => {
     setKeyword(data);
     let soPhongNguoiDungDat = originalListReservation.filter((item, index) => {
-      return String(item.maNguoiDung).includes(data.trim());
+      // Tìm user có maNguoiDung tương ứng
+      const user = listUsers.find((user) => user.id == item.maNguoiDung);
+      return user
+        ? user.name.toLowerCase().includes(data.trim().toLowerCase()) ||
+            user.email.toLowerCase().includes(data.trim().toLowerCase())
+        : false;
     });
     setListReservation(soPhongNguoiDungDat);
   };
@@ -85,9 +103,34 @@ const ManagerReservation = ({ isDarkMode }) => {
       key: "maPhong",
     },
     {
-      title: t("userCode"),
+      title: t("userName"),
       dataIndex: "maNguoiDung",
       key: "maNguoiDung",
+      render: (text, record, index) => {
+        const Obj = listUsers.find((user) => user.id == record.maNguoiDung);
+        return Obj ? (
+          <div>
+            <p className="font-semibold text-base">{Obj.name}</p>
+          </div>
+        ) : (
+          <p className="font-semibold text-base">Not Found</p>
+        );
+      },
+    },
+    {
+      title: t("userEmail"),
+      dataIndex: "maNguoiDung",
+      key: "maNguoiDung",
+      render: (text, record, index) => {
+        const Obj = listUsers.find((user) => user.id == record.maNguoiDung);
+        return Obj ? (
+          <div>
+            <p className="font-semibold text-base">{Obj.email}</p>
+          </div>
+        ) : (
+          <p className="font-semibold text-base">Not Found</p>
+        );
+      },
     },
     {
       title: t("arrival"),
@@ -181,6 +224,7 @@ const ManagerReservation = ({ isDarkMode }) => {
   ];
   useEffect(() => {
     getAllReservation();
+    getAllUsers();
   }, []);
   useEffect(() => {}, [getAllReservation]);
   return (

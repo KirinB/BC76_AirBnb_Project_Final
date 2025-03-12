@@ -8,8 +8,6 @@ import { setRoomService } from "../../services/setRoom.service";
 import { phongService } from "../../services/phong.service";
 import VisitCounterChart from "./components/VisitCounterChart";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
-
 const DashBoard = () => {
   const { t } = useTranslation("dashboard");
   const [listUser, setListUser] = useState([]);
@@ -67,20 +65,20 @@ const DashBoard = () => {
     <div>
       <h1 className="text-xl font-semibold">{t("title")}</h1>
       <LineSpace />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="flex gap-6">
-          <div className="w-1/2 border border-gray-200 bg-white rounded-2xl p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-6">
+          <div className="border border-gray-200 bg-white rounded-md p-6">
             <UserChartRole listUser={listUser} />
           </div>
-          <div className="w-1/2 border border-gray-200 bg-white rounded-2xl p-6">
+          <div className="border border-gray-200 bg-white rounded-md p-6">
             <UserChartGender listUser={listUser} />
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {MOCKUP_DATA_DASHBOARD.map((item, index) => {
             return (
               <div
-                className="bg-white rounded-2xl p-4 flex flex-col items-center lg:items-start"
+                className="bg-white rounded-md p-4 flex flex-col items-center lg:items-start"
                 key={index}
               >
                 <h4 className="text-black/70 text-sm dark:text-black/70">
@@ -94,10 +92,10 @@ const DashBoard = () => {
       </div>
       <LineSpace />
 
-      <div className="w-full rounded-2xl bg-white p-12 hidden md:block mb-10">
+      <div className="w-full rounded-md bg-white p-12 hidden md:block mb-10">
         <TopRoomsChart bookingData={listSetRoom} roomData={listRoom} />
       </div>
-      <div className="w-full rounded-2xl bg-white p-12 hidden md:block">
+      <div className="w-full rounded-md bg-white p-12 hidden md:block">
         <VisitCounterChart />
       </div>
     </div>

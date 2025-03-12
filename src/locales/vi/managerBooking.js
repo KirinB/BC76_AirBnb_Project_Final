@@ -1,8 +1,9 @@
 export const BookingVI = {
   title: "Quản Lý Danh Sách Đặt Phòng",
-  phSearch: "Vui lòng nhập mã người dùng...",
+  phSearch: "Vui lòng nhập tên hoặc email người dùng...",
   roomCode: "Mã Phòng",
-  userCode: "Mã Người Dùng",
+  userName: "Tên Người Dùng",
+  userEmail: "Email Người Dùng",
   arrival: "Ngày Đến",
   departure: "Ngày Đi",
   guest: "Số Khách",
